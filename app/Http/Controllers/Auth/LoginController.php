@@ -36,4 +36,14 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    /**
+     *修改默认登陆用户名类型为非邮箱
+     *
+     * @return username 
+     */
+/*    public function username()
+    {
+        return 'username';
+    }*/
 }

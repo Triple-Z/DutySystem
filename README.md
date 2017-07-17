@@ -2,6 +2,10 @@
 
 A duty system for Drone Institution of NUAA.
 
+laravel 5.4
+php		7.0.10
+
+
 -------
 
 # Copyright
