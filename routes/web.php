@@ -12,7 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    	if (Auth::check()) {
+    		return view('welcome');
+    	}
+    	else {
+    		return redirect()->route('login');
+    	}
 });
 
 Auth::routes();
@@ -22,3 +27,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+/*Route::get('api/user',function(){
+	return view('welcome');
+})->middleware('auth.basic.once');
+*/
