@@ -13,4 +13,5 @@ let mix = require('laravel-mix');
 
 mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');
-mix.styles(['resources/assets/css/other.css','public/css/app.css'],'public/css/app.css');
+mix.styles(['ie10-viewport-bug-workaround.css','resources/assets/css/dashboard.css','resources/assets/css/other.css','public/css/app.css'],'public/css/app.css');
+mix.styles(['holder.min.js','ie10-viewport-bug-workaround.js','ie-emulation-modes-warning.js','public/js/app.js'],'public/js/app.js');
