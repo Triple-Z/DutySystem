@@ -1,4 +1,4 @@
-
+@charset "UTF-8";
 
 /*!
  * Bootstrap v3.3.7 (http://getbootstrap.com)
@@ -9,7 +9,7 @@
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
 html {
-  font-family: "Lucida Grande", Helvetica, Arial, STXihei, "华文细黑", "Microsoft YaHei", "微软雅黑";
+  font-family: sans-serif;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
