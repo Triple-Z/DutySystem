@@ -17,6 +17,9 @@
             .sidebar {
                 position: fixed;
             }
+            .navbar-header {
+                padding-left: 42%;
+            }
         </style>
     </head>
     <body>
@@ -29,18 +32,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Project name</a>
+                    <a class="navbar-brand" href="">无人机院考勤系统</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="#">Dashboard</a></li>
-                        <li>
-                            <a href="#">Settings</a></li>
-                        <li>
-                            <a href={{ url('/home') }}>管理面板</a></li>
-                        <li>
-                            <a href="#">Profile</a></li>
+                        <li><a href={{ url('/home') }}>管理面板</a></li>
                     </ul>
                     <form class="navbar-form navbar-right">
                         <input type="text" class="form-control" placeholder="Search..."></form>
