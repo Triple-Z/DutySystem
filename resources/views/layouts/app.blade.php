@@ -32,6 +32,7 @@
                     @if (!Auth::guest())
                         <ul class="nav navbar-nav navbar-right">
                             <!-- Authentication Links -->
+                            <li><a href="{{ url('/') }}">查看报表</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
