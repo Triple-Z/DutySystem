@@ -32,3 +32,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 	return view('welcome');
 })->middleware('auth.basic.once');
 */
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
