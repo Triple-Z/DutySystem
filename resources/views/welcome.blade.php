@@ -17,8 +17,8 @@
             .sidebar {
                 position: fixed;
             }
-            .navbar-header {
-                padding-left: 42%;
+            .nav-sidebar > li {
+                padding-left: 40px;
             }
         </style>
     </head>

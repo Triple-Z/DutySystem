@@ -51,9 +51,6 @@
                                 </ul>
                             </li>
                         </ul>
-                        <ul class="nav navbar-nav navbar-right">
-                            <li><a href={{ url('/home') }}>管理面板</a></li>
-                        </ul>
                         <form class="navbar-form navbar-right">
                             <input type="text" class="form-control" placeholder="Search...">
                         </form>
