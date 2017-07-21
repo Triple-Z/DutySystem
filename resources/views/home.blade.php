@@ -18,7 +18,6 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a data-toggle="tab" href="#last">上次登录记录</a></li>
                 <li><a data-toggle="tab" href="#history">登录历史</a></li>
                 <li><a data-toggle="tab" href="#password">修改密码</a></li>
             </ul> 
