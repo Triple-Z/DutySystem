@@ -36,8 +36,32 @@ php artisan migrate
 
 ## Model
 
+- User
+
 ## Controller
 
+- Controller
+- HomeController
+- SuperHomeController
+
+Auth
+- RegisterController
+- LoginController
+- ForgetPasswordController
+- ResetPasswordController
+
+## Middleware
+
+- EncryptCookies
+- RedirectIfAuthenticated
+- TrimStrings
+- VerifyCsrfToken
+
+## API
+
+- GET /: 返回认证状态
+- GET /home: 返回普通管理员登录结果
+- GET /superhome: 返回超级管理员登录结果
 
 ## Personal Information
 
