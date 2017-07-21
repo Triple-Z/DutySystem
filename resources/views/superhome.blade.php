@@ -9,7 +9,7 @@
 
                 <div class="panel-body">
                     You are logged in!<br>
-                    You are an admin.<br>
+					You are a super admin!<br>
                 </div>
             </div>
         </div>
