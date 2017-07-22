@@ -133,30 +133,6 @@ body {
   border-top-right-radius: 3px;
   border-bottom: 1px solid #DDDDDD;
 }
-
-.panel-heading {
-  margin-top: 5px;
-  padding: 0;
-  border-radius: 3px;
-  border: 1px solid transparent;
-  border-color: #DDDDDD;
-}
-
-.item-body {
-  padding: 10px 15px 5px 15px;
-  border-bottom: 1px solid #DDDDDD;
-}
-
-.item-second {
-  margin-top: 5px;
-  cursor: pointer;
-}
-
-.item-second a {
-  display: block;
-  height: 100%;
-  width: 100%;
-}
 @charset "UTF-8";
 
 /*!

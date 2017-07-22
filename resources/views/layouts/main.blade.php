@@ -11,7 +11,7 @@
         <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
         <style type="text/css">
             body {
-                padding-top: 70px;
+                padding-top: 50px;
             }
             .sidebar {
                 position: fixed;
@@ -19,7 +19,14 @@
             .nav-sidebar > li {
                 padding-left: 40px;
             }
+            @yield('style')
         </style>
+<!--         <script type="text/javascript">
+            $(document).ready(function(){  
+                url = document.domain;
+                alert(url)
+            })  
+        </script> -->
     </head>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -53,7 +60,7 @@
                             </ul>
                         </li>
                     </ul>
-                    <form class="navbar-form navbar-right" role="search">
+<!--                     <form class="navbar-form navbar-right" role="search">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search" name="q">
                             <div class="input-group-btn">
@@ -62,7 +69,7 @@
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    </form> -->
                 </div>
             </div>
         </nav>
@@ -70,11 +77,11 @@
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar">
-                        <li class="active"><a data-toggle="tab" href={{url('/')}}>进出记录总览</a></li>
-                        <li><a data-toggle="tab" href="{{url('/graph')}}">绘制出勤曲线</a></li>
-                        <li><a data-toggle="tab" href="{{url('/holiday')}}">节假日编辑</a></li>
-                        <li><a data-toggle="tab" href="{{url('/timeedit')}}">考勤有效时间编辑</a></li>
-                        <li><a data-toggle="tab" href="{{url('/export')}}">导出报表</a></li>
+                        <li id="general" class="active"><a href={{url('/')}}>进出记录总览</a></li>
+                        <li id="graph"><a href="{{url('/graph')}}">绘制出勤曲线</a></li>
+                        <li id="holiday"><a href="{{url('/holiday')}}">节假日编辑</a></li>
+                        <li id="timeedit"><a href="{{url('/timeedit')}}">考勤有效时间编辑</a></li>
+                        <li id="export"><a href="{{url('/export')}}">导出报表</a></li>
                     </ul>    
                 </div>
                 @yield('content-in-main')

@@ -1,4 +1,13 @@
 @extends('layouts.main')
+@section('style') 
+#period {
+    border-color: #ccc;
+}
+body {
+    padding-top:50px;
+}
+@endsection
+
 @section('content-in-main')
 <!-- modal model -->
 <div id="modal-switch" tabindex="-1" role="dialog" aria-labelledby="modal-switch-label" class="modal fade">
@@ -18,48 +27,18 @@
 <!-- filter choice -->
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <div class="panel panel-default">
+        <div class="panel-heading">显示选项</div>
         <div class="panel-body">
-            <div class="btn-group bootstrap-select">
-                <button type="button" class="btn dropdown-toggle btn-default" data-toggle="dropdown" data-id="first-disabled" title="Corn" aria-expanded="false">
-                    <span class="filter-option pull-left">Corn</span>&nbsp;
-                    <span class="caret"></span>
-                </button>
-                <div class="dropdown-menu open" style="max-height: 177px; overflow: hidden; min-height: 134px;">
-                    <div class="bs-searchbox">
-                        <input type="text" class="form-control" autocomplete="off">
+            <form role="search" class="col-md-5 col-md-offset-2">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" name="q">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
                     </div>
-                    <ul class="dropdown-menu inner" role="menu" style="max-height: 123px; overflow-y: auto; min-height: 80px;">
-                        <li class="dropdown-header " data-optgroup="1"><span class="text">Fruit</span></li>
-                        <li data-original-index="1" data-optgroup="1" class="">
-                            <a tabindex="0" class="opt  " style="" data-tokens="null">
-                                <span class="text">Apple</span>
-                                <span class="glyphicon glyphicon-ok check-mark"></span>
-                            </a>
-                        </li>
-                        <li data-original-index="2" data-optgroup="1" class="">
-                            <a tabindex="0" class="opt undefined" style="" data-tokens="null">
-                                <span class="text">Orange</span>
-                                <span class="glyphicon glyphicon-ok check-mark"></span>
-                            </a>
-                        </li>
-                        <li class="divider" data-optgroup="2div"></li>
-                        <li class="dropdown-header " data-optgroup="2">
-                            <span class="text">Vegetable</span></li>
-                        <li data-original-index="3" data-optgroup="2" class="selected active">
-                            <a tabindex="0" class="opt  " style="" data-tokens="null">
-                                <span class="text">Corn</span>
-                                <span class="glyphicon glyphicon-ok check-mark"></span>
-                            </a>
-                        </li>
-                        <li data-original-index="4" data-optgroup="2">
-                            <a tabindex="0" class="opt undefined" style="" data-tokens="null">
-                                <span class="text">Carrot</span>
-                                <span class="glyphicon glyphicon-ok check-mark"></span>
-                            </a>
-                        </li>
-                    </ul>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
