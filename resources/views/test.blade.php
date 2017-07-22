@@ -30,6 +30,7 @@
                 <div class="panel-heading">上次登录记录</div>
                 <div class="panel-body">
                     You are logged in!
+					{{ $employees->name }}
                 </div>
             </div>
             <div class="tab-pane panel panel-default fade" id="email">
@@ -54,7 +55,7 @@
                 <div class="panel-heading">修改密码</div>
                 <div class="panel-body">
                     You are logged in!<br>
-                    You are a super admin.<br>
+                    You are an admin.<br>
                 </div>
             </div>
         </div>
