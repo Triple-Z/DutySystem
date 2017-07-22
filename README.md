@@ -37,12 +37,14 @@ php artisan migrate
 ## Model
 
 - User
+- Employee
 
 ## Controller
 
 - Controller
 - HomeController
-- SuperHomeController
+- RouteController
+- EmployeeController
 
 - Auth
 	- RegisterController
@@ -68,7 +70,10 @@ php artisan migrate
 - GET `/holiday`： 返回？？界面
 - GET `/timeedit`: 返回有效时间编辑界面
 
-## Personal Information
+- GET `/employee/id`: 返回某个指定雇员信息
+
+
+## Database tables
 
 个人信息 (增删查补)
 
@@ -97,9 +102,6 @@ columns:
 |\*		|primary key|
 |^		|foreign key|
 
-## User
-
-用户(管理员)
 
 table name: `users`
 
@@ -108,6 +110,15 @@ columns:
 |-----|----|----|----|-----|-----|----|----|
 |1|TripleZ|me@triplez.cn|******|1|15240241051|
 |2|test|test@triplez.cn|******|0|88888888|
+
+## Seeds
+
+填充 `employees` 假数据
+
+```
+composer dump-autoload
+php artisan db:seed
+```
 
 ## Check In
 
