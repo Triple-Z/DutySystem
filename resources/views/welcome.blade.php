@@ -6,6 +6,9 @@
 body {
     padding-top:50px;
 }
+th {
+    text-align:center;
+}
 @endsection
 
 @section('content-in-main')
@@ -31,7 +34,7 @@ body {
         <div class="panel-body">
             <form role="search" class="col-md-5 col-md-offset-2">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search" name="q">
+                    <input type="text" class="form-control" placeholder="搜索姓名" name="q">
                     <div class="input-group-btn">
                         <button class="btn btn-default" type="submit">
                             <i class="glyphicon glyphicon-search"></i>
@@ -45,28 +48,17 @@ body {
 
 <!-- content view -->
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <h2 class="sub-header">Section title</h2>
-    <div class="table-responsive">
+    <h2 class="sub-header">所有记录</h2>
+    <div class="table-responsive col-md-10 col-md-offset-1">
         <table class="table table-striped">
-            <thead>
+            <thead  style="text-align:center;">
                 <tr>
                     <th>姓名</th>
-                    <th>到达</th>
-                    <th>离开</th>
-                    <th>Header</th>
-                    <th>Header</th>
-                    <th>选项</th>
+                    <th>记录时间</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1,001</td>
-                    <td>Lorem</td>
-                    <td>ipsum</td>
-                    <td>dolor</td>
-                    <td>sit</td>
-                    <td><button data-toggle="modal" data-target="#modal-switch" class="btn btn-default">修正记录</button></td>
-                </tr>
+
             </tbody>
         </table>
     </div>
