@@ -9,6 +9,9 @@ body {
 th {
     text-align:center;
 }
+#search-box {
+    padding:5%;
+}
 @endsection
 
 @section('content-in-main')
@@ -30,11 +33,10 @@ th {
 <!-- filter choice -->
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <div class="panel panel-default">
-        <div class="panel-heading">显示选项</div>
-        <div class="panel-body">
-            <form role="search" class="col-md-5 col-md-offset-2">
+        <div class="panel-heading" id="search-box">
+            <form role="search" class="col-md-6 col-md-offset-2">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="搜索姓名" name="q">
+                    <input type="text" class="form-control" placeholder="搜索姓名" name="name">
                     <div class="input-group-btn">
                         <button class="btn btn-default" type="submit">
                             <i class="glyphicon glyphicon-search"></i>
@@ -42,6 +44,9 @@ th {
                     </div>
                 </div>
             </form>
+        </div>
+        <div class="panel-body">
+            233333
         </div>
     </div>
 </div>
