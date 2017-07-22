@@ -24,6 +24,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = Auth::user();
+        if ($user->admin) {
+            // super admin
+            return redirect('superhome');
+        } else {
+            return view('home');
+        }
+    }
+
+    public function superadmin()
+    {
+        return view('superhome');
     }
 }
