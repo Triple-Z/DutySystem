@@ -10,6 +10,9 @@
         <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
         <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
         <style type="text/css">
+            body {
+                padding-top: 70px;
+            }
             .sidebar {
                 position: fixed;
             }
@@ -50,8 +53,15 @@
                             </ul>
                         </li>
                     </ul>
-                    <form class="navbar-form navbar-right">
-                        <input type="text" class="form-control" placeholder="Search...">
+                    <form class="navbar-form navbar-right" role="search">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search" name="q">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="submit">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -60,13 +70,11 @@
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar">
-                        <li><a href=""><span class="sr-only"></span></a></li>
-                        <li class="active"><a data-toggle="tab" href={{url('/')}}>出勤情况总览</a></li>
-                        <li><a data-toggle="tab" href="">绘制出勤曲线</a></li>
-                        <li><a data-toggle="tab" href="">修正考勤记录</a></li>
-                        <li><a data-toggle="tab" href="">节假日编辑</a></li>
-                        <li><a data-toggle="tab" href="">考勤有效时间编辑</a></li>
-                        <li><a data-toggle="tab" href="">导出报表</a></li>
+                        <li class="active"><a data-toggle="tab" href={{url('/')}}>进出记录总览</a></li>
+                        <li><a data-toggle="tab" href="{{url('/graph')}}">绘制出勤曲线</a></li>
+                        <li><a data-toggle="tab" href="{{url('/holiday')}}">节假日编辑</a></li>
+                        <li><a data-toggle="tab" href="{{url('/timeedit')}}">考勤有效时间编辑</a></li>
+                        <li><a data-toggle="tab" href="{{url('/export')}}">导出报表</a></li>
                     </ul>    
                 </div>
                 @yield('content-in-main')

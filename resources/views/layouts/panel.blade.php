@@ -12,6 +12,11 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style type="text/css">
+        body {
+            padding-top: 70px;
+        }
+    </style>
     @yield('style')
 </head>
 <body>
