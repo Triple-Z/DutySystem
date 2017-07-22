@@ -25,14 +25,6 @@
                 <li><a data-toggle="tab" href="#password">修改密码</a></li>
             </ul> 
         </div>
-<!--         <div class="col-md-8">
-            <div class="panel panel-default">
-                <div class="panel-heading">上次登录记录</div>
-                <div class="panel-body">
-                    You are logged in!
-                </div>
-            </div>
-        </div> -->
         <div class="col-md-8 tab-content">
             <div class="tab-pane panel panel-default fade active in" id="last">
                 <div class="panel-heading">上次登录记录</div>
