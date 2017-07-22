@@ -44,11 +44,11 @@ php artisan migrate
 - HomeController
 - SuperHomeController
 
-Auth
-- RegisterController
-- LoginController
-- ForgetPasswordController
-- ResetPasswordController
+- Auth
+	- RegisterController
+	- LoginController
+	- ForgetPasswordController
+	- ResetPasswordController
 
 ## Middleware
 
@@ -59,27 +59,38 @@ Auth
 
 ## API
 
-- GET /: 返回认证状态
-- GET /home: 返回普通管理员登录结果
-- GET /superhome: 返回超级管理员登录结果
+- GET `/`: 返回认证状态
+- GET `/home`: 返回普通管理员登录结果
+- GET `/superhome`: 返回超级管理员登录结果
 
 ## Personal Information
 
 个人信息 (增删查补)
-table name: `person_info`
+
+table name: `employees`
 
 columns:
-> ID* name gender work_title department first_time_work car_number
+|ID*	|name	|gender	|eamil	|phone_number	|work_title	|department	|car_number	|
+|----|----|----|----|----|----|----|----|
+|1|TripleZ|man|me@triplez.cn|15240241051|CEO|Develop Department|null|
+
 
 --------
 
 table names: `person_record_---`(id)
 
 columns:
-> ID* personal_id^ checkin_condition(Y/N)
+|ID*	|person_id^	|check_direction(Y/N)	|check_method	|check_time	|
+|----|----|----|----|---|
+|1|1|1|card|2017-07-21 13:22:13|
+|2|1|0|card|2017-07-21 17:22:13|
+|3|1|1|car|2017-07-22 07:22:13|
+|4|1|0|car|2017-07-22 12:22:13|
 
-* primary key
-^ foreign key
+|symbol	|means		|
+|:---:	|:-----:	|
+|\*		|primary key|
+|^		|foreign key|
 
 ## User
 
@@ -88,7 +99,10 @@ columns:
 table name: `users`
 
 columns:
-> ID* name email password admin(Y/N)
+|ID*	|name	|email	|password	|admin(Y/N)	|phone_number	|created_at|updated_at|
+|-----|----|----|----|-----|-----|----|----|
+|1|TripleZ|me@triplez.cn|******|1|15240241051|
+|2|test|test@triplez.cn|******|0|88888888|
 
 ## Check In
 
