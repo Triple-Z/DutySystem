@@ -22,9 +22,50 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('home', 'HomeController@index');
 
-Route::get('/superhome', 'SuperHomeController@index');
+Route::get('superhome', 'SuperHomeController@index');
+
+Route::get('graph', function(){
+	if(Auth::check()) {
+		echo '<h1> Check passed!</p>';
+		return view('graph');
+	} else {
+		return redirect('login');
+	}
+});
+
+Route::get('correct', function(){
+	if (Auth::check()) {
+		return view('correct');
+	} else {
+		return redirect('login');
+	}
+});
+
+Route::get('export', function(){
+	if (Auth::check()) {
+		return view('export');
+	} else {
+		return redirect('login');
+	}
+});
+
+Route::get('holiday', function(){
+	if (Auth::check()) {
+		return view('holiday');
+	} else {
+		return redirect('login');
+	}
+});
+
+Route::get('timeedit', function(){
+	if (Auth::check()) {
+		return view('timeedit');
+	} else {
+		return redirect('login');
+	}
+});
 
 // Auth::routes();
 

@@ -60,8 +60,13 @@ php artisan migrate
 ## API
 
 - GET `/`: 返回认证状态
-- GET `/home`: 返回普通管理员登录结果
-- GET `/superhome`: 返回超级管理员登录结果
+- GET `/home`: 返回普通管理员登录界面
+- GET `/superhome`: 返回超级管理员登录界面
+- GET `/graph`: 返回图表界面
+- GET `/correct`: 返回？？界面
+- GET `/export`: 返回？？界面
+- GET `/holiday`： 返回？？界面
+- GET `/timeedit`: 返回有效时间编辑界面
 
 ## Personal Information
 
