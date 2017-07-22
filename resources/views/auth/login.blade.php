@@ -1,6 +1,15 @@
-@extends('layouts.app')
+@extends('layouts.panel')
+@section('style')
+<style type="text/css">
+    body {
+        padding-top:100px;
+    }
+</style>
+@endsection
+
 
 @section('content')
+
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
