@@ -51,7 +51,7 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
-            'phone_number' =>'required|string|size:11'
+            'phone_number' =>'required|numeric'
         ]);
     }
 
@@ -72,6 +72,3 @@ class RegisterController extends Controller
     }
 }
 
-//2017年7月23日03:45:13
-//add：'phone_number' =>'required|string|size:11' 
-//     'phone_number' => $data['phone_number']

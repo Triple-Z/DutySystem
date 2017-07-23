@@ -54,7 +54,7 @@
             </div>
             <div class="tab-pane panel panel-default fade" id="password">
                 <div class="panel-body">
-                    <form class="login-form col-md-8 col-md-offset-2" action="" method="post">
+                    <form class="login-form col-md-8 col-md-offset-2" action="admin/resetpassword" method="POST">
                         {{ csrf_field() }}
                         <h3 class="font-green">修改密码</h3>
                         @if($errors->first())
