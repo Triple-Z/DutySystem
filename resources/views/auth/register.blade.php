@@ -22,7 +22,18 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="form-group{{ $errors->has('phone_number') ? ' has-error' : '' }}">
+                            <label for="phone_number" class="col-md-4 control-label">手机号</label>
+                            <div class="col-md-6">
+                                <input id="phone_number" type="phone_number" class="form-control" name="phone_number" required>
 
+                                @if ($errors->has('phone_number'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('phone_number') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">E-Mail地址</label>
                             <div class="col-md-6">
