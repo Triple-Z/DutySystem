@@ -33,7 +33,7 @@ th {
 <!-- filter choice -->
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <div class="panel panel-default">
-        <div class="panel-heading" id="search-box">
+<!--         <div class="panel-heading" id="search-box">
             <form role="search" class="col-md-6 col-md-offset-2">
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="搜索姓名" name="name">
@@ -44,7 +44,7 @@ th {
                     </div>
                 </div>
             </form>
-        </div>
+        </div> -->
         <div class="panel-body">
             233333
         </div>

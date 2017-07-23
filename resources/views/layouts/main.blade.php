@@ -60,7 +60,7 @@
                             </ul>
                         </li>
                     </ul>
-<!--                     <form class="navbar-form navbar-right" role="search">
+                    <form class="navbar-form navbar-right" role="search">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search" name="q">
                             <div class="input-group-btn">
@@ -69,7 +69,7 @@
                                 </button>
                             </div>
                         </div>
-                    </form> -->
+                    </form>
                 </div>
             </div>
         </nav>
