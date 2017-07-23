@@ -7,7 +7,7 @@ Auth::routes();
 Route::get('home', 'HomeController@index');
 Route::get('superhome', 'HomeController@superadmin');
 
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
 	Route::get('actions', 'HomeController@show_action');
 	Route::get('actions/{id}', 'HomeController@show_action_test');
 });
@@ -24,7 +24,7 @@ Route::group(['middleware' => 'auth'], function(){
 // Rotues for modifying admin info
 Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'namespace' => 'Auth'], function(){
 	Route::post('resetpassword', 'ResetPasswordController@resetPassword');
-	Route::post('resetemail', 'ResetInfoController@resetemail');
+	// Route::post('resetemail', 'ResetInfoController@resetemail');
 });
 
 // Route for test SQL Server connection;
