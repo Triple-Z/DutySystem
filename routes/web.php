@@ -10,13 +10,19 @@ Route::get('home', 'HomeController@index');
 
 Route::get('superhome', 'HomeController@superadmin');
 
-// 
+// ALl check in condition
 Route::group(['middleware' => 'auth'], function(){
 	Route::get('graph', 'RouteController@graph');
 	Route::get('correct', 'RouteController@correct');
 	Route::get('export', 'RouteController@export');
 	Route::get('holiday', 'RouteController@holiday');
 	Route::get('timeedit', 'RouteController@timeedit');
+});
+
+// Rotues for modifying admin info
+Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'namespace' => 'Auth'], function(){
+	Route::post('resetpassword', 'ResetPasswordController@resetPassword');
+	Route::post('resetemail', 'ResetInfoController@resetemail');
 });
 
 // Route for test SQL Server connection;
