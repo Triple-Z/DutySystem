@@ -132,8 +132,36 @@ php artisan db:seed
 
 刷新频率
 
+
+##note
+####Error message:
+```
+$ php artisan migrate
+Migration table created successfully.
+
+
+  [Illuminate\Database\QueryException]
+  SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was t
+  oo long; max key length is 1000 bytes (SQL: alter table `users` add unique
+  `users_email_unique`(`email`))
+
+  [PDOException]
+  SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was t
+  oo long; max key length is 1000 bytes
+```
+####Solution
+in file:config\database.php
+
+```
+'charset' => 'utf8mb4',
+'collation' => 'utf8mb4_unicode_ci',
+'engine' => 'InnoDB ROW_FORMAT=DYNAMIC',
+```
+
+
 # Copyright
 
 版权信息
 
 Copyright (c) 2017 [TripleZ](https://triplez.cn) [foxnuaaer](http://403forbidden.website)
+
