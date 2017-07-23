@@ -2,10 +2,10 @@
 
 use Illuminate\Database\Seeder;
 
-use App\LoginRecord;
+use App\ActionRecord;
 use Carbon\Carbon;
 
-class LoginRecordSeeder extends Seeder
+class ActionRecordSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,23 +15,26 @@ class LoginRecordSeeder extends Seeder
     public function run()
     {
         for ($i = 0; $i < 5; $i++) {
-            LoginRecord::create([
+            ActionRecord::create([
                 'user_id' => '1',
-                'login_time' => Carbon::now(),
+                'action' => 'login',
+                'timestamp' => Carbon::now(),
             ]);
         }
 
         for ($i = 0; $i < 5; $i++) {
-            LoginRecord::create([
+            ActionRecord::create([
                 'user_id' => '2',
-                'login_time' => Carbon::now(),
+                'action' => 'logout',
+                'timestamp' => Carbon::now(),
             ]);
         }
         
         for ($i = 0; $i < 5; $i++) {
-            LoginRecord::create([
+            ActionRecord::create([
                 'user_id' => '3',
-                'login_time' => Carbon::now(),
+                'action' => 'login',
+                'timestamp' => Carbon::now(),
             ]);
         }
     }

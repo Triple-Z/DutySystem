@@ -5,8 +5,8 @@ Route::get('/', 'IndexController@index');
 Auth::routes();
 
 Route::get('home', 'HomeController@index');
-
 Route::get('superhome', 'HomeController@superadmin');
+Route::get('action/{id}', 'HomeController@show_action');
 
 // ALl check in condition
 Route::group(['middleware' => 'auth'], function(){

@@ -13,10 +13,11 @@ class CreateLoginRecordsTable extends Migration
      */
     public function up()
     {
-        Schema::create('login_records', function (Blueprint $table) {
+        Schema::create('user_action_records', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->timestamp('login_time');
+            $table->string('action');
+            $table->timestamp('timestamp');
         });
     }
 
@@ -27,6 +28,6 @@ class CreateLoginRecordsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('login_records');
+        Schema::dropIfExists('user_action_records');
     }
 }
