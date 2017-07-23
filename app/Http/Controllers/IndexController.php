@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Employee;
-use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Employee;
+use App\User;
+use App\Record;
 
 class IndexController extends Controller
 {
@@ -17,9 +18,11 @@ class IndexController extends Controller
     public function index() {
         $users = User::all();
         $employees = Employee::all();
+        $records = Record::all();
         return view('welcome', [
             'users' => $users,
             'employees' => $employees,
+            'records' => $records,
         ]);
     }
 }

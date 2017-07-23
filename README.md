@@ -88,13 +88,13 @@ columns:
 
 --------
 
-table names: `person_record_---`(id)
+table names: `records`(id)
 
 columns:
-|ID*	|person_id^	|check_direction(Y/N)	|check_method	|check_time	|
+|ID*	|employee_id^	|check_direction(Y/N)	|check_method	|check_time	|
 |----|----|----|----|---|
-|1|1|1|card|2017-07-21 13:22:13|
-|2|1|0|card|2017-07-21 17:22:13|
+|1|3|1|card|2017-07-21 13:22:13|
+|2|3|0|card|2017-07-21 17:22:13|
 |3|1|1|car|2017-07-22 07:22:13|
 |4|1|0|car|2017-07-22 12:22:13|
 
@@ -116,10 +116,15 @@ columns:
 
 填充 `employees` 假数据
 
-```
+```bash
 composer dump-autoload
 php artisan db:seed
 ```
+
+记得将需要 seed 的数据在 `database/seeds/DatabaseSeeder.php` 中注册。
+
+- EmployeeSeeder
+- RecordSeeder
 
 ## Check In
 
