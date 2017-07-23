@@ -10,4 +10,5 @@ class Record extends Model
     public $timestamps = false;
 
     
+
 }

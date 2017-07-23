@@ -71,7 +71,10 @@ php artisan migrate
 - GET `/holiday`： 返回节假日编辑界面
 - GET `/timeedit`: 返回有效时间编辑界面
 
-- GET `/employee/id`: 返回某个指定雇员信息
+- GET `/employee/{id}`: 返回某个指定雇员信息
+- GET `/employee/{id}/record`: 返回某个指定雇员的签到记录
+
+- POST `/admin/resetpassword` 重置管理员密码
 
 
 ## Database tables
@@ -139,8 +142,8 @@ php artisan db:seed
 刷新频率
 
 
-##note
-####Error message:
+## note
+#### Error message:
 ```
 $ php artisan migrate
 Migration table created successfully.
@@ -155,8 +158,8 @@ Migration table created successfully.
   SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was t
   oo long; max key length is 1000 bytes
 ```
-####Solution
-in file:config\database.php
+#### Solution
+in file: `config\database.php`
 
 ```
 'charset' => 'utf8mb4',
