@@ -38,6 +38,8 @@ php artisan migrate
 
 - User
 - Employee
+- Record (For employees)
+- ActionRecord (For admins)
 
 ## Controller
 
@@ -71,17 +73,23 @@ php artisan migrate
 - GET `/holiday`： 返回节假日编辑界面
 - GET `/timeedit`: 返回有效时间编辑界面
 
-- GET `/employee/{id}`: 返回某个指定雇员信息
-- GET `/employee/{id}/record`: 返回某个指定雇员的签到记录
+- GET `/employees/{id}`: 返回某个指定雇员信息
+- GET `/employees/{id}/record`: 返回某个指定雇员的签到记录
+
+- GET `/admin/actions`: 返回当前管理员操作信息
+- GET `/admin/actions/{id}`: 返回某个指定管理员的操作信息
 
 - POST `/admin/resetpassword` 重置管理员密码
 
 
 ## Database tables
 
-个人信息 (增删查补)
+|symbol	|means		|
+|:---:	|:-----:	|
+|\*		|primary key|
+|^		|foreign key|
 
-table name: `employees`
+### table name: `employees`
 
 columns:
 |ID*	|name	|gender	|eamil	|phone_number	|work_title	|department	|car_number	|
@@ -89,9 +97,7 @@ columns:
 |1|TripleZ|man|me@triplez.cn|15240241051|CEO|Develop Department|null|
 
 
---------
-
-table names: `records`(id)
+### table names: `records`
 
 columns:
 |ID*	|employee_id^	|check_direction(Y/N)	|check_method	|check_time	|
@@ -101,13 +107,9 @@ columns:
 |3|1|1|car|2017-07-22 07:22:13|
 |4|1|0|car|2017-07-22 12:22:13|
 
-|symbol	|means		|
-|:---:	|:-----:	|
-|\*		|primary key|
-|^		|foreign key|
 
 
-table name: `users`
+### table name: `users`
 
 columns:
 |ID*	|name	|email	|password	|admin(Y/N)	|phone_number	|created_at|updated_at|
@@ -115,9 +117,30 @@ columns:
 |1|TripleZ|me@triplez.cn|******|1|15240241051|
 |2|test|test@triplez.cn|******|0|88888888|
 
+
+### table name: `user_action_records`
+
+columns:
+|ID*	|user_id^	|action	|timestamp	|
+|-----|----|----|----|
+|1|1|login|2017-07-23 15:47:35|
+|2|1|logout|2017-07-23 15:47:39|
+
+## Migrations
+
+- 2014_10_12_000000_create_users_table
+- 2014_10_12_100000_create_password_resets_table
+- 2017_07_22_053844_create_employees_table
+- 2017_07_23_074658_create_records_table
+- 2017_07_23_142002_create_login_records_table
+
 ## Seeds
 
-填充 `employees` 假数据
+填充假数据
+
+- EmployeeSeeder
+- RecordSeeder
+- ActionRecordSeeder
 
 ```bash
 composer dump-autoload
@@ -126,8 +149,6 @@ php artisan db:seed
 
 记得将需要 seed 的数据在 `database/seeds/DatabaseSeeder.php` 中注册。
 
-- EmployeeSeeder
-- RecordSeeder
 
 ## Check In
 
