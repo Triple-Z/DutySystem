@@ -27,4 +27,8 @@ class Employee extends Model
         'updated_at',
     ];
 
+    public function records() {
+        return $this->hasMany('App\Record', 'employee_id', 'id');
+    }
+
 }
