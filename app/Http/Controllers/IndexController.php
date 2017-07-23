@@ -16,13 +16,13 @@ class IndexController extends Controller
     }
 
     public function index() {
-        // $users = User::all();
+        $users = User::all();
         $employees = Employee::all();
-        // $records = Record::all();
+        $records = Record::all();
         return view('welcome', [
-            // 'users' => $users,
+            'users' => $users,
             'employees' => $employees,
-            // 'records' => $records,
+            'records' => $records,
         ]);
     }
 }

@@ -54,16 +54,18 @@ th {
 <!-- content view -->
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <h2 class="sub-header">所有记录</h2>
-    <div class="table-responsive col-md-10 col-md-offset-1">
+    <div class="table-responsive">
         <table class="table table-striped">
             <thead  style="text-align:center;">
                 <tr>
                     <th>姓名</th>
                     <th>记录时间</th>
-                    @foreach($employees as $employee)
-                        <th>{{$employee->name}}</th>>
-                    @endforeach
                 </tr>
+                @foreach($employees as $employee)
+                <tr>
+                    <th>{{$employee->name}}</th>
+                </tr>
+                @endforeach
             </thead>
             <tbody>
 
