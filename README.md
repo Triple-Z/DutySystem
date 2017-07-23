@@ -167,7 +167,7 @@ in file: `config\database.php`
 'engine' => 'InnoDB ROW_FORMAT=DYNAMIC',
 ```
 
-## web-view layouts design
+## Web-view Layouts Design
 
 #### general page
 function:display all the records ordered by time stamp
