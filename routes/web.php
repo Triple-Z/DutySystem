@@ -1,8 +1,6 @@
 <?php
 
-Route::get('/', function () {
-	return view('welcome');
-})->middleware('auth');
+Route::get('/', 'IndexController@index');
 
 Auth::routes();
 

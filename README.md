@@ -42,6 +42,7 @@ php artisan migrate
 ## Controller
 
 - Controller
+- IndexController
 - HomeController
 - RouteController
 - EmployeeController
@@ -70,7 +71,7 @@ php artisan migrate
 - GET `/holiday`： 返回节假日编辑界面
 - GET `/timeedit`: 返回有效时间编辑界面
 
-- GET `/employee/id`: 返回某个指定雇员信息 ？？
+- GET `/employee/id`: 返回某个指定雇员信息
 
 
 ## Database tables
