@@ -26,6 +26,7 @@ class LogSuccessfulLogout
      */
     public function handle(Logout $event)
     {
-        //
+        $user = $event->user;
+        $user->logout();
     }
 }

@@ -6,7 +6,11 @@ Auth::routes();
 
 Route::get('home', 'HomeController@index');
 Route::get('superhome', 'HomeController@superadmin');
-Route::get('action/{id}', 'HomeController@show_action');
+
+Route::group(['middleware' => 'auth'], function() {
+	Route::get('actions', 'HomeController@show_action');
+	Route::get('actions/{id}', 'HomeController@show_action_test');
+});
 
 // ALl check in condition
 Route::group(['middleware' => 'auth'], function(){
@@ -31,6 +35,6 @@ Route::get('test', function(){
 
 // Routes for employee information;
 Route::group(['middleware' => 'auth'], function() {
-	Route::get('employee/{id}', 'EmployeeController@show_info');
-	Route::get('employee/{id}/record', 'EmployeeController@show_record');
+	Route::get('employees/{id}', 'EmployeeController@show_info');
+	Route::get('employees/{id}/record', 'EmployeeController@show_record');
 });

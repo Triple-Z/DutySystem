@@ -39,8 +39,13 @@ class HomeController extends Controller
         return view('superhome');
     }
 
-    public function show_action($id) {
-        // $user = Auth::user();
+    public function show_action() {
+        $user = Auth::user();
+        $actions = $user->actions()->get();
+        return response()->json($actions);
+    }
+    
+    public function show_action_test($id) {
         // user for test...
         $user = User::where('id', '=', $id)->first();
         $actions = $user->actions()->get();
