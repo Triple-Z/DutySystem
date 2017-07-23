@@ -167,6 +167,100 @@ in file: `config\database.php`
 'engine' => 'InnoDB ROW_FORMAT=DYNAMIC',
 ```
 
+## web-view layouts design
+
+#### general page
+function:display all the records ordered by time stamp
+demand:
+  1.day/week/month
+  2.export as excel
+  3.correct records
+  4.search by employee name
+view structure:
+   _____________________________
+  |                     export  |
+  |display option | search box  |
+  |-----------------------------|
+  |records                      |
+  |record 1              correct|
+  |record 2              correct|
+  |   .                     .   |
+  |   .                     .   |
+  |_____________________________|
+
+
+#### graph page
+function:build a calendar,and display each employee duty status
+demand:
+  1.a calendar can show as day/week/month.
+  2.mark up the time/date that has record
+view structure:
+   _____________________________
+  |                             |
+  |display option | search box  |
+  |-----------------------------|
+  |calendar option              |
+  |   .                     .   |
+  |   .                     .   |
+  |   .     calendar        .   |
+  |   .                     .   |
+  |_____________________________|
+
+
+#### valid records
+function:display all records by day
+demand:
+  1.display single record(included in and out) of each employee devided by day
+  2.should include arrive&leave time,also,a status indicate valid(invalid) should be shown
+
+view structure:
+   _____________________________
+  |                     export  |
+  |       | search box  |       |
+  |-----------------------------|
+  |records        status        |
+  |record 1          Y   correct|
+  |record 2          Y   correct|
+  |   .                     .   |
+  |      pagination by day      |
+  |_____________________________|
+
+
+#### holiday page(option)
+function:mark up holiday
+demand:
+  1.decide which day has no duty
+  2.mark up the time/date in the calendar view
+view structure:
+   _____________________________
+  |                             |
+  |        ????????????         |
+  |-----------------------------|
+  |calendar option              |
+  |   .                     .   |
+  |   .                     .   |
+  |   .     calendar        .   |
+  |   .                     .   |
+  |_____________________________|
+
+
+#### timeedit page
+function:define legal time
+demand:
+  1.define valid time of records
+view structure:
+   _____________________________
+  |                             |
+  |        ????????????         |
+  |-----------------------------|
+  |                             |
+  |   .                     .   |
+  |   .      post form      .   |
+  |   .                     .   |
+  |   .                     .   |
+  |_____________________________|
+
+
 
 # Copyright
 
