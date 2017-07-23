@@ -5,8 +5,12 @@ Route::get('/', 'IndexController@index');
 Auth::routes();
 
 Route::get('home', 'HomeController@index');
-
 Route::get('superhome', 'HomeController@superadmin');
+
+Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
+	Route::get('actions', 'HomeController@show_action');
+	Route::get('actions/{id}', 'HomeController@show_action_test');
+});
 
 // ALl check in condition
 Route::group(['middleware' => 'auth'], function(){
@@ -20,7 +24,7 @@ Route::group(['middleware' => 'auth'], function(){
 // Rotues for modifying admin info
 Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'namespace' => 'Auth'], function(){
 	Route::post('resetpassword', 'ResetPasswordController@resetPassword');
-	Route::post('resetemail', 'ResetInfoController@resetemail');
+	// Route::post('resetemail', 'ResetInfoController@resetemail');
 });
 
 // Route for test SQL Server connection;
@@ -31,6 +35,6 @@ Route::get('test', function(){
 
 // Routes for employee information;
 Route::group(['middleware' => 'auth'], function() {
-	Route::get('employee/{id}', 'EmployeeController@show_info');
-	Route::get('employee/{id}/record', 'EmployeeController@show_record');
+	Route::get('employees/{id}', 'EmployeeController@show_info');
+	Route::get('employees/{id}/record', 'EmployeeController@show_record');
 });
