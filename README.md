@@ -198,6 +198,7 @@ demand:
   3.correct records
   4.search by employee name
 view structure:
+```
    _____________________________
   |                     export  |
   |display option | search box  |
@@ -208,6 +209,7 @@ view structure:
   |   .                     .   |
   |   .                     .   |
   |_____________________________|
+```
 
 
 #### graph page
@@ -216,6 +218,7 @@ demand:
   1.a calendar can show as day/week/month.
   2.mark up the time/date that has record
 view structure:
+```
    _____________________________
   |                             |
   |display option | search box  |
@@ -226,6 +229,7 @@ view structure:
   |   .     calendar        .   |
   |   .                     .   |
   |_____________________________|
+```
 
 
 #### valid records
@@ -235,6 +239,7 @@ demand:
   2.should include arrive&leave time,also,a status indicate valid(invalid) should be shown
 
 view structure:
+```
    _____________________________
   |                     export  |
   |       | search box  |       |
@@ -245,6 +250,7 @@ view structure:
   |   .                     .   |
   |      pagination by day      |
   |_____________________________|
+```
 
 
 #### holiday page(option)
@@ -253,6 +259,7 @@ demand:
   1.decide which day has no duty
   2.mark up the time/date in the calendar view
 view structure:
+```
    _____________________________
   |                             |
   |        ????????????         |
@@ -263,6 +270,7 @@ view structure:
   |   .     calendar        .   |
   |   .                     .   |
   |_____________________________|
+```
 
 
 #### timeedit page
@@ -270,6 +278,7 @@ function:define legal time
 demand:
   1.define valid time of records
 view structure:
+```
    _____________________________
   |                             |
   |        ????????????         |
@@ -280,6 +289,7 @@ view structure:
   |   .                     .   |
   |   .                     .   |
   |_____________________________|
+```
 
 
 
