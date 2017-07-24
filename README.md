@@ -77,6 +77,8 @@ php artisan migrate
 - Employee
 - Record (For employees)
 - ActionRecord (For admins)
+- CarRecord
+- CardRecord
 
 ###  3.1. <a name='ModelRelationship'></a>Model Relationship
 
@@ -191,14 +193,24 @@ columns:
 - 2017_07_22_053844_create_employees_table
 - 2017_07_23_074658_create_records_table
 - 2017_07_23_142002_create_login_records_table
+- 2017_07_24_130805_create_car_records_table
+- 2017_07_24_132509_create_card_records_table
+
+```bash
+php artisan migrate:reset
+php artisan migrate
+```
 
 ##  9. <a name='Seeds'></a>Seeds
 
 填充假数据
 
+- UsersTableSeeder
 - EmployeeSeeder
 - RecordSeeder
 - ActionRecordSeeder
+- CarRecordSeeder
+- CardRecordSeeder
 
 ```bash
 composer dump-autoload
