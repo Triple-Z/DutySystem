@@ -60,16 +60,17 @@
                             </ul>
                         </li>
                     </ul>
-<!--                     <form class="navbar-form navbar-right" role="search">
+                    <form class="navbar-form navbar-right" role="search">
+                        {{csrf_field()}}
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search" name="q">
+                            <input type="text" class="form-control" placeholder="按名字搜索" name="employee_name">
                             <div class="input-group-btn">
                                 <button class="btn btn-default" type="submit">
                                     <i class="glyphicon glyphicon-search"></i>
                                 </button>
                             </div>
                         </div>
-                    </form> -->
+                    </form>
                 </div>
             </div>
         </nav>
