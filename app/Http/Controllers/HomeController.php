@@ -41,14 +41,14 @@ class HomeController extends Controller
 
     public function show_action() {
         $user = Auth::user();
-        $actions = $user->actions()->get();
+        $actions = $user->actions()->latest('timestamp')->get();
         return response()->json($actions);
     }
     
     public function show_action_test($id) {
         // user for test...
         $user = User::where('id', '=', $id)->first();
-        $actions = $user->actions()->get();
+        $actions = $user->actions()->latest('timestamp')->get();
         return response()->json($actions);
     }
 }
