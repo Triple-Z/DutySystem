@@ -20,6 +20,7 @@ class EmployeeSeeder extends Seeder
                 'work_title' => 'worker',
                 'department' => 'Production',
                 'car_number' => '苏A2344' . $i,
+                'card_uid' => '12345'. $i,
             ]);
         }
     }

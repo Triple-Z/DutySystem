@@ -22,6 +22,7 @@ class CreateEmployeesTable extends Migration
             $table->string('work_title');
             $table->string('department');
             $table->string('car_number')->nullable();
+            $table->string('card_uid');
             $table->timestamps();
         });
     }

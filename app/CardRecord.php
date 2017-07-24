@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CarRecord extends Model
+class CardRecord extends Model
 {
-    public $timestamps = false;
+    public $timestamp = false;
 
-    protected $table = 'car_records';
+    protected $table = 'card_records';
 
     protected $fillable = [
-        'car_number',
+        'card_uid',
         'direction',
         'timestamp',
     ];
@@ -21,6 +21,6 @@ class CarRecord extends Model
     ];
 
     public function employee() {
-        return $this->hasMany('App\Employee', 'car_number', 'car_number');
+        return $this->hasOne('App\Employee', 'card_uid', 'card_uid');
     }
 }
