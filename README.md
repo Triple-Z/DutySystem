@@ -3,6 +3,41 @@
 A duty system for Drone Institution of NUAA.
 
 
+<!-- vscode-markdown-toc -->
+* 1. [Initialize](#Initialize)
+* 2. [MySQL authentication](#MySQLauthentication)
+* 3. [Model](#Model)
+	* 3.1. [Model Relationship](#ModelRelationship)
+* 4. [Controller](#Controller)
+* 5. [Middleware](#Middleware)
+* 6. [API](#API)
+* 7. [Database tables](#Databasetables)
+	* 7.1. [table name: `employees`](#tablename:employees)
+	* 7.2. [table names: `records`](#tablenames:records)
+	* 7.3. [table name: `users`](#tablename:users)
+	* 7.4. [table name: `user_action_records`](#tablename:user_action_records)
+* 8. [Migrations](#Migrations)
+* 9. [Seeds](#Seeds)
+* 10. [Check In](#CheckIn)
+* 11. [Check Out](#CheckOut)
+* 12. [Refresh Frequency](#RefreshFrequency)
+* 13. [note](#note)
+	* 13.1. [Error message:](#Errormessage:)
+	* 13.2. [Solution](#Solution)
+* 14. [Web-view Layouts Design](#Web-viewLayoutsDesign)
+	* 14.1. [general page](#generalpage)
+	* 14.2. [graph page](#graphpage)
+	* 14.3. [valid records](#validrecords)
+	* 14.4. [holiday page(option)](#holidaypageoption)
+	* 14.5. [timeedit page](#timeeditpage)
+
+<!-- vscode-markdown-toc-config
+	numbering=true
+	autoSave=true
+	/vscode-markdown-toc-config -->
+<!-- /vscode-markdown-toc -->
+
+
 # Runtime Enviornment
 
 运行环境
@@ -14,7 +49,7 @@ A duty system for Drone Institution of NUAA.
 |MySQL			|5.7.17		|
 |Nginx			|1.11.9		|
 
-## Initialize
+##  1. <a name='Initialize'></a>Initialize
 
 系统初始化
 
@@ -24,7 +59,7 @@ php artisan make:auth
 php artisan migrate
 ```
 
-## MySQL authentication
+##  2. <a name='MySQLauthentication'></a>MySQL authentication
 
 > account: `homestead`
 > 
@@ -34,14 +69,31 @@ php artisan migrate
 
 业务逻辑
 
-## Model
+##  3. <a name='Model'></a>Model
+
+模型
 
 - User
 - Employee
 - Record (For employees)
 - ActionRecord (For admins)
 
-## Controller
+###  3.1. <a name='ModelRelationship'></a>Model Relationship
+
+模型间关系
+
+```php
+$user->actions(); // 返回某个指定管理员操作记录
+$actions->user(); // 返回某条指定记录的管理员信息
+
+$employee->records(); // 返回某个指定雇员的签到记录
+$record->employee(); // 返回某条指定签到记录的雇员信息
+```
+
+
+##  4. <a name='Controller'></a>Controller
+
+控制器
 
 - Controller
 - IndexController
@@ -55,14 +107,18 @@ php artisan migrate
 	- ForgetPasswordController
 	- ResetPasswordController
 
-## Middleware
+##  5. <a name='Middleware'></a>Middleware
+
+中间件
 
 - EncryptCookies
 - RedirectIfAuthenticated
 - TrimStrings
 - VerifyCsrfToken
 
-## API
+##  6. <a name='API'></a>API
+
+应用程序接口
 
 - GET `/`: 返回认证状态
 - GET `/home`: 返回普通管理员登录界面
@@ -82,14 +138,16 @@ php artisan migrate
 - POST `/admin/resetpassword` 重置管理员密码
 
 
-## Database tables
+##  7. <a name='Databasetables'></a>Database tables
+
+数据表
 
 |symbol	|means		|
 |:---:	|:-----:	|
 |\*		|primary key|
 |^		|foreign key|
 
-### table name: `employees`
+###  7.1. <a name='tablename:employees'></a>table name: `employees`
 
 columns:
 |ID*	|name	|gender	|eamil	|phone_number	|work_title	|department	|car_number	|
@@ -97,7 +155,7 @@ columns:
 |1|TripleZ|man|me@triplez.cn|15240241051|CEO|Develop Department|null|
 
 
-### table names: `records`
+###  7.2. <a name='tablenames:records'></a>table names: `records`
 
 columns:
 |ID*	|employee_id^	|check_direction(Y/N)	|check_method	|check_time	|
@@ -109,7 +167,7 @@ columns:
 
 
 
-### table name: `users`
+###  7.3. <a name='tablename:users'></a>table name: `users`
 
 columns:
 |ID*	|name	|email	|password	|admin(Y/N)	|phone_number	|created_at|updated_at|
@@ -118,7 +176,7 @@ columns:
 |2|test|test@triplez.cn|******|0|88888888|
 
 
-### table name: `user_action_records`
+###  7.4. <a name='tablename:user_action_records'></a>table name: `user_action_records`
 
 columns:
 |ID*	|user_id^	|action	|timestamp	|
@@ -126,7 +184,7 @@ columns:
 |1|1|login|2017-07-23 15:47:35|
 |2|1|logout|2017-07-23 15:47:39|
 
-## Migrations
+##  8. <a name='Migrations'></a>Migrations
 
 - 2014_10_12_000000_create_users_table
 - 2014_10_12_100000_create_password_resets_table
@@ -134,7 +192,7 @@ columns:
 - 2017_07_23_074658_create_records_table
 - 2017_07_23_142002_create_login_records_table
 
-## Seeds
+##  9. <a name='Seeds'></a>Seeds
 
 填充假数据
 
@@ -150,21 +208,21 @@ php artisan db:seed
 记得将需要 seed 的数据在 `database/seeds/DatabaseSeeder.php` 中注册。
 
 
-## Check In
+##  10. <a name='CheckIn'></a>Check In
 
 签到
 
-## Check Out
+##  11. <a name='CheckOut'></a>Check Out
 
 签出
 
-## Refresh Frequency
+##  12. <a name='RefreshFrequency'></a>Refresh Frequency
 
 刷新频率
 
 
-## note
-#### Error message:
+##  13. <a name='note'></a>note
+###  13.1. <a name='Errormessage:'></a>Error message:
 ```
 $ php artisan migrate
 Migration table created successfully.
@@ -179,7 +237,7 @@ Migration table created successfully.
   SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was t
   oo long; max key length is 1000 bytes
 ```
-#### Solution
+###  13.2. <a name='Solution'></a>Solution
 in file: `config\database.php`
 
 ```
@@ -188,13 +246,14 @@ in file: `config\database.php`
 'engine' => 'InnoDB ROW_FORMAT=DYNAMIC',
 ```
 
-## Web-view Layouts Design
+##  14. <a name='Web-viewLayoutsDesign'></a>Web-view Layouts Design
 
-#### general page
+###  14.1. <a name='generalpage'></a>general page
 
 function:display all the records ordered by time stamp
 
 demand:
+
 1. day/week/month
 2. export as excel
 3. correct records
@@ -215,7 +274,7 @@ view structure:
 ```
 
 
-#### graph page
+###  14.2. <a name='graphpage'></a>graph page
 
 function: build a calendar, and display each employee duty status.
 
@@ -239,7 +298,7 @@ view structure:
 ```
 
 
-#### valid records
+###  14.3. <a name='validrecords'></a>valid records
 
 function: display all records by day.
 
@@ -263,7 +322,7 @@ view structure:
 ```
 
 
-#### holiday page(option)
+###  14.4. <a name='holidaypageoption'></a>holiday page(option)
 
 function: mark up holiday.
 
@@ -287,7 +346,7 @@ view structure:
 ```
 
 
-#### timeedit page
+###  14.5. <a name='timeeditpage'></a>timeedit page
 
 function:define legal time
 

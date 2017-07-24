@@ -9,6 +9,7 @@ Route::get('superhome', 'HomeController@superadmin');
 
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
 	Route::get('actions', 'HomeController@show_action');
+	Route::get('actions_all', 'ActionRecordController@show_all_action_records');
 	Route::get('actions/{id}', 'HomeController@show_action_test');
 });
 
@@ -33,8 +34,9 @@ Route::get('test', function(){
 	return view('test', ['employees' => $employees]);
 });
 
-// Routes for employee information;
+// Routes for employee & record information;
 Route::group(['middleware' => 'auth'], function() {
 	Route::get('employees/{id}', 'EmployeeController@show_info');
 	Route::get('employees/{id}/records', 'EmployeeController@show_record');
+	Route::get('records', 'RecordController@show_records');
 });
