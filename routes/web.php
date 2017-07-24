@@ -17,7 +17,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
 Route::group(['middleware' => 'auth'], function(){
 	Route::get('graph', 'RouteController@graph');
 	Route::get('correct', 'RouteController@correct');
-	Route::get('export', 'RouteController@export');
+	Route::get('valid', 'RouteController@valid');
 	Route::get('holiday', 'RouteController@holiday');
 	Route::get('timeedit', 'RouteController@timeedit');
 });

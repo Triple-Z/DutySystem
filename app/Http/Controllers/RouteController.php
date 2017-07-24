@@ -9,6 +9,9 @@ class RouteController extends Controller
     public function __construct() {
         $this->middleware('auth');
     }
+    public function valid() {
+        return view('valid');
+    }
 
     public function graph() {
         return view('graph');
