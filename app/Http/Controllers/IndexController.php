@@ -16,12 +16,15 @@ class IndexController extends Controller
     }
 
     public function index() {
-        $users = User::all();
-        $employees = Employee::all();
-        $records = Record::all();
+        // $users = User::all();
+        // $employees = Employee::all();
+        // $records = Record::all();
+        $records = Record::latest('check_time')->paginate(15);
+        $records->withPath('reords');
+
         return view('welcome', [
-            'users' => $users,
-            'employees' => $employees,
+            // 'users' => $users,
+            // 'employees' => $employees,
             'records' => $records,
         ]);
     }

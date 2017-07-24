@@ -12,7 +12,11 @@ class RecordController extends Controller
     }
 
     public function show_records() {
-        $records = Record::latest('check_time')->get();
-        return response()->json($records);;
+        // $records = Record::latest('check_time')->paginate(15);
+        // $records->withPath('records');// custom page url -> `records?page=x`
+        // return response()->json($records);
+        $record = Record::find(1)->first();
+        $employee = $record->employee;
+        return $employee->name;
     }
 }
