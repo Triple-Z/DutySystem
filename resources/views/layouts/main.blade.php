@@ -83,7 +83,6 @@
                         <li id="graph"><a href="{{url('/graph')}}">绘制出勤曲线</a></li>
                         <li id="holiday"><a href="{{url('/holiday')}}">节假日编辑</a></li>
                         <li id="timeedit"><a href="{{url('/timeedit')}}">考勤有效时间编辑</a></li>
-                        <li id="export"><a href="{{url('/export')}}">导出报表</a></li>
                     </ul>    
                 </div>
                 @yield('content-in-main')

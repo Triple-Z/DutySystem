@@ -89,11 +89,15 @@ th {
                 <tr>
                     <th>姓名</th>
                     <th>记录时间</th>
+                    <th>操作</th>
                 </tr>
                 @foreach($records as $record)
                 <tr>
                     <th>{{ $record->employee->name }}</th> 
                     <th>{{ $record->check_time }}</th>
+                    <th>
+                        <button data-toggle="modal" data-target="#modal-switch" class="btn btn-primary btn-sm">修改记录</button>
+                    </th>
                 </tr>
                 @endforeach
             </thead>

@@ -24,12 +24,15 @@ A duty system for Drone Institution of NUAA.
 * 13. [note](#note)
 	* 13.1. [Error message:](#Errormessage:)
 	* 13.2. [Solution](#Solution)
-* 14. [Web-view Layouts Design](#Web-viewLayoutsDesign)
-	* 14.1. [general page](#generalpage)
-	* 14.2. [graph page](#graphpage)
-	* 14.3. [valid records](#validrecords)
-	* 14.4. [holiday page(option)](#holidaypageoption)
-	* 14.5. [timeedit page](#timeeditpage)
+* 14. [Source Code rewrite](#SourceCodeRewrite)
+  * 14.1 [bootstrap modal position](#modalposition)
+  * 14.2 [position method](#positionmethon)
+* 15. [Web-view Layouts Design](#Web-viewLayoutsDesign)
+  * 15.1. [general page](#generalpage)
+  * 15.2. [graph page](#graphpage)
+  * 15.3. [valid records](#validrecords)
+  * 15.4. [holiday page(option)](#holidaypageoption)
+  * 15.5. [timeedit page](#timeeditpage)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -246,9 +249,46 @@ in file: `config\database.php`
 'engine' => 'InnoDB ROW_FORMAT=DYNAMIC',
 ```
 
-##  14. <a name='Web-viewLayoutsDesign'></a>Web-view Layouts Design
+##  14. <a name='SourceCodeRewrite'></a>Source Code rewrite
 
-###  14.1. <a name='generalpage'></a>general page
+###  14.1. <a name='modalposition'></a>modal position
+
+demand:
+
+make the modal box be in the center of the screen
+
+###  14.2. <a name='positionmethod'></a>positionmethod
+
+find the function 'Modal.prototype.adjustDialog' bootstrap.js(in this project is included in public/js/app.js),then replace them as the follow code:
+
+```
+Modal.prototype.adjustDialog = function () {  
+    var modalIsOverflowing = this.$element[0].scrollHeight > document.documentElement.clientHeight  
+  
+    this.$element.css({  
+      paddingLeft:  !this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '',  
+      paddingRight: this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''  
+    });  
+  
+
+    var $modal_dialog = $(this.$element[0]).find('.modal-dialog');  
+    //get the view heigh
+    var clientHeight = (document.body.clientHeight < document.documentElement.clientHeight) ? document.body.clientHeight: document.documentElement.clientHeight;  
+    //get dialog heigh 
+    var dialogHeight = $modal_dialog.height();  
+    //compute the distance to the top 
+    var m_top = (clientHeight - dialogHeight)/2;  
+    // console.log("clientHeight : " + clientHeight);  
+    // console.log("dialogHeight : " + dialogHeight);  
+    // console.log("m_top : " + m_top);  
+    $modal_dialog.css({'margin': m_top + 'px auto'});  
+}  
+```
+
+
+##  15. <a name='Web-viewLayoutsDesign'></a>Web-view Layouts Design
+
+###  15.1. <a name='generalpage'></a>general page
 
 function:display all the records ordered by time stamp
 
@@ -274,7 +314,7 @@ view structure:
 ```
 
 
-###  14.2. <a name='graphpage'></a>graph page
+###  15.2. <a name='graphpage'></a>graph page
 
 function: build a calendar, and display each employee duty status.
 
@@ -298,7 +338,7 @@ view structure:
 ```
 
 
-###  14.3. <a name='validrecords'></a>valid records
+###  15.3. <a name='validrecords'></a>valid records
 
 function: display all records by day.
 
@@ -322,7 +362,7 @@ view structure:
 ```
 
 
-###  14.4. <a name='holidaypageoption'></a>holiday page(option)
+###  15.4. <a name='holidaypageoption'></a>holiday page(option)
 
 function: mark up holiday.
 
@@ -346,7 +386,7 @@ view structure:
 ```
 
 
-###  14.5. <a name='timeeditpage'></a>timeedit page
+###  15.5. <a name='timeeditpage'></a>timeedit page
 
 function:define legal time
 

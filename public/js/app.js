@@ -29403,14 +29403,27 @@ if (typeof jQuery === 'undefined') {
     this.adjustDialog()
   }
 
-  Modal.prototype.adjustDialog = function () {
-    var modalIsOverflowing = this.$element[0].scrollHeight > document.documentElement.clientHeight
-
-    this.$element.css({
-      paddingLeft:  !this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '',
-      paddingRight: this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''
-    })
-  }
+Modal.prototype.adjustDialog = function () {  
+    var modalIsOverflowing = this.$element[0].scrollHeight > document.documentElement.clientHeight  
+  
+    this.$element.css({  
+      paddingLeft:  !this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '',  
+      paddingRight: this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''  
+    });  
+  
+    // 是弹出框居中。。。  
+    var $modal_dialog = $(this.$element[0]).find('.modal-dialog');  
+    //获取可视窗口的高度  
+    var clientHeight = (document.body.clientHeight < document.documentElement.clientHeight) ? document.body.clientHeight: document.documentElement.clientHeight;  
+    //得到dialog的高度  
+    var dialogHeight = $modal_dialog.height();  
+    //计算出距离顶部的高度  
+    var m_top = (clientHeight - dialogHeight)/2;  
+    // console.log("clientHeight : " + clientHeight);  
+    // console.log("dialogHeight : " + dialogHeight);  
+    // console.log("m_top : " + m_top);  
+    $modal_dialog.css({'margin': m_top + 'px auto'});  
+}  
 
   Modal.prototype.resetAdjustments = function () {
     this.$element.css({
