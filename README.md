@@ -255,7 +255,7 @@ in file: `config\database.php`
 
 demand:
 
-make the modal box be in the center of the screen
+make the modal box be at a right position
 
 ###  14.2. <a name='positionmethod'></a>positionmethod
 
@@ -277,7 +277,7 @@ Modal.prototype.adjustDialog = function () {
     //get dialog heigh 
     var dialogHeight = $modal_dialog.height();  
     //compute the distance to the top 
-    var m_top = (clientHeight - dialogHeight)/2;  
+    var m_top = (clientHeight - dialogHeight)/3;  
     // console.log("clientHeight : " + clientHeight);  
     // console.log("dialogHeight : " + dialogHeight);  
     // console.log("m_top : " + m_top);  

@@ -21,6 +21,7 @@
             }
             @yield('style')
         </style>
+        @yield('script')
 <!--         <script type="text/javascript">
             $(document).ready(function(){  
                 url = document.domain;
