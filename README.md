@@ -74,7 +74,7 @@ php artisan migrate
 - GET `/timeedit`: 返回有效时间编辑界面
 
 - GET `/employees/{id}`: 返回某个指定雇员信息
-- GET `/employees/{id}/record`: 返回某个指定雇员的签到记录
+- GET `/employees/{id}/records`: 返回某个指定雇员的签到记录
 
 - GET `/admin/actions`: 返回当前管理员操作信息
 - GET `/admin/actions/{id}`: 返回某个指定管理员的操作信息
@@ -191,12 +191,15 @@ in file: `config\database.php`
 ## Web-view Layouts Design
 
 #### general page
+
 function:display all the records ordered by time stamp
+
 demand:
-  1.day/week/month
-  2.export as excel
-  3.correct records
-  4.search by employee name
+1. day/week/month
+2. export as excel
+3. correct records
+4. search by employee name
+
 view structure:
 ```
    _____________________________
@@ -213,10 +216,14 @@ view structure:
 
 
 #### graph page
-function:build a calendar,and display each employee duty status
+
+function: build a calendar, and display each employee duty status.
+
 demand:
-  1.a calendar can show as day/week/month.
-  2.mark up the time/date that has record
+
+1. a calendar can show as day/week/month.
+2. mark up the time/date that has record
+
 view structure:
 ```
    _____________________________
@@ -233,10 +240,13 @@ view structure:
 
 
 #### valid records
-function:display all records by day
+
+function: display all records by day.
+
 demand:
-  1.display single record(included in and out) of each employee devided by day
-  2.should include arrive&leave time,also,a status indicate valid(invalid) should be shown
+
+1. display single record(included in and out) of each employee devided by day
+2. should include arrive&leave time,also,a status indicate valid(invalid) should be shown
 
 view structure:
 ```
@@ -254,10 +264,14 @@ view structure:
 
 
 #### holiday page(option)
-function:mark up holiday
+
+function: mark up holiday.
+
 demand:
-  1.decide which day has no duty
-  2.mark up the time/date in the calendar view
+
+1. decide which day has no duty
+2. mark up the time/date in the calendar view
+
 view structure:
 ```
    _____________________________
@@ -274,9 +288,13 @@ view structure:
 
 
 #### timeedit page
+
 function:define legal time
+
 demand:
-  1.define valid time of records
+
+1. define valid time of records
+
 view structure:
 ```
    _____________________________

@@ -36,5 +36,5 @@ Route::get('test', function(){
 // Routes for employee information;
 Route::group(['middleware' => 'auth'], function() {
 	Route::get('employees/{id}', 'EmployeeController@show_info');
-	Route::get('employees/{id}/record', 'EmployeeController@show_record');
+	Route::get('employees/{id}/records', 'EmployeeController@show_record');
 });
