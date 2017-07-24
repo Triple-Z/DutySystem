@@ -20,6 +20,7 @@ class Employee extends Model
         'work_title', 
         'department', 
         'car_number',
+        'card_uid',
     ];
 
     protected $fillable = [

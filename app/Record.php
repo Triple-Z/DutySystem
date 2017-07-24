@@ -14,6 +14,7 @@ class Record extends Model
         'check_direction',
         'check_method',
         'check_time',
+        'note',
     ];
 
     protected $guarded = [
