@@ -90,9 +90,10 @@ th {
                     <th>姓名</th>
                     <th>记录时间</th>
                 </tr>
-                @foreach($employees as $employee)
+                @foreach($records as $record)
                 <tr>
-                    <th>{{$employee->name}}</th>
+                    <th>{{ $record->employee->name }}</th> 
+                    <th>{{ $record->check_time }}</th>
                 </tr>
                 @endforeach
             </thead>
