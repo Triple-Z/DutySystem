@@ -1,226 +1,106 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.main')
+@section('style') 
+#period {
+    border-color: #ccc;
+}
+body {
+    padding-top:50px;
+}
+th {
+    text-align:center;
+}
+#search-box {
+    padding:5%;
+}
+@endsection
 
-        <title>无人机院考勤系统</title>
-
-        <!-- Fonts -->
-        <!-- <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css"> -->
-        
-        <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
-        <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
-
-        <style type="text/css">
-            .sidebar {
-                position: fixed;
-            }
-            .navbar-header {
-                padding-left: 42%;
-            }
-        </style>
-    </head>
-    <body>
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="">无人机院考勤系统</a>
-                </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href={{ url('/home') }}>管理面板</a></li>
-                    </ul>
-                    <form class="navbar-form navbar-right">
-                        <input type="text" class="form-control" placeholder="Search..."></form>
-                </div>
+@section('content-in-main')
+<!-- modal model -->
+<div id="modal-switch" tabindex="-1" role="dialog" aria-labelledby="modal-switch-label" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span></button>
+                <div id="modal-switch-label" class="modal-title">Title</div>
             </div>
-        </nav>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-3 col-md-2 sidebar">
-                    <ul class="nav nav-sidebar">
-                        <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-                        <li><a href="#">Reports</a></li>
-                        <li><a href="#">Analytics</a></li>
-                        <li><a href="#">Export</a></li>
-                    </ul>
-                    <ul class="nav nav-sidebar">
-                        <li><a href="">Nav item</a></li>
-                        <li><a href="">Nav item again</a></li>
-                        <li><a href="">One more nav</a></li>
-                        <li><a href="">Another nav item</a></li>
-                        <li><a href="">More navigation</a></li>
-                    </ul>
-                    <ul class="nav nav-sidebar">
-                        <li><a href="">Nav item again</a></li>
-                        <li><a href="">One more nav</a></li>
-                        <li><a href="">Another nav item</a></li>
-                    </ul>
-                </div>
-                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                    <h1 class="page-header">Dashboard</h1>
-        
-                    <div class="row placeholders">
-                        <div class="col-xs-6 col-sm-3 placeholder">
-                          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="          img-responsive" alt="Generic placeholder thumbnail">
-                          <h4>Label</h4>
-                          <span class="text-muted">Something else</span>
-                        </div>
-                        <div class="col-xs-6 col-sm-3 placeholder">
-                          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="          img-responsive" alt="Generic placeholder thumbnail">
-                          <h4>Label</h4>
-                          <span class="text-muted">Something else</span>
-                        </div>
-                        <div class="col-xs-6 col-sm-3 placeholder">
-                          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="          img-responsive" alt="Generic placeholder thumbnail">
-                          <h4>Label</h4>
-                          <span class="text-muted">Something else</span>
-                        </div>
-                        <div class="col-xs-6 col-sm-3 placeholder">
-                          <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="          img-responsive" alt="Generic placeholder thumbnail">
-                          <h4>Label</h4>
-                          <span class="text-muted">Something else</span>
-                        </div>
-                    </div>
-                
-                    <h2 class="sub-header">Section title</h2>
-                    <div class="table-responsive">
-                        <table class="table table-striped">
-                            <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Header</th>
-                            <th>Header</th>
-                            <th>Header</th>
-                            <th>Header</th>
-                        </tr>
-                            </thead>
-                            <tbody>
-                        <tr>
-                            <td>1,001</td>
-                            <td>Lorem</td>
-                            <td>ipsum</td>
-                            <td>dolor</td>
-                            <td>sit</td>
-                        </tr>
-                        <tr>
-                            <td>1,002</td>
-                            <td>amet</td>
-                            <td>consectetur</td>
-                            <td>adipiscing</td>
-                            <td>elit</td>
-                        </tr>
-                        <tr>
-                            <td>1,003</td>
-                            <td>Integer</td>
-                            <td>nec</td>
-                            <td>odio</td>
-                            <td>Praesent</td>
-                        </tr>
-                        <tr>
-                            <td>1,003</td>
-                            <td>libero</td>
-                            <td>Sed</td>
-                            <td>cursus</td>
-                            <td>ante</td>
-                        </tr>
-                        <tr>
-                            <td>1,004</td>
-                            <td>dapibus</td>
-                            <td>diam</td>
-                            <td>Sed</td>
-                            <td>nisi</td>
-                        </tr>
-                        <tr>
-                            <td>1,005</td>
-                            <td>Nulla</td>
-                            <td>quis</td>
-                            <td>sem</td>
-                            <td>at</td>
-                        </tr>
-                        <tr>
-                            <td>1,006</td>
-                            <td>nibh</td>
-                            <td>elementum</td>
-                            <td>imperdiet</td>
-                            <td>Duis</td>
-                        </tr>
-                        <tr>
-                            <td>1,007</td>
-                            <td>sagittis</td>
-                            <td>ipsum</td>
-                            <td>Praesent</td>
-                            <td>mauris</td>
-                        </tr>
-                        <tr>
-                            <td>1,008</td>
-                            <td>Fusce</td>
-                            <td>nec</td>
-                            <td>tellus</td>
-                            <td>sed</td>
-                        </tr>
-                        <tr>
-                            <td>1,009</td>
-                            <td>augue</td>
-                            <td>semper</td>
-                            <td>porta</td>
-                            <td>Mauris</td>
-                        </tr>
-                        <tr>
-                            <td>1,010</td>
-                            <td>massa</td>
-                            <td>Vestibulum</td>
-                            <td>lacinia</td>
-                            <td>arcu</td>
-                        </tr>
-                        <tr>
-                            <td>1,011</td>
-                            <td>eget</td>
-                            <td>nulla</td>
-                            <td>Class</td>
-                            <td>aptent</td>
-                        </tr>
-                        <tr>
-                            <td>1,012</td>
-                            <td>taciti</td>
-                            <td>sociosqu</td>
-                            <td>ad</td>
-                            <td>litora</td>
-                        </tr>
-                        <tr>
-                            <td>1,013</td>
-                            <td>torquent</td>
-                            <td>per</td>
-                            <td>conubia</td>
-                            <td>nostra</td>
-                        </tr>
-                        <tr>
-                            <td>1,014</td>
-                            <td>per</td>
-                            <td>inceptos</td>
-                            <td>himenaeos</td>
-                            <td>Curabitur</td>
-                        </tr>
-                        <tr>
-                            <td>1,015</td>
-                            <td>sodales</td>
-                            <td>ligula</td>
-                            <td>in</td>
-                            <td>libero</td>
-                        </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+            <div class="modal-body">
+                <input id="switch-modal" type="checkbox" checked="checked">
             </div>
         </div>
-    </body>
-</html>
+    </div>
+</div>
+
+<!-- filter choice -->
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <div style="margin-top: 20px;">
+            <div class="col-md-3 col-md-offset-1" style="display: inline-block;">
+                <form class="pull-left">
+                    {{csrf_field()}}
+                    <select id="period" class="selectpicker btn" data-live-search-style="begins">
+                        <optgroup label="选择显示周期">
+                            <option>今天</option>
+                            <option>最近一周</option>
+                            <option>最近一个月</option>
+                            <option>最近半年</option>
+                            <option>最近一年</option>
+                            <option>所有记录</option>
+                        </optgroup>
+                    </select>
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        确定
+                    </button>
+                </form>
+            </div>
+            <div class="col-md-5">
+                <form class="" role="search">
+                    {{csrf_field()}}
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="按名字搜索" name="employee_name">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- content view -->
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <div>
+        <div class="col-sm-2 col-md-2" style="font-size: 200%;float: left;">
+            所有记录
+        </div>
+        <div class="col-sm-2 col-md-2" style="float: right;">
+            <button type="button" class="btn btn-primary">
+                导出为excel
+            </button>
+        </div>
+    </div>
+
+    <div class="table-responsive col-md-11">
+        <table class="table table-striped">
+            <thead  style="text-align:center;">
+                <tr>
+                    <th>姓名</th>
+                    <th>记录时间</th>
+                </tr>
+                @foreach($records as $record)
+                <tr>
+                    <th>{{ $record->employee->name }}</th> 
+                    <th>{{ $record->check_time }}</th>
+                </tr>
+                @endforeach
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+@endsection

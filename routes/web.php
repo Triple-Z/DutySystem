@@ -1,34 +1,43 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::get('/', 'IndexController@index');
 
-Route::get('/', function () {
-    	if (Auth::check()) {
-    		return view('welcome');
-    	}
-    	else {
-    		return redirect()->route('login');
-    	}
+Auth::routes();
+
+Route::get('home', 'HomeController@index');
+Route::get('superhome', 'HomeController@superadmin');
+
+Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
+	Route::get('actions', 'HomeController@show_action');
+	Route::get('actions_all', 'ActionRecordController@show_all_action_records');
+	Route::get('actions/{id}', 'HomeController@show_action_test');
 });
 
-Auth::routes();
+// ALl check in condition
+Route::group(['middleware' => 'auth'], function(){
+	Route::get('graph', 'RouteController@graph');
+	Route::get('correct', 'RouteController@correct');
+	Route::get('valid', 'RouteController@valid');
+	Route::get('holiday', 'RouteController@holiday');
+	Route::get('timeedit', 'RouteController@timeedit');
+});
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Rotues for modifying admin info
+Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'namespace' => 'Auth'], function(){
+	Route::post('resetpassword', 'ResetPasswordController@resetPassword');
+	// Route::post('resetemail', 'ResetInfoController@resetemail');
+});
 
-Auth::routes();
+// Route for test SQL Server connection;
+Route::get('test', function(){
+	$employees = DB::connection('sqlsrv')->select('select * from employees');
+	return view('test', ['employees' => $employees]);
+});
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-/*Route::get('api/user',function(){
-	return view('welcome');
-})->middleware('auth.basic.once');
-*/
+// Routes for employee & record information;
+Route::group(['middleware' => 'auth'], function() {
+	Route::get('employees', 'EmployeeController@show_all');
+	Route::get('employees/{id}', 'EmployeeController@show_info');
+	Route::get('employees/{id}/records', 'EmployeeController@show_records');
+	// Route::get('records', 'RecordController@show_records');
+});
