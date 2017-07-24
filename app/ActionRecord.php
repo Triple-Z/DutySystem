@@ -21,4 +21,8 @@ class ActionRecord extends Model
         'id',
     ];
 
+    public function user() {
+        $this->hasOne('App\User', 'user_id', 'id');
+    }
+
 }
