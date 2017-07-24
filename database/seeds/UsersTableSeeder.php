@@ -31,5 +31,15 @@ class UsersTableSeeder extends Seeder
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
+
+        App\User::create([
+            'name' => 'Foxwest',
+            'email' => 'foxwest@403forbidden.website',
+            'password' => bcrypt('foxwest'),
+            'admin' => '1', 
+            'phone_number' => '15952055009',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]);
     }
 }
