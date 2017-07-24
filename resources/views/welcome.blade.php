@@ -90,6 +90,11 @@ th {
                     <th>姓名</th>
                     <th>记录时间</th>
                 </tr>
+                @foreach($employees as $employee)
+                <tr>
+                    <th>{{$employee->name}}</th>
+                </tr>
+                @endforeach
             </thead>
             <tbody>
 

@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\ActionRecord;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -26,4 +28,24 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function actions() {
+        return $this->hasMany('App\ActionRecord', 'user_id', 'id');
+    }
+
+    public function login() {
+        ActionRecord::create([
+            'user_id' => $this->id,
+            'action' => 'login',
+            'timestamp' => Carbon::now(),
+        ]);
+    }
+
+    public function logout() {
+        ActionRecord::create([
+            'user_id' => $this->id,
+            'action' => 'logout',
+            'timestamp' => Carbon::now(),
+        ]);
+    }
 }
