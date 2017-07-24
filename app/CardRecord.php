@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CardRecord extends Model
 {
-    public $timestamp = false;
+    public $timestamps = false;
 
     protected $table = 'card_records';
 

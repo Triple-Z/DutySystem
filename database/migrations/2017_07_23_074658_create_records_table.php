@@ -16,9 +16,10 @@ class CreateRecordsTable extends Migration
         Schema::create('records', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('employee_id');
-            $table->tinyInteger('check_direction');
+            $table->tinyInteger('check_direction')->nullable();
             $table->string('check_method');
             $table->timestamp('check_time');
+            $table->string('note')->nullable();
         });
     }
 
