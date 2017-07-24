@@ -22,7 +22,7 @@ th {
 
 @section('content-in-main')
 <!-- modal model -->
-<div id="modal-switch" tabindex="-1" role="dialog" aria-labelledby="modal-switch-label" class="modal fade">
+<!-- <div id="modal-switch" tabindex="-1" role="dialog" aria-labelledby="modal-switch-label" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -52,7 +52,7 @@ th {
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <!-- filter choice -->
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
