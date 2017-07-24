@@ -58,6 +58,7 @@
                             </li>
                         </ul>
                         <form class="navbar-form navbar-right" role="search">
+                            {{csrf_field()}}
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Search" name="q">
                                 <div class="input-group-btn">
