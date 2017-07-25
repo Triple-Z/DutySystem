@@ -20,7 +20,7 @@ class IndexController extends Controller
         // $employees = Employee::all();
         // $records = Record::all();
         $records = Record::latest('check_time')->paginate(15);
-        $records->withPath('reords');
+        $records->withPath('records');
 
         return view('welcome', [
             // 'users' => $users,
