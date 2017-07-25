@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Employee;
+use App\Record;
+use Carbon\Carbon;
+
 
 class RouteController extends Controller
 {
@@ -10,7 +14,15 @@ class RouteController extends Controller
         $this->middleware('auth');
     }
     public function valid() {
-        return view('valid');
+        $employees = Employee::orderBy('work_number')->paginate(15);
+        
+        return view('valid', [
+            'employees' => $employees,
+        ]);
+    }
+
+    public function valid_date($date) {
+        
     }
 
     public function graph() {

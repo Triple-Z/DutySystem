@@ -13,7 +13,6 @@ class RecordController extends Controller
 
     public function show_records() {
         $records = Record::latest('check_time')->get();
-        // $records->withPath('records');// custom page url -> `records?page=x`
         return response()->json($records);
     }
 }
