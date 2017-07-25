@@ -13,7 +13,7 @@ class RecordSeeder extends Seeder
      */
     public function run()
     {
-        for( $i = 0; $i < 10; $i++) {
+        for( $i = 0; $i < 30; $i++) {
             if ($i % 2 == 0){
                 Record::create([
                     'employee_id' => '1',
@@ -31,7 +31,7 @@ class RecordSeeder extends Seeder
             }
         }
 
-        for( $i = 0; $i < 10; $i++) {
+        for( $i = 0; $i < 30; $i++) {
             if ($i % 2 == 0){
                 Record::create([
                     'employee_id' => '3',
@@ -49,7 +49,7 @@ class RecordSeeder extends Seeder
             }
         }
 
-        for( $i = 0; $i < 10; $i++) {
+        for( $i = 0; $i < 30; $i++) {
             if ($i % 2 == 0){
                 Record::create([
                     'employee_id' => '2',

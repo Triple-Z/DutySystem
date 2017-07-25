@@ -123,6 +123,9 @@ th {
                     </th> -->
                 </tr>
                 @endforeach
+                <div class="navbar-fixed-bottom" style="text-align: center;">
+                    {{ $records->links() }}
+                </div>
             </thead>
             <tbody>
 
