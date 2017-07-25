@@ -1,6 +1,7 @@
 <?php
 
 Route::get('/', 'IndexController@index');
+Route::get('/s/{start_time}/e/{end_time}', 'IndexController@search');
 
 Auth::routes();
 
@@ -39,5 +40,5 @@ Route::group(['middleware' => 'auth'], function() {
 	Route::get('employees', 'EmployeeController@show_all');
 	Route::get('employees/{id}', 'EmployeeController@show_info');
 	Route::get('employees/{id}/records', 'EmployeeController@show_records');
-	// Route::get('records', 'RecordController@show_records');
+	Route::get('records', 'RecordController@show_records');
 });

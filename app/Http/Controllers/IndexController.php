@@ -19,12 +19,20 @@ class IndexController extends Controller
         // $users = User::all();
         // $employees = Employee::all();
         // $records = Record::all();
-        $records = Record::latest('check_time')->paginate(15);
-        $records->withPath('records');
+        $all = Record::latest('check_time')->paginate(15);
+        // $all->withPath('');
 
         return view('welcome', [
-            // 'users' => $users,
-            // 'employees' => $employees,
+            'records' => $all,
+        ]);
+    }
+
+    public function search($start_time, $end_time) {
+        $records = Record::where('check_time', '>', $start_time)
+                            ->where('check_time', '<', $end_time)
+                            ->latest('check_time')
+                            ->paginate(15);
+        return view('welcome', [
             'records' => $records,
         ]);
     }
