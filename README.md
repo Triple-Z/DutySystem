@@ -125,7 +125,9 @@ $record->employee(); // 返回某条指定签到记录的雇员信息
 
 应用程序接口
 
-- GET `/`: 返回认证状态
+- GET `/`: 返回所有记录界面
+- GET `/s/{start_time}/e/{end_time}`: 返回指定时间记录界面
+	> 建议改成 `POST` 方法
 - GET `/home`: 返回普通管理员登录界面
 - GET `/superhome`: 返回超级管理员登录界面
 - GET `/graph`: 返回图表界面

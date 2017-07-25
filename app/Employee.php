@@ -16,7 +16,8 @@ class Employee extends Model
         'name', 
         'gender', 
         'email', 
-        'phone_number', 
+        'phone_number',
+        'work_number',
         'work_title', 
         'department', 
         'car_number',
@@ -30,6 +31,11 @@ class Employee extends Model
 
     public function records() {
         return $this->hasMany('App\Record', 'employee_id', 'id');
+    }
+
+    public function morning_record() {
+        $records = $this->hasMany('App\Record', 'employee_id', 'id')->get();
+        $today_records = $records;// ......
     }
 
 }

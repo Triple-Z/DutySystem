@@ -175,13 +175,17 @@ th {
                 </tr>
             </thead>
             <tbody>
-                <th>test</th>
-                <th>test</th>
-                <th>test</th>
-                <th>test</th>
-                <th>test</th>
-                <th>test</th>
-                <th>test</th>
+                 @foreach($employees as $employee) 
+                    <tr>
+                        <th>{{ $employee->name }}</th>
+                        <th>test</th>
+                        <th>test</th>
+                        <th>test</th>
+                        <th>test</th>
+                        <th>test</th>
+                        <th>test</th>
+                    </tr>
+                 @endforeach
             </tbody>
         </table>
     </div>

@@ -19,6 +19,7 @@ class CreateEmployeesTable extends Migration
             $table->string('gender');
             $table->string('email')->unique();
             $table->string('phone_number');
+            $table->string('work_number');
             $table->string('work_title');
             $table->string('department');
             $table->string('car_number')->nullable();
