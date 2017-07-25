@@ -60,14 +60,14 @@ th {
             <div class="col-md-3 col-md-offset-1" style="display: inline-block;">
                 <form class="pull-left">
                     {{csrf_field()}}
-                    <select id="period" class="selectpicker btn" data-live-search-style="begins">
+                    <select id="period" class="selectpicker btn" data-live-search-style="begins" name="period">
                         <optgroup label="选择显示周期">
-                            <option>今天</option>
-                            <option>最近一周</option>
-                            <option>最近一个月</option>
-                            <option>最近半年</option>
-                            <option>最近一年</option>
-                            <option>所有记录</option>
+                            <option value="today">今天</option>
+                            <option value="week">最近一周</option>
+                            <option value="month">最近一个月</option>
+                            <option value="half">最近半年</option>
+                            <option value="year">最近一年</option>
+                            <option value="all">所有记录</option>
                         </optgroup>
                     </select>
                     <button type="submit" class="btn btn-primary btn-sm">
@@ -113,6 +113,8 @@ th {
                     <th>记录时间</th>
                     <th>备注</th>
                 </tr>
+            </thead>
+            <tbody>
                 @foreach($records as $record)
                 <tr>
                     <th>{{ $record->employee->name }}</th> 
@@ -123,14 +125,12 @@ th {
                     </th> -->
                 </tr>
                 @endforeach
-                <div class="navbar-fixed-bottom" style="text-align: center;">
-                    {{ $records->links() }}
-                </div>
-            </thead>
-            <tbody>
 
             </tbody>
         </table>
+                <div style="text-align: center;">
+                    {{ $records->links() }}
+                </div>
     </div>
 </div>
 @endsection
