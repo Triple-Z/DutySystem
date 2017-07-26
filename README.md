@@ -24,15 +24,16 @@ A duty system for Drone Institution of NUAA.
 * 13. [note](#note)
 	* 13.1. [Error message:](#Errormessage:)
 	* 13.2. [Solution](#Solution)
-* 14. [Source Code rewrite](#SourceCodeRewrite)
-  * 14.1 [bootstrap modal position](#modalposition)
-  * 14.2 [position method](#positionmethon)
+	* 13.3. [Change Server Timezone](#ChangeServerTimezone)
+* 14. [Source Code rewrite](#SourceCoderewrite)
+	* 14.1. [modal position](#modalposition)
+	* 14.2. [positionmethod](#positionmethod)
 * 15. [Web-view Layouts Design](#Web-viewLayoutsDesign)
-  * 15.1. [general page](#generalpage)
-  * 15.2. [graph page](#graphpage)
-  * 15.3. [valid records](#validrecords)
-  * 15.4. [holiday page(option)](#holidaypageoption)
-  * 15.5. [timeedit page](#timeeditpage)
+	* 15.1. [general page](#generalpage)
+	* 15.2. [graph page](#graphpage)
+	* 15.3. [valid records](#validrecords)
+	* 15.4. [holiday page(option)](#holidaypageoption)
+	* 15.5. [timeedit page](#timeeditpage)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -264,7 +265,14 @@ in file: `config\database.php`
 'engine' => 'InnoDB ROW_FORMAT=DYNAMIC',
 ```
 
-##  14. <a name='SourceCodeRewrite'></a>Source Code rewrite
+###  13.3. <a name='ChangeServerTimezone'></a>Change Server Timezone
+
+```bash
+sudo timedatectl set-timezone Asia/Shanghai
+date
+```
+
+##  14. <a name='SourceCoderewrite'></a>Source Code rewrite
 
 ###  14.1. <a name='modalposition'></a>modal position
 
