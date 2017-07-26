@@ -13,7 +13,7 @@ class RecordSeeder extends Seeder
      */
     public function run()
     {
-        for ($j = 0; $j < 100; $j += 3) {
+        for ($j = 1; $j <= 102; $j += 3) {
 
             for( $i = 0; $i < 4; $i++) {
                 if ($i % 2 == 0){

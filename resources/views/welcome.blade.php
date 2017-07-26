@@ -200,9 +200,24 @@ th {
             <tbody>
                 @foreach($records as $record)
                 <tr>
-                    <th>{{ $record->employee->name }}</th> 
-                    <th>{{ $record->check_time }}</th>
-                    <th>{{ $record->note }}</th>
+                    @if($record->employee)
+                        <th>{{ $record->employee->name }}</th>
+                    @else
+                        <th>N/A</th>
+                    @endif
+
+                    @if($record->check_time)
+                        <th>{{ $record->check_time }}</th>
+                    @else
+                        <th>N/A</th>
+                    @endif
+                    
+                    @if($record->note)
+                        <th>{{ $record->note }}</th>
+                    @else
+                        <th>N/A</th>
+                    @endif
+
 <!--                     <th>
                         <button data-toggle="modal" data-target="#modal-switch" class="btn btn-primary btn-sm">修改记录</button>
                     </th> -->
