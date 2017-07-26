@@ -18,16 +18,30 @@ th {
 @endsection
 
 @section('script')
-
+<link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-datetimepicker.min.css')}}">
+<script src="{{asset('js/moment.js')}}" type="text/javascript"></script>
+<script src="{{asset('js/zh-cn.js')}}" type="text/javascript"></script>
+<script src="{{asset('js/bootstrap-datetimepicker.min.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
-    // var idTmr;  
-    // var date = new Date();
-    // var year = date.getFullYear();
-    // var month = date.getMonth()+1;
-    // var day = date.getDate();
-    // var hour = date.getHours();
-    // var minute = date.getMinutes();
-    // var name = year + "_" + month + "_" +day + "_" + hour + "_" + minute;
+    $(function () {  
+        var picker1 = $('#datetimepicker1').datetimepicker({  
+            format: 'YYYY-MM-DD HH:mm',  
+            locale: moment.locale('zh-cn'),  
+            //minDate: '2016-7-1'  
+        });  
+        var picker2 = $('#datetimepicker2').datetimepicker({  
+            format: 'YYYY-MM-DD HH:mm',  
+            locale: moment.locale('zh-cn')  
+        });  
+        //动态设置最小值  
+        picker1.on('dp.change', function (e) {  
+            picker2.data('DateTimePicker').minDate(e.date);  
+        });  
+        //动态设置最大值  
+        picker2.on('dp.change', function (e) {  
+            picker1.data('DateTimePicker').maxDate(e.date);  
+        });  
+    });  
     function  getExplorer() {  
         var explorer = window.navigator.userAgent ;  
         //ie  
@@ -139,39 +153,40 @@ th {
 
 <!-- filter choice -->
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <div style="margin-top: 20px;">
-            <div class="col-md-3 col-md-offset-1" style="display: inline-block;">
-                <form class="pull-left" method="POST">
-                    {{csrf_field()}}
-                    <select id="period" class="selectpicker btn" data-live-search-style="begins" name="period">
-                        <optgroup label="选择显示周期">
-                            <option value="today">今天</option>
-                            <option value="week">最近一周</option>
-                            <option value="month">最近一个月</option>
-                            <option value="half">最近半年</option>
-                            <option value="year">最近一年</option>
-                            <option value="all">所有记录</option>
-                        </optgroup>
-                    </select>
-                    <button type="submit" class="btn btn-primary btn-sm">
-                        确定
-                    </button>
-                </form>
-            </div>
-            <div class="col-md-5">
-                <form class="" role="search" method="POST">
-                    {{csrf_field()}}
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="按名字搜索" name="employee_name">
-                        <div class="input-group-btn">
-                            <button class="btn btn-default" type="submit">
-                                <i class="glyphicon glyphicon-search"></i>
+    <div>
+            <form class="form-horizontal" method="POST" action="">
+                {{ csrf_field() }}
+                <div class="col-md-1 col-md-offset-2" style="vertical-align: middle;margin-top: 20px;font-size: 150%;">
+                    显示时段:
+                </div>
+                <div class="col-md-2" style="margin-left: 50px;">  
+                    <div class="form-group">  
+                        <label>选择开始时间：</label>  
+                        <!--指定 date标记-->  
+                        <div class="input-group date" id="datetimepicker1" style="width: 81%;">  
+                            <input type="text" class="form-control" type="time" autocomplete="off" placeholder="开始时间" name="start_time" required/>  
+                            <span class="input-group-addon">  
+                                <span class="glyphicon glyphicon-calendar"></span>  
+                            </span>  
+                        </div>  
+                    </div> 
+                </div>  
+                <div class="col-md-2">  
+                    <div class="form-group">  
+                        <label>选择结束时间：</label>  
+                        <!--指定 date标记-->  
+                        <div class="input-group date" id="datetimepicker2">  
+                            <input type='text' class="form-control" type="time" autocomplete="off" placeholder="结束时间" name="end_time" required/>  
+                            <span class="input-group-addon">  
+                                <span class="glyphicon glyphicon-calendar"></span>  
+                            </span>  
+                            <button type="submit" class="btn btn-primary pull-right">
+                                确定
                             </button>
-                        </div>
+                        </div>  
                     </div>
-                </form>
-            </div>
-        </div>
+                </div> 
+            </form>
     </div>
 </div>
 
@@ -179,7 +194,7 @@ th {
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <div>
         <div class="col-sm-2 col-md-2" style="font-size: 200%;float: left;">
-            所有记录
+            所有刷卡记录
         </div>
         <div class="col-sm-2 col-md-2" style="float: right;">
             <button type="button" class="btn btn-primary" onclick="method('tableExcel')">
@@ -192,14 +207,23 @@ th {
         <table class="table table-striped" id="tableExcel">
             <thead  style="text-align:center;">
                 <tr>
+                    <th>工号</th>
                     <th>姓名</th>
                     <th>记录时间</th>
+                    <th>刷卡位置</th>
+                    <th>刷卡方向</th>
                     <th>备注</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($records as $record)
                 <tr>
+                    @if($record->employee)
+                        <th>{{ $record->employee->id }}</th>
+                    @else
+                        <th>N/A</th>
+                    @endif
+
                     @if($record->employee)
                         <th>{{ $record->employee->name }}</th>
                     @else
@@ -210,6 +234,18 @@ th {
                         <th>{{ $record->check_time }}</th>
                     @else
                         <th>N/A</th>
+                    @endif
+
+                    @if($record->card_gate)
+                        <th>{{ $record->card_gate }}</th>
+                    @else
+                        <th>N/A</th>
+                    @endif
+
+                    @if($record->check_direction==1)
+                        <th>进</th>
+                    @else
+                        <th>出</th>
                     @endif
                     
                     @if($record->note)
