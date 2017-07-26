@@ -19,6 +19,7 @@ class CreateRecordsTable extends Migration
             $table->tinyInteger('check_direction')->nullable();
             $table->string('check_method');
             $table->timestamp('check_time');
+            $table->string('card_gate')->nullable();
             $table->string('note')->nullable();
         });
     }

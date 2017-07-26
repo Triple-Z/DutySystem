@@ -88,11 +88,12 @@ php artisan migrate
 模型间关系
 
 ```php
-$user->actions(); // 返回某个指定管理员操作记录
-$actions->user(); // 返回某条指定记录的管理员信息
+$user->actions; // 返回某个指定管理员操作记录
+$actions->user; // 返回某条指定记录的管理员信息
 
-$employee->records(); // 返回某个指定雇员的签到记录
-$record->employee(); // 返回某条指定签到记录的雇员信息
+$employee->records; // 返回某个指定雇员的签到记录
+$employee->special_records(); // 以数组返回某个指定雇员的重要签到记录
+$record->employee; // 返回某条指定签到记录的雇员信息
 ```
 
 
