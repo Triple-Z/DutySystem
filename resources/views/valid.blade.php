@@ -178,16 +178,44 @@ th {
                  @foreach($employees as $employee) 
                     <tr>
                         <th>{{ $employee->name }}</th>
-                        <th>test</th>
-                        <th>test</th>
-                        <th>test</th>
-                        <th>test</th>
-                        <th>test</th>
-                        <th>test</th>
+
+                        @if($employee->special_records()['today_morning_earliest_record'])
+                            <th>{{ $employee->special_records()['today_morning_earliest_record']->check_time }}</th> 
+                        @else
+                            <th>N/A</th>
+                        @endif
+
+                        @if($employee->special_records()['today_morning_latest_record'])
+                            <th>{{ $employee->special_records()['today_morning_latest_record']->check_time }}</th> 
+                        @else
+                            <th>N/A</th>
+                        @endif
+
+                        @if($employee->special_records()['today_afternoon_earliest_record'])
+                            <th>{{ $employee->special_records()['today_afternoon_earliest_record']->check_time }}</th> 
+                        @else
+                            <th>N/A</th>
+                        @endif
+
+                        @if($employee->special_records()['today_evening_latest_record'])
+                            <th>{{ $employee->special_records()['today_evening_latest_record']->check_time }}</th> 
+                        @else
+                            <th>N/A</th>
+                        @endif
+
+                        @if($employee->special_records()['note'])
+                            <th>{{ $employee->special_records()['note'] }}</th> 
+                        @else
+                            <th>N/A</th>
+                        @endif
+                        <th><button type="button" class="btn btn-primary" onclick="method('')">修正</button></th>
                     </tr>
                  @endforeach
             </tbody>
         </table>
+        <div style="text-align: center;">
+            {{ $employees->links() }}
+        </div>
     </div>
 </div>
 @endsection
