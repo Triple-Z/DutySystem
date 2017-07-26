@@ -140,7 +140,7 @@ th {
 <!-- filter choice -->
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <div style="margin-top: 20px;">
-            <div class="col-md-3 col-md-offset-1" style="display: inline-block;">
+<!--             <div class="col-md-3 col-md-offset-1" style="display: inline-block;">
                 <form class="pull-left" method="POST">
                     {{csrf_field()}}
                     <select id="period" class="selectpicker btn" data-live-search-style="begins" name="period">
@@ -157,8 +157,8 @@ th {
                         确定
                     </button>
                 </form>
-            </div>
-            <div class="col-md-5">
+            </div> -->
+            <div class="col-md-6 col-md-offset-3">
                 <form class="" role="search" method="POST">
                     {{csrf_field()}}
                     <div class="input-group">
@@ -194,6 +194,8 @@ th {
                 <tr>
                     <th>姓名</th>
                     <th>记录时间</th>
+                    <th>刷卡位置</th>
+                    <th>刷卡方向</th>
                     <th>备注</th>
                 </tr>
             </thead>
@@ -210,6 +212,18 @@ th {
                         <th>{{ $record->check_time }}</th>
                     @else
                         <th>N/A</th>
+                    @endif
+
+                    @if($record->card_gate)
+                        <th>{{ $record->card_gate }}</th>
+                    @else
+                        <th>N/A</th>
+                    @endif
+
+                    @if($record->check_direction==1)
+                        <th>进</th>
+                    @else
+                        <th>出</th>
                     @endif
                     
                     @if($record->note)

@@ -99,11 +99,27 @@ th {
             <div class="modal-header">
                 <button type="button" data-dismiss="modal" class="close">
                     <span aria-hidden="true">&times;</span>
-                    <span class="sr-only">Close</span></button>
-                <div id="modal-switch-label" class="modal-title">Title</div>
+                    <span class="sr-only">记录修正</span></button>
+                <div id="modal-switch-label" class="modal-title" style="font-size: large;">记录修正</div>
             </div>
             <div class="modal-body">
-                <input id="switch-modal" type="checkbox" checked="checked">
+                <form role="form">
+                    {{csrf_field()}}
+                    <div class="form-group">
+                        <label for="dtp_input1" class="col-md-2 control-label">选择时间</label>
+                        <div class="input-group date form_datetime col-md-5" data-date="2017-07-25T05:25:07Z" data-date-format="yyyy MM dd - HH:ii p" data-link-field="dtp_input1">
+                            <input class="form-control" size="16" type="text" value="">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                        </div>
+                        <input type="hidden" id="dtp_input1" value="" class="col-md-11" /><br/>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label visible-ie8 visible-ie9">备注</label>
+                        <input class="form-control placeholder-no-fix" type="note" autocomplete="off" id="register_password" name="note" required>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 15px;margin-left: 90%;">提交</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -208,7 +224,7 @@ th {
                         @else
                             <th>N/A</th>
                         @endif
-                        <th><button type="button" class="btn btn-primary" onclick="method('')">修正</button></th>
+                        <th><button data-toggle="modal" data-target="#modal-switch" class="btn btn-primary btn-sm">修正</button></th>
                     </tr>
                  @endforeach
             </tbody>
