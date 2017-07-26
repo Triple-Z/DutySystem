@@ -64,7 +64,7 @@
                     <form class="navbar-form navbar-right" role="search">
                         {{csrf_field()}}
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="按名字搜索" name="employee_name">
+                            <input type="text" class="form-control" placeholder="按工号搜索" name="employee_id">
                             <div class="input-group-btn">
                                 <button class="btn btn-default" type="submit">
                                     <i class="glyphicon glyphicon-search"></i>
