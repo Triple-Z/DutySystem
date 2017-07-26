@@ -19,9 +19,9 @@ class EmployeeController extends Controller
     }
 
     // show employee information
-    public function show_info($id) {
-        $employee = Employee::where('id', '=', $id)->first();
-        return response()->json($employee);
+    public function show_info($name) {
+        $employees = Employee::where('name', '=', $name)->get();
+        return response()->json($employees);
     }
 
     public function show_records($id) {

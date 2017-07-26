@@ -137,7 +137,7 @@ $record->employee; // 返回某条指定签到记录的雇员信息
 - GET `/holiday`： 返回节假日编辑界面
 - GET `/timeedit`: 返回有效时间编辑界面
 
-- GET `/employees/{id}`: 返回某个指定雇员信息
+- GET `/employees/{name}`: 返回某个指定雇员信息
 - GET `/employees/{id}/records`: 返回某个指定雇员的签到记录
 
 - GET `/admin/actions`: 返回当前管理员操作信息
