@@ -21,14 +21,14 @@ class RecordSeeder extends Seeder
                         'employee_id' => $j,
                         'check_direction' => '0',
                         'check_method' => 'car',
-                        'check_time' => Carbon::now()->format('Y-m-d H:i:s'),
+                        'check_time' => Carbon::now('Asia/Shanghai')->format('Y-m-d H:i:s'),
                     ]);
                 } else {
                     Record::create([
                         'employee_id' => $j,
                         'check_direction' => '1',
                         'check_method' => 'car',
-                        'check_time' => Carbon::now()->format('Y-m-d H:i:s'),
+                        'check_time' => Carbon::now('Asia/Shanghai')->format('Y-m-d H:i:s'),
                     ]);
                 }
             }
@@ -40,7 +40,7 @@ class RecordSeeder extends Seeder
                         'check_direction' => '0',
                         'check_method' => 'card',
                         'card_gate' => 'SN01',
-                        'check_time' => Carbon::now()->format('Y-m-d H:i:s'),
+                        'check_time' => Carbon::now('Asia/Shanghai')->format('Y-m-d H:i:s'),
                     ]);
                 } else {
                     Record::create([
@@ -48,7 +48,7 @@ class RecordSeeder extends Seeder
                         'check_direction' => '1',
                         'check_method' => 'card',
                         'card_gate' => 'SN02',
-                        'check_time' => Carbon::now()->format('Y-m-d H:i:s'),
+                        'check_time' => Carbon::now('Asia/Shanghai')->format('Y-m-d H:i:s'),
                     ]);
                 }
             }
@@ -60,7 +60,7 @@ class RecordSeeder extends Seeder
                         'check_direction' => '0',
                         'check_method' => 'card',
                         'card_gate' => 'SN03',
-                        'check_time' => Carbon::now()->format('Y-m-d H:i:s'),
+                        'check_time' => Carbon::now('Asia/Shanghai')->format('Y-m-d H:i:s'),
                     ]);
                 } else {
                     Record::create([
@@ -68,7 +68,7 @@ class RecordSeeder extends Seeder
                         'check_direction' => '1',
                         'check_method' => 'card',
                         'card_gate' => 'SN02',
-                        'check_time' => Carbon::now()->format('Y-m-d H:i:s'),
+                        'check_time' => Carbon::now('Asia/Shanghai')->format('Y-m-d H:i:s'),
                     ]);
                 }
             }

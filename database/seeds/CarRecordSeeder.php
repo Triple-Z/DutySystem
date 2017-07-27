@@ -17,13 +17,13 @@ class CarRecordSeeder extends Seeder
                 App\CarRecord::create([
                     'car_number' => '苏A2344'.$i,
                     'direction' => '1',
-                    'timestamp' => Carbon::now(),
+                    'timestamp' => Carbon::now('Asia/Shanghai'),
                 ]);
             } else {
                 App\CarRecord::create([
                     'car_number' => '苏A2344'.$i,
                     'direction' => '0',
-                    'timestamp' => Carbon::now(),
+                    'timestamp' => Carbon::now('Asia/Shanghai'),
                 ]);
             }
         }
@@ -33,13 +33,13 @@ class CarRecordSeeder extends Seeder
                 App\CarRecord::create([
                     'car_number' => '苏A2344'.$i,
                     'direction' => '0',
-                    'timestamp' => Carbon::now(),
+                    'timestamp' => Carbon::now('Asia/Shanghai'),
                 ]);
             } else {
                 App\CarRecord::create([
                     'car_number' => '苏A2344'.$i,
                     'direction' => '1',
-                    'timestamp' => Carbon::now(),
+                    'timestamp' => Carbon::now('Asia/Shanghai'),
                 ]);
             }
         }

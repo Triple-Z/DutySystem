@@ -207,29 +207,37 @@ th {
                  @foreach($employees as $employee) 
                     <tr>
                         <th><a href="/employees/{{ $employee->id }}/records">{{ $employee->name }}</a></th>
-
-                        @if($employee->special_records()['today_am_earliest_record'])
-                            <th>{{ $employee->special_records()['today_am_earliest_record']->check_time }}</th> 
-                        @else
+                        @if (strcmp($employee->special_records()['check_status'], "请假") == 0)
                             <th>N/A</th>
-                        @endif
-
-                        @if($employee->special_records()['today_am_latest_record'])
-                            <th>{{ $employee->special_records()['today_am_latest_record']->check_time }}</th> 
-                        @else
                             <th>N/A</th>
-                        @endif
-
-                        @if($employee->special_records()['today_pm_earliest_record'])
-                            <th>{{ $employee->special_records()['today_pm_earliest_record']->check_time }}</th> 
-                        @else
                             <th>N/A</th>
-                        @endif
-
-                        @if($employee->special_records()['today_pm_latest_record'])
-                            <th>{{ $employee->special_records()['today_pm_latest_record']->check_time }}</th> 
-                        @else
                             <th>N/A</th>
+                        @else 
+
+                            @if($employee->special_records()['today_am_earliest_record'])
+                                <th>{{ $employee->special_records()['today_am_earliest_record']->check_time }}</th> 
+                            @else
+                                <th>N/A</th>
+                            @endif
+
+                            @if($employee->special_records()['today_am_latest_record'])
+                                <th>{{ $employee->special_records()['today_am_latest_record']->check_time }}</th> 
+                            @else
+                                <th>N/A</th>
+                            @endif
+
+                            @if($employee->special_records()['today_pm_earliest_record'])
+                                <th>{{ $employee->special_records()['today_pm_earliest_record']->check_time }}</th> 
+                            @else
+                                <th>N/A</th>
+                            @endif
+
+                            @if($employee->special_records()['today_pm_latest_record'])
+                                <th>{{ $employee->special_records()['today_pm_latest_record']->check_time }}</th> 
+                            @else
+                                <th>N/A</th>
+                            @endif
+
                         @endif
 
                         @if($employee->special_records()['check_status'])
@@ -237,6 +245,13 @@ th {
                         @else
                             <th>N/A</th>
                         @endif
+
+                        @if($employee->special_records()['note'])
+                            <th>{{ $employee->special_records()['note'] }}</th> 
+                        @else
+                            <th></th>
+                        @endif
+
                     </tr>
                  @endforeach
             </tbody>

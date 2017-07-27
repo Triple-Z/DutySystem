@@ -18,7 +18,7 @@ class ActionRecordSeeder extends Seeder
             ActionRecord::create([
                 'user_id' => '1',
                 'action' => 'login',
-                'timestamp' => Carbon::now(),
+                'timestamp' => Carbon::now('Asia/Shanghai'),
             ]);
         }
 
@@ -26,7 +26,7 @@ class ActionRecordSeeder extends Seeder
             ActionRecord::create([
                 'user_id' => '2',
                 'action' => 'logout',
-                'timestamp' => Carbon::now(),
+                'timestamp' => Carbon::now('Asia/Shanghai'),
             ]);
         }
         
@@ -34,7 +34,7 @@ class ActionRecordSeeder extends Seeder
             ActionRecord::create([
                 'user_id' => '3',
                 'action' => 'login',
-                'timestamp' => Carbon::now(),
+                'timestamp' => Carbon::now('Asia/Shanghai'),
             ]);
         }
     }
