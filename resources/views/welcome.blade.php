@@ -156,15 +156,12 @@ th {
     <div>
             <form class="form-horizontal" method="POST" action="">
                 {{ csrf_field() }}
-                <div class="col-md-1 col-md-offset-2" style="vertical-align: middle;margin-top: 20px;font-size: 150%;">
-                    显示时段:
-                </div>
-                <div class="col-md-2" style="margin-left: 50px;">  
+                <div class="col-md-2 col-md-offset-3">  
                     <div class="form-group">  
-                        <label>选择开始时间：</label>  
+                        <label>起始时间：</label>  
                         <!--指定 date标记-->  
                         <div class="input-group date" id="datetimepicker1" style="width: 81%;">  
-                            <input type="text" class="form-control" type="time" autocomplete="off" placeholder="开始时间" name="start_time" required/>  
+                            <input type="text" class="form-control" type="time" autocomplete="off" placeholder="选择显示时段" name="start_time" required/>  
                             <span class="input-group-addon">  
                                 <span class="glyphicon glyphicon-calendar"></span>  
                             </span>  
@@ -173,10 +170,10 @@ th {
                 </div>  
                 <div class="col-md-2">  
                     <div class="form-group">  
-                        <label>选择结束时间：</label>  
+                        <label>结束时间：</label>  
                         <!--指定 date标记-->  
                         <div class="input-group date" id="datetimepicker2">  
-                            <input type='text' class="form-control" type="time" autocomplete="off" placeholder="结束时间" name="end_time" required/>  
+                            <input type='text' class="form-control" type="time" autocomplete="off" placeholder="选择显示时段" name="end_time" required/>  
                             <span class="input-group-addon">  
                                 <span class="glyphicon glyphicon-calendar"></span>  
                             </span>  
@@ -219,7 +216,7 @@ th {
                 @foreach($records as $record)
                 <tr>
                     @if($record->employee)
-                        <th>{{ $record->employee->id }}</th>
+                        <th><a href="/employees/{{ $record->employee->work_number }}">{{ $record->employee->work_number }}</a></th>
                     @else
                         <th>N/A</th>
                     @endif

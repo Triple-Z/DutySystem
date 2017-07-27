@@ -20,6 +20,9 @@ th {
 @section('script')
 
 <script type="text/javascript">
+    function get_record_id(value){
+        $("#record_id").val(value);
+    }
     function  getExplorer() {  
         var explorer = window.navigator.userAgent ;  
         //ie  
@@ -96,6 +99,51 @@ th {
 @endsection
 
 @section('content-in-main')
+<!-- modal model -->
+<div id="modal-switch" tabindex="-1" role="dialog" aria-labelledby="modal-switch-label" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">记录修正</span></button>
+                <div id="modal-switch-label" class="modal-title" style="font-size: large;">记录修正</div>
+            </div>
+            <div class="modal-body">
+                <form role="form" style="margin:15px;" method="POST" action="">
+                    {{csrf_field()}}
+                    <div class="form-group">
+                        <label class="control-label">选择修改项</label><br/>
+                        <select id="period" class="selectpicker btn" data-live-search-style="begins" name="period" style="float: none;">
+                            <optgroup label="选择显示周期">
+                                <option value="today_morning_earliest_record">上午签到时间</option>
+                                <option value="today_morning_latest_record">上午离班时间</option>
+                                <option value="today_afternoon_earliest_record">下午签到时间</option>
+                                <option value="today_afternoon_latest_record">下午离班时间</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <br/>
+                    <div class="form-group">  
+                        <label>修改为：</label>  
+                        <div class='input-group date' id='datetimepicker2'>  
+                            <input type='text' class="form-control" />  
+                            <span class="input-group-addon">  
+                                <span class="glyphicon glyphicon-calendar"></span>  
+                            </span>  
+                        </div>  
+                    </div>  
+                    <div class="form-group">
+                        <label class="control-label visible-ie8 visible-ie9">备注</label>
+                        <input class="form-control placeholder-no-fix" type="note" autocomplete="off" id="register_password" name="note" required>
+                        <input id="record_id" type="record_id" name="record_id" hidden="hidden">
+                        <button type="submit" class="btn btn-primary" style="margin-top: 15px;margin-left: 90%;">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <div>
         <div class="col-sm-2 col-md-2" style="font-size: 200%;float: left;">
@@ -124,7 +172,7 @@ th {
                 @foreach($records as $record)
                 <tr>
                     @if($record->employee)
-                        <th>{{ $record->employee->work_number }}</th>
+                        <th><a href="/employees/{{ $record->employee->work_number }}">{{ $record->employee->work_number }}</a></th>
                     @else
                         <th>N/A</th>
                     @endif
@@ -160,7 +208,7 @@ th {
                     @endif
 
                     <th>
-                        <button type="button" class="btn btn-primary" onclick="method('')">修改</button>
+                        <button data-toggle="modal" data-target="#modal-switch" value="{{$record->id}}" class="btn-primary btn" onclick="get_record_id(this.value)">修改</button>
                     </th>
                 </tr>
                 @endforeach

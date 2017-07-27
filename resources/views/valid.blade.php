@@ -95,9 +95,18 @@ th {
 </script>  
 <script type="text/javascript">
     $(function () {
-        $('#datetimepicker2').datetimepicker({  
+
+        var picker2 = $('#datetimepicker2').datetimepicker({  
             format: 'YYYY-MM-DD',  
             locale: moment.locale('zh-cn')  
+        });  
+        //动态设置最小值  
+        picker1.on('dp.change', function (e) {  
+            picker2.data('DateTimePicker').minDate(e.date);  
+        });  
+        //动态设置最大值  
+        picker2.on('dp.change', function (e) {  
+            picker1.data('DateTimePicker').maxDate(e.date);  
         });  
     });  
 </script>
@@ -194,6 +203,7 @@ th {
         <table class="table table-striped" id="tableExcel">
             <thead style="text-align:center;">
                 <tr>
+                    <th>工号</th>
                     <th>姓名</th>
                     <th>上午签到时间</th>
                     <th>上午离班时间</th>
@@ -206,7 +216,8 @@ th {
             <tbody>
                  @foreach($employees as $employee) 
                     <tr>
-                        <th><a href="/employees/{{ $employee->id }}/records">{{ $employee->name }}</a></th>
+                        <th><a href="/employees/{{ $employee->work_number }}">{{ $employee->work_number }}</a></th>
+                        <th>{{ $employee->name }}</th>
                         @if (strcmp($employee->special_records()['check_status'], "请假") == 0)
                             <th>N/A</th>
                             <th>N/A</th>
