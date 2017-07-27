@@ -69,6 +69,11 @@ php artisan migrate
 > 
 > password: `secret`
 
+remote database:
+IP: `119.29.150.233:3306`
+Account: `root`
+Password: `DutySystem`
+
 # Service Logic
 
 业务逻辑
@@ -271,6 +276,10 @@ in file: `config\database.php`
 sudo timedatectl set-timezone Asia/Shanghai
 date
 ```
+
+> Add timezone when written data into database!
+>
+> `Caron::now('Asia/Shanghai')` **OR** `Carbon::now('CST')`
 
 ##  14. <a name='SourceCoderewrite'></a>Source Code rewrite
 

@@ -17,7 +17,6 @@ class Employee extends Model
     protected $table = 'employees';
 
     protected $fillable = [
-        'id', 
         'name', 
         'gender', 
         'email', 
@@ -27,11 +26,12 @@ class Employee extends Model
         'department', 
         'car_number',
         'card_uid',
+        'created_at', 
+        'updated_at',
     ];
 
     protected $guarded = [
-        'created_at', 
-        'updated_at',
+        'id',
     ];
 
     public function records() {
@@ -40,18 +40,19 @@ class Employee extends Model
 
     public function special_records() {
 
-        $now = Carbon::now();
+        $now = Carbon::now('Asia/Shanghai');
 
-        $am_start           = Carbon::create(null, null, null, 3, 0, 0, 'Asia/Shanghai');
-        $am_end             = Carbon::create(null, null, null, 14, 0, 0, 'Asia/Shanghai');
-        $pm_start           = Carbon::create(null, null, null, 11, 59, 59, 'Asia/Shanghai');
-        $pm_end             = Carbon::create(null, null, null, 3, 0, 0, 'Asia/Shanghai')->addDay();
+        // default timezone is "Asia/Shanghai"
+        $am_start           = Carbon::create(null, null, null, 3, 0, 0);
+        $am_end             = Carbon::create(null, null, null, 14, 0, 0);
+        $pm_start           = Carbon::create(null, null, null, 11, 59, 59);
+        $pm_end             = Carbon::create(null, null, null, 3, 0, 0)->addDay();
 
-        $am_ddl         = Carbon::create(null, null, null, 8, 0, 0, 'Asia/Shanghai');
-        $am_late_ddl    = Carbon::create(null, null, null, 10, 0, 0, 'Asia/Shanghai');
-        $pm_ddl         = Carbon::create(null, null, null, 14, 0, 0, 'Asia/Shanghai');
-        $pm_early_ddl    = Carbon::create(null, null, null, 16, 0, 0, 'Asia/Shanghai');
-        $pm_away        = Carbon::create(null, null, null, 17, 59, 59, 'Asia/Shanghai');
+        $am_ddl         = Carbon::create(null, null, null, 8, 0, 0);
+        $am_late_ddl    = Carbon::create(null, null, null, 10, 0, 0);
+        $pm_ddl         = Carbon::create(null, null, null, 14, 0, 0);
+        $pm_early_ddl    = Carbon::create(null, null, null, 16, 0, 0);
+        $pm_away        = Carbon::create(null, null, null, 17, 59, 59);
 
         // AM
         $today_am_records = DB::table('records')
@@ -151,7 +152,7 @@ class Employee extends Model
             }
         } else {
             // Records invalid
-            $check_status = "找不到记录";
+            $check_status = "暂无";
         }
 
 

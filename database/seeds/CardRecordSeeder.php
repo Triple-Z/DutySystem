@@ -17,13 +17,13 @@ class CardRecordSeeder extends Seeder
                 App\CardRecord::create([
                     'card_uid' => '12345'.$i,
                     'direction' => '1',
-                    'timestamp' => Carbon::now(),
+                    'timestamp' => Carbon::now('Asia/Shanghai'),
                 ]);
             } else {
                 App\CardRecord::create([
                     'card_uid' => '12345'.$i,
                     'direction' => '0',
-                    'timestamp' => Carbon::now(),
+                    'timestamp' => Carbon::now('Asia/Shanghai'),
                 ]);
             }
         }
@@ -33,13 +33,13 @@ class CardRecordSeeder extends Seeder
                 App\CardRecord::create([
                     'card_uid' => '12345'.$i,
                     'direction' => '0',
-                    'timestamp' => Carbon::now(),
+                    'timestamp' => Carbon::now('Asia/Shanghai'),
                 ]);
             } else {
                 App\CardRecord::create([
                     'card_uid' => '12345'.$i,
                     'direction' => '1',
-                    'timestamp' => Carbon::now(),
+                    'timestamp' => Carbon::now('Asia/Shanghai'),
                 ]);
             }
         }

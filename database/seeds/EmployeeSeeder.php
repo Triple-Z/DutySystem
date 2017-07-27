@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class EmployeeSeeder extends Seeder
 {
@@ -22,6 +23,8 @@ class EmployeeSeeder extends Seeder
                 'department' => 'Production',// 部门
                 'car_number' => '苏A2344' . $i,// 车牌号
                 'card_uid' => '12345'. $i,// 职员卡UID
+                'created_at' => Carbon::now('Asia/Shanghai'),
+                'updated_at' => Carbon::now('Asia/Shanghai'),
             ]);
         }
     }
