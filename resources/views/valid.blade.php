@@ -208,32 +208,32 @@ th {
                     <tr>
                         <th><a href="/employees/{{ $employee->id }}/records">{{ $employee->name }}</a></th>
 
-                        @if($employee->special_records()['today_morning_earliest_record'])
-                            <th>{{ $employee->special_records()['today_morning_earliest_record']->check_time }}</th> 
+                        @if($employee->special_records()['today_am_earliest_record'])
+                            <th>{{ $employee->special_records()['today_am_earliest_record']->check_time }}</th> 
                         @else
                             <th>N/A</th>
                         @endif
 
-                        @if($employee->special_records()['today_morning_latest_record'])
-                            <th>{{ $employee->special_records()['today_morning_latest_record']->check_time }}</th> 
+                        @if($employee->special_records()['today_am_latest_record'])
+                            <th>{{ $employee->special_records()['today_am_latest_record']->check_time }}</th> 
                         @else
                             <th>N/A</th>
                         @endif
 
-                        @if($employee->special_records()['today_afternoon_earliest_record'])
-                            <th>{{ $employee->special_records()['today_afternoon_earliest_record']->check_time }}</th> 
+                        @if($employee->special_records()['today_pm_earliest_record'])
+                            <th>{{ $employee->special_records()['today_pm_earliest_record']->check_time }}</th> 
                         @else
                             <th>N/A</th>
                         @endif
 
-                        @if($employee->special_records()['today_evening_latest_record'])
-                            <th>{{ $employee->special_records()['today_evening_latest_record']->check_time }}</th> 
+                        @if($employee->special_records()['today_pm_latest_record'])
+                            <th>{{ $employee->special_records()['today_pm_latest_record']->check_time }}</th> 
                         @else
                             <th>N/A</th>
                         @endif
 
-                        @if($employee->special_records()['note'])
-                            <th>{{ $employee->special_records()['note'] }}</th> 
+                        @if($employee->special_records()['check_status'])
+                            <th>{{ $employee->special_records()['check_status'] }}</th> 
                         @else
                             <th>N/A</th>
                         @endif

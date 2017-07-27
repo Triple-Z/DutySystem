@@ -80,7 +80,7 @@
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar" id="left-nav">
                         <li><a href="{{url('/')}}/">进出记录总览</a></li>
-                        <li><a href="{{url('/valid')}}">有效出勤记录</a></li>
+                        <li><a href="{{url('/valid')}}">每日出勤情况</a></li>
                         <li><a href="{{url('/graph')}}">绘制出勤曲线</a></li>
                         <li><a href="{{url('/holiday')}}">节假日编辑</a></li>
                         <li><a href="{{url('/timeedit')}}">考勤有效时间编辑</a></li>
