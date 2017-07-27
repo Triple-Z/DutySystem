@@ -112,6 +112,7 @@ th {
         <table class="table table-striped" id="tableExcel">
             <thead  style="text-align:center;">
                 <tr>
+                    <th>工号</th>
                     <th>姓名</th>
                     <th>记录时间</th>
                     <th>刷卡位置</th>
@@ -122,6 +123,12 @@ th {
             <tbody>
                 @foreach($records as $record)
                 <tr>
+                    @if($record->employee)
+                        <th>{{ $record->employee->work_number }}</th>
+                    @else
+                        <th>N/A</th>
+                    @endif
+                    
                     @if($record->employee)
                         <th>{{ $record->employee->name }}</th>
                     @else
@@ -151,6 +158,10 @@ th {
                     @else
                         <th>N/A</th>
                     @endif
+
+                    <th>
+                        <button type="button" class="btn btn-primary" onclick="method('')">修改</button>
+                    </th>
                 </tr>
                 @endforeach
 
