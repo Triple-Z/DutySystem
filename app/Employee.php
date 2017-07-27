@@ -104,49 +104,56 @@ class Employee extends Model
 
         // Check status
         $check_status = null;
-        if (var_dump($today_am_earliest_record->check_time->between($am_start, $am_ddl))) { 
-            // AM in-check valid
-            if (var_dump($today_pm_latest_record->between($pm_away, $pm_end))) { 
-                // PM out-check valid
-                if (strcmp($today_am_earliest_record->check_method, "car") && strcmp($today_am_earliest_record->check_method, "card")) { 
-                    // Present invalid
-                    $check_status = $today_am_earliest_record->check_method;
+        if ($today_am_earliest_record && $today_pm_latest_record) {
+            // Records valid
+            if (Carbon::parse($today_am_earliest_record->check_time)->between($am_start, $am_ddl)) { 
+                // AM in-check valid
+                if (Carbon::parse($today_pm_latest_record->check_time)->between($pm_away, $pm_end)) { 
+                    // PM out-check valid
+                    if (strcmp($today_am_earliest_record->check_method, "car") && strcmp($today_am_earliest_record->check_method, "card")) { 
+                        // Present invalid
+                        $check_status = $today_am_earliest_record->check_method;
+                    } else { 
+                        // Present valid
+                        $check_status = "正常";
+                    }
                 } else { 
-                    // Present valid
-                    $check_status = "正常";
-                }
-            } else { 
-                // AM in-check valid, PM out-check invalid
-                if (var_dump($today_pm_latest_record->between($pm_early_ddl, $pm_away))) {
-                    // AM in-check valid, PM out-check early
-                    $check_status = "早退";
-                } else {
-                    // AM in-check valid, PM out-check earlier
-                    $check_status = "缺勤";
-                }
-            }
-        } else {
-            // AM in-check invalid
-            if (var_dump($today_am_earliest_record->between($am_ddl, $am_late_ddl))) {
-                // AM in-check late
-                if (var_dump($today_pm_latest_record->between($pm_away, $pm_end))) {
-                    // AM in-check late, PM out-check valid
-                    $check_status = "迟到";
-                } else {
-                    // AM in-check late, PM out-check invalid
-                    if (var_dump($today_pm_latest_record->between($pm_early_ddl, $pm_away))) {
-                        // AM in-check late, PM out-check early
-                        $check_status = "迟到早退";
+                    // AM in-check valid, PM out-check invalid
+                    if (Carbon::parse($today_pm_latest_record->check_time)->between($pm_early_ddl, $pm_away)) {
+                        // AM in-check valid, PM out-check early
+                        $check_status = "早退";
                     } else {
-                        // AM in-check late, PM out-check earlier
+                        // AM in-check valid, PM out-check earlier
                         $check_status = "缺勤";
                     }
                 }
             } else {
-                // AM in-check later
-                $check_status = "缺勤";
+                // AM in-check invalid
+                if (Carbon::parse($today_am_earliest_record->check_time)->between($am_ddl, $am_late_ddl)) {
+                    // AM in-check late
+                    if (Carbon::parse($today_pm_latest_record->check_time)->between($pm_away, $pm_end)) {
+                        // AM in-check late, PM out-check valid
+                        $check_status = "迟到";
+                    } else {
+                        // AM in-check late, PM out-check invalid
+                        if (Carbon::parse($today_pm_latest_record->check_time)->between($pm_early_ddl, $pm_away)) {
+                            // AM in-check late, PM out-check early
+                            $check_status = "迟到早退";
+                        } else {
+                            // AM in-check late, PM out-check earlier
+                            $check_status = "缺勤";
+                        }
+                    }
+                } else {
+                    // AM in-check later
+                    $check_status = "缺勤";
+                }
             }
+        } else {
+            // Records invalid
+            $check_status = "找不到记录";
         }
+
 
 
 
