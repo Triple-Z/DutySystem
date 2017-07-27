@@ -19,15 +19,17 @@ class EmployeeController extends Controller
     }
 
     // show employee information
-    public function show_info($name) {
+    public function show_info($work_number) {
         $employees = Employee::where('name', '=', $name)->get();
         return response()->json($employees);
     }
 
-    public function show_records($id) {
-        $employee = Employee::where('id', '=', $id)->first();
-        $records = $employee->records()->latest('check_time')->get();
-        return response()->json($records);
+    public function show_records($work_number) {
+        $employee = Employee::where('work_number', '=', $work_number)->first();
+        $records = $employee->records()->latest('check_time')->paginate(15);
+        return view('employee', [
+            'records' => $records,
+        ]);
     }
 
     
