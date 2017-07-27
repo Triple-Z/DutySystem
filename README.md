@@ -70,9 +70,10 @@ php artisan migrate
 > password: `secret`
 
 remote database:
-IP: `119.29.150.233:3306`
-Account: `root`
-Password: `DutySystem`
+
+- IP: `119.29.150.233:3306`
+- Account: `root`
+- Password: `DutySystem`
 
 # Service Logic
 
@@ -232,13 +233,34 @@ php artisan db:seed
 记得将需要 seed 的数据在 `database/seeds/DatabaseSeeder.php` 中注册。
 
 
-##  10. <a name='CheckIn'></a>Check In
+## Important Timestamp
 
-签到
+重要时间戳
 
-##  11. <a name='CheckOut'></a>Check Out
+- Global
+```php
+$am_start = `3:00` // 上午记录开始时间
+$am_end = `14:00` // 上午记录结束时间
+$pm_start = `12:00` // 下午记录开始时间
+$pm_end = `+1Day 3:00` // 下午记录结束时间
+```
+- AM
+```php
+$am_ddl = `8:00` // 上午签到最晚时间
+$am_late_ddl = `10:00` // 上午签到迟到最晚时间
+```
+- PM
+```php
+$pm_ddl = `14:00` // 下午签到最晚时间
+$pm_away = `18:00` // 下午离开最早时间
+$pm_early_ddl = `16:00` // 下午离开早退最早时间
+```
 
-签出
+### Default Timezone
+
+默认时区
+
+`UTC+8` `Asia/Shanghai`
 
 ##  12. <a name='RefreshFrequency'></a>Refresh Frequency
 
