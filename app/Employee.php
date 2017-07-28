@@ -42,27 +42,96 @@ class Employee extends Model
         // default timezone is "Asia/Shanghai"
 
         $now = Carbon::now('Asia/Shanghai');
-
+        
+        // Load time from db
         $am_start_timeNode = DB::table('time_nodes')
                         ->where('name', '=', 'am_start')
                         ->first();
 
         $am_start = Carbon::create(null, null, null, $am_start_timeNode->hour, $am_start_timeNode->minute, $am_start_timeNode->second);
         if ($am_start_timeNode->day) {
-            $am_start->addDays($am_start_timeNode);
+            $am_start->addDays($am_start_timeNode->day);
+        }
+        
+        $am_end_timeNode = DB::table('time_nodes')
+                        ->where('name', '=', 'am_end')
+                        ->first();
+
+        $am_end = Carbon::create(null, null, null, $am_end_timeNode->hour, $am_end_timeNode->minute, $am_end_timeNode->second);
+        if ($am_end_timeNode->day) {
+            $am_end->addDays($am_end_timeNode->day);
         }
 
+		$pm_start_timeNode = DB::table('time_nodes')
+                        ->where('name', '=', 'pm_start')
+                        ->first();
+
+        $pm_start = Carbon::create(null, null, null, $pm_start_timeNode->hour, $pm_start_timeNode->minute, $pm_start_timeNode->second);
+        if ($pm_start_timeNode->day) {
+            $pm_start->addDays($pm_start_timeNode->day);
+        }
+        
+        $pm_end_timeNode = DB::table('time_nodes')
+                        ->where('name', '=', 'pm_end')
+                        ->first();
+
+        $pm_end = Carbon::create(null, null, null, $pm_end_timeNode->hour, $pm_end_timeNode->minute, $pm_end_timeNode->second);
+        if ($pm_end_timeNode->day) {
+            $pm_end->addDays($pm_end_timeNode->day);
+        }
+        
+        $am_ddl_timeNode = DB::table('time_nodes')
+                        ->where('name', '=', 'am_ddl')
+                        ->first();
+
+        $am_ddl = Carbon::create(null, null, null, $am_ddl_timeNode->hour, $am_ddl_timeNode->minute, $am_ddl_timeNode->second);
+        if ($am_ddl_timeNode->day) {
+            $am_ddl->addDays($am_ddl_timeNode->day);
+        }
+        
+        $am_late_ddl_timeNode = DB::table('time_nodes')
+                        ->where('name', '=', 'am_late_ddl')
+                        ->first();
+        
+        $am_late_ddl = Carbon::create(null, null, null, $am_late_ddl_timeNode->hour, $am_late_ddl_timeNode->minute, $am_late_ddl_timeNode->second);
+        if ($am_late_ddl_timeNode->day) {
+        	$am_late_ddl->addDays($am_late_ddl_timeNode->day);
+        }
+        
+        $pm_ddl_timeNode = DB::table('time_nodes')
+                        ->where('name', '=', 'pm_ddl')
+                        ->first();
+        $pm_ddl = Carbon::create(null, null, null, $pm_ddl_timeNode->hour, $pm_ddl_timeNode->minute, $pm_ddl_timeNode->second);
+        if ($pm_ddl_timeNode->day) {
+            $pm_ddl->addDays($pm_ddl_timeNode->day);
+        }
+        
+        $pm_early_ddl_timeNode = DB::table('time_nodes')
+                        ->where('name', '=', 'pm_early_ddl')
+                        ->first();
+        $pm_early_ddl = Carbon::create(null, null, null, $pm_early_ddl_timeNode->hour, $pm_early_ddl_timeNode->minute, $pm_early_dll_timeNode->second);
+        if ($pm_early_ddl_timeNode->day) {
+            $pm_early_ddl->addDays($pm_early_ddl_timeNode->day);
+        }
+        
+        $pm_away_timeNode = DB::table('time_nodes')
+                         ->where('name', '=', 'pm_away')
+                         ->first();
+        $pm_away = Carbon::create(null, null, null, $pm_away_timeNode->hour, $pm_away_timeNode->minute, $pm_away_timeNode->second);
+        if ($pm_away_timeNode->day) {
+            $pm_away->addDays($pm_away_timeNode->day);
+        }
 
         // $am_start           = Carbon::create(null, null, null, 3, 0, 0);
-        $am_end             = Carbon::create(null, null, null, 14, 0, 0);
-        $pm_start           = Carbon::create(null, null, null, 11, 59, 59);
-        $pm_end             = Carbon::create(null, null, null, 3, 0, 0)->addDays(1);
+        // $am_end             = Carbon::create(null, null, null, 14, 0, 0);
+        // $pm_start           = Carbon::create(null, null, null, 11, 59, 59);
+        // $pm_end             = Carbon::create(null, null, null, 3, 0, 0)->addDays(1);
 
-        $am_ddl         = Carbon::create(null, null, null, 8, 0, 0);
-        $am_late_ddl    = Carbon::create(null, null, null, 10, 0, 0);
-        $pm_ddl         = Carbon::create(null, null, null, 14, 0, 0);
-        $pm_early_ddl    = Carbon::create(null, null, null, 16, 0, 0);
-        $pm_away        = Carbon::create(null, null, null, 17, 59, 59);
+        // $am_ddl         = Carbon::create(null, null, null, 8, 0, 0);
+        // $am_late_ddl    = Carbon::create(null, null, null, 10, 0, 0);
+        // $pm_ddl         = Carbon::create(null, null, null, 14, 0, 0);
+        // $pm_early_ddl    = Carbon::create(null, null, null, 16, 0, 0);
+        // $pm_away        = Carbon::create(null, null, null, 17, 59, 59);
 
         // AM
         $today_am_records = DB::table('records')
