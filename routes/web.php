@@ -40,5 +40,6 @@ Route::get('test', function(){
 Route::group(['middleware' => 'auth'], function() {
 	Route::get('employees', 'EmployeeController@show_all');
 	Route::get('employees/{work_number}', 'EmployeeController@show_records');
+	Route::put('employees/{work_number}/records/{id}', 'RecordController@update');
 	Route::get('records', 'RecordController@show_records');
 });
