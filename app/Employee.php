@@ -39,14 +39,24 @@ class Employee extends Model
     }
 
     public function special_records() {
+        // default timezone is "Asia/Shanghai"
 
         $now = Carbon::now('Asia/Shanghai');
 
-        // default timezone is "Asia/Shanghai"
-        $am_start           = Carbon::create(null, null, null, 3, 0, 0);
+        $am_start_timeNode = DB::table('time_nodes')
+                        ->where('name', '=', 'am_start')
+                        ->first();
+
+        $am_start = Carbon::create(null, null, null, $am_start_timeNode->hour, $am_start_timeNode->minute, $am_start_timeNode->second);
+        if ($am_start_timeNode->day) {
+            $am_start->addDays($am_start_timeNode);
+        }
+
+
+        // $am_start           = Carbon::create(null, null, null, 3, 0, 0);
         $am_end             = Carbon::create(null, null, null, 14, 0, 0);
         $pm_start           = Carbon::create(null, null, null, 11, 59, 59);
-        $pm_end             = Carbon::create(null, null, null, 3, 0, 0)->addDay();
+        $pm_end             = Carbon::create(null, null, null, 3, 0, 0)->addDays(1);
 
         $am_ddl         = Carbon::create(null, null, null, 8, 0, 0);
         $am_late_ddl    = Carbon::create(null, null, null, 10, 0, 0);
