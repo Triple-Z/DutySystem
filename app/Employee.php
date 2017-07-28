@@ -109,7 +109,7 @@ class Employee extends Model
         $pm_early_ddl_timeNode = DB::table('time_nodes')
                         ->where('name', '=', 'pm_early_ddl')
                         ->first();
-        $pm_early_ddl = Carbon::create(null, null, null, $pm_early_ddl_timeNode->hour, $pm_early_ddl_timeNode->minute, $pm_early_dll_timeNode->second);
+        $pm_early_ddl = Carbon::create(null, null, null, $pm_early_ddl_timeNode->hour, $pm_early_ddl_timeNode->minute, $pm_early_ddl_timeNode->second);
         if ($pm_early_ddl_timeNode->day) {
             $pm_early_ddl->addDays($pm_early_ddl_timeNode->day);
         }
