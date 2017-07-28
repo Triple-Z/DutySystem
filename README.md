@@ -18,22 +18,22 @@ A duty system for Drone Institution of NUAA.
 	* 7.4. [table name: `user_action_records`](#tablename:user_action_records)
 * 8. [Migrations](#Migrations)
 * 9. [Seeds](#Seeds)
-* 10. [Check In](#CheckIn)
-* 11. [Check Out](#CheckOut)
-* 12. [Refresh Frequency](#RefreshFrequency)
-* 13. [note](#note)
-	* 13.1. [Error message:](#Errormessage:)
-	* 13.2. [Solution](#Solution)
-	* 13.3. [Change Server Timezone](#ChangeServerTimezone)
-* 14. [Source Code rewrite](#SourceCoderewrite)
-	* 14.1. [modal position](#modalposition)
-	* 14.2. [positionmethod](#positionmethod)
-* 15. [Web-view Layouts Design](#Web-viewLayoutsDesign)
-	* 15.1. [general page](#generalpage)
-	* 15.2. [graph page](#graphpage)
-	* 15.3. [valid records](#validrecords)
-	* 15.4. [holiday page(option)](#holidaypageoption)
-	* 15.5. [timeedit page](#timeeditpage)
+* 10. [Important Timestamp](#ImportantTimestamp)
+	* 10.1. [Default Timezone](#DefaultTimezone)
+* 11. [Refresh Frequency](#RefreshFrequency)
+* 12. [note](#note)
+	* 12.1. [Error message:](#Errormessage:)
+	* 12.2. [Solution](#Solution)
+	* 12.3. [Change Server Timezone](#ChangeServerTimezone)
+* 13. [Source Code rewrite](#SourceCoderewrite)
+	* 13.1. [modal position](#modalposition)
+	* 13.2. [positionmethod](#positionmethod)
+* 14. [Web-view Layouts Design](#Web-viewLayoutsDesign)
+	* 14.1. [general page](#generalpage)
+	* 14.2. [graph page](#graphpage)
+	* 14.3. [valid records](#validrecords)
+	* 14.4. [holiday page(option)](#holidaypageoption)
+	* 14.5. [timeedit page](#timeeditpage)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -70,9 +70,10 @@ php artisan migrate
 > password: `secret`
 
 remote database:
-IP: `119.29.150.233:3306`
-Account: `root`
-Password: `DutySystem`
+
+- IP: `119.29.150.233:3306`
+- Account: `root`
+- Password: `DutySystem`
 
 # Service Logic
 
@@ -88,6 +89,7 @@ Password: `DutySystem`
 - ActionRecord (For admins)
 - CarRecord
 - CardRecord
+- TimeNode
 
 ###  3.1. <a name='ModelRelationship'></a>Model Relationship
 
@@ -207,6 +209,7 @@ columns:
 - 2017_07_23_142002_create_login_records_table
 - 2017_07_24_130805_create_car_records_table
 - 2017_07_24_132509_create_card_records_table
+- 2017_07_28_080332_create_time_nodes_table
 
 ```bash
 php artisan migrate:reset
@@ -223,6 +226,7 @@ php artisan migrate
 - ActionRecordSeeder
 - CarRecordSeeder
 - CardRecordSeeder
+- TimeNodeSeeder
 
 ```bash
 composer dump-autoload
@@ -232,21 +236,42 @@ php artisan db:seed
 记得将需要 seed 的数据在 `database/seeds/DatabaseSeeder.php` 中注册。
 
 
-##  10. <a name='CheckIn'></a>Check In
+##  10. <a name='ImportantTimestamp'></a>Important Timestamp
 
-签到
+重要时间戳
 
-##  11. <a name='CheckOut'></a>Check Out
+- Global
+```php
+$am_start = `3:00` // 上午记录开始时间
+$am_end = `14:00` // 上午记录结束时间
+$pm_start = `12:00` // 下午记录开始时间
+$pm_end = `+1Day 3:00` // 下午记录结束时间
+```
+- AM
+```php
+$am_ddl = `8:00` // 上午签到最晚时间
+$am_late_ddl = `10:00` // 上午签到迟到最晚时间
+```
+- PM
+```php
+$pm_ddl = `14:00` // 下午签到最晚时间
+$pm_away = `18:00` // 下午离开最早时间
+$pm_early_ddl = `16:00` // 下午离开早退最早时间
+```
 
-签出
+###  10.1. <a name='DefaultTimezone'></a>Default Timezone
 
-##  12. <a name='RefreshFrequency'></a>Refresh Frequency
+默认时区
 
-刷新频率
+`UTC+8` `Asia/Shanghai`
+
+##  11. <a name='RefreshFrequency'></a>Scheduling task
+
+计划任务
 
 
-##  13. <a name='note'></a>note
-###  13.1. <a name='Errormessage:'></a>Error message:
+##  12. <a name='note'></a>note
+###  12.1. <a name='Errormessage:'></a>Error message:
 ```
 $ php artisan migrate
 Migration table created successfully.
@@ -261,7 +286,7 @@ Migration table created successfully.
   SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was t
   oo long; max key length is 1000 bytes
 ```
-###  13.2. <a name='Solution'></a>Solution
+###  12.2. <a name='Solution'></a>Solution
 in file: `config\database.php`
 
 ```
@@ -270,7 +295,7 @@ in file: `config\database.php`
 'engine' => 'InnoDB ROW_FORMAT=DYNAMIC',
 ```
 
-###  13.3. <a name='ChangeServerTimezone'></a>Change Server Timezone
+###  12.3. <a name='ChangeServerTimezone'></a>Change Server Timezone
 
 ```bash
 sudo timedatectl set-timezone Asia/Shanghai
@@ -281,15 +306,15 @@ date
 >
 > `Caron::now('Asia/Shanghai')` **OR** `Carbon::now('CST')`
 
-##  14. <a name='SourceCoderewrite'></a>Source Code rewrite
+##  13. <a name='SourceCoderewrite'></a>Source Code rewrite
 
-###  14.1. <a name='modalposition'></a>modal position
+###  13.1. <a name='modalposition'></a>modal position
 
 demand:
 
 make the modal box be at a right position
 
-###  14.2. <a name='positionmethod'></a>positionmethod
+###  13.2. <a name='positionmethod'></a>positionmethod
 
 find the function 'Modal.prototype.adjustDialog' bootstrap.js(in this project is included in public/js/app.js),then replace them as the follow code:
 
@@ -318,9 +343,9 @@ Modal.prototype.adjustDialog = function () {
 ```
 
 
-##  15. <a name='Web-viewLayoutsDesign'></a>Web-view Layouts Design
+##  14. <a name='Web-viewLayoutsDesign'></a>Web-view Layouts Design
 
-###  15.1. <a name='generalpage'></a>general page
+###  14.1. <a name='generalpage'></a>general page
 
 function:display all the records ordered by time stamp
 
@@ -346,7 +371,7 @@ view structure:
 ```
 
 
-###  15.2. <a name='graphpage'></a>graph page
+###  14.2. <a name='graphpage'></a>graph page
 
 function: build a calendar, and display each employee duty status.
 
@@ -370,7 +395,7 @@ view structure:
 ```
 
 
-###  15.3. <a name='validrecords'></a>valid records
+###  14.3. <a name='validrecords'></a>valid records
 
 function: display all records by day.
 
@@ -394,7 +419,7 @@ view structure:
 ```
 
 
-###  15.4. <a name='holidaypageoption'></a>holiday page(option)
+###  14.4. <a name='holidaypageoption'></a>holiday page(option)
 
 function: mark up holiday.
 
@@ -418,7 +443,7 @@ view structure:
 ```
 
 
-###  15.5. <a name='timeeditpage'></a>timeedit page
+###  14.5. <a name='timeeditpage'></a>timeedit page
 
 function:define legal time
 

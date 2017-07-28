@@ -18,12 +18,6 @@ class EmployeeController extends Controller
         return response()->json($employees);
     }
 
-    // show employee information
-    public function show_info($work_number) {
-        $employees = Employee::where('name', '=', $name)->get();
-        return response()->json($employees);
-    }
-
     public function show_records($work_number) {
         $employee = Employee::where('work_number', '=', $work_number)->first();
         $records = $employee->records()->latest('check_time')->paginate(15);
