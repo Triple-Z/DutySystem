@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\TimeNode;
 
 class TimeNodeController extends Controller
 {
@@ -19,9 +20,8 @@ class TimeNodeController extends Controller
         $am_start_minute    = $request->input('am_start_minute');
         $am_start_second    = $request->input('am_start_second');
 
-        $am_start = DB::table('time_nodes')
-                        ->where('name', '=', 'am_start')
-                        ->first();
+        $am_start = TimeNode::where('name', '=', 'am_start')
+                            ->first();
 
         $am_start->day      = $am_start_day;
         $am_start->hour     = $am_start_hour;
@@ -36,9 +36,8 @@ class TimeNodeController extends Controller
         $am_end_minute    = $request->input('am_end_minute');
         $am_end_second    = $request->input('am_end_second');
 
-        $am_end = DB::table('time_nodes')
-                        ->where('name', '=', 'am_end')
-                        ->first();
+        $am_end =TimeNode::where('name', '=', 'am_end')
+                          ->first();
 
         $am_end->day      = $am_end_day;
         $am_end->hour     = $am_end_hour;
@@ -53,9 +52,8 @@ class TimeNodeController extends Controller
         $pm_start_minute    = $request->input('pm_start_minute');
         $pm_start_second    = $request->input('pm_start_second');
 
-        $pm_start = DB::table('time_nodes')
-                        ->where('name', '=', 'pm_start')
-                        ->first();
+        $pm_start = TimeNode::where('name', '=', 'pm_start')
+                            ->first();
 
         $pm_start->day      = $pm_start_day;
         $pm_start->hour     = $pm_start_hour;
@@ -70,9 +68,8 @@ class TimeNodeController extends Controller
         $pm_end_minute    = $request->input('pm_end_minute');
         $pm_end_second    = $request->input('pm_end_second');
 
-        $pm_end = DB::table('time_nodes')
-                        ->where('name', '=', 'pm_end')
-                        ->first();
+        $pm_end = TimeNode::where('name', '=', 'pm_end')
+                            ->first();
 
         $pm_end->day      = $pm_end_day;
         $pm_end->hour     = $pm_end_hour;
@@ -87,9 +84,8 @@ class TimeNodeController extends Controller
         $am_ddl_minute    = $request->input('am_ddl_minute');
         $am_ddl_second    = $request->input('am_ddl_second');
 
-        $am_ddl = DB::table('time_nodes')
-                        ->where('name', '=', 'am_ddl')
-                        ->first();
+        $am_ddl = TimeNode::where('name', '=', 'am_ddl')
+                            ->first();
 
         $am_ddl->day      = $am_ddl_day;
         $am_ddl->hour     = $am_ddl_hour;
@@ -104,9 +100,8 @@ class TimeNodeController extends Controller
         $am_late_ddl_minute    = $request->input('am_late_ddl_minute');
         $am_late_ddl_second    = $request->input('am_late_ddl_second');
 
-        $am_late_ddl = DB::table('time_nodes')
-                        ->where('name', '=', 'am_late_ddl')
-                        ->first();
+        $am_late_ddl = TimeNode::where('name', '=', 'am_late_ddl')
+                            ->first();
 
         $am_late_ddl->day      = $am_late_ddl_day;
         $am_late_ddl->hour     = $am_late_ddl_hour;
@@ -121,9 +116,8 @@ class TimeNodeController extends Controller
         $pm_ddl_minute    = $request->input('pm_ddl_minute');
         $pm_ddl_second    = $request->input('pm_ddl_second');
 
-        $pm_ddl = DB::table('time_nodes')
-                        ->where('name', '=', 'pm_ddl')
-                        ->first();
+        $pm_ddl = TimeNode::where('name', '=', 'pm_ddl')
+                            ->first();
 
         $pm_ddl->day      = $pm_ddl_day;
         $pm_ddl->hour     = $pm_ddl_hour;
@@ -138,9 +132,8 @@ class TimeNodeController extends Controller
         $pm_early_ddl_minute    = $request->input('pm_early_ddl_minute');
         $pm_early_ddl_second    = $request->input('pm_early_ddl_second');
 
-        $pm_early_ddl = DB::table('time_nodes')
-                        ->where('name', '=', 'pm_early_ddl')
-                        ->first();
+        $pm_early_ddl = TimeNode::where('name', '=', 'pm_early_ddl')
+                            ->first();
 
         $pm_early_ddl->day      = $pm_early_ddl_day;
         $pm_early_ddl->hour     = $pm_early_ddl_hour;
@@ -155,9 +148,8 @@ class TimeNodeController extends Controller
         $pm_away_minute    = $request->input('pm_away_minute');
         $pm_away_second    = $request->input('pm_away_second');
 
-        $pm_away = DB::table('time_nodes')
-                        ->where('name', '=', 'pm_away')
-                        ->first();
+        $pm_away = TimeNode::where('name', '=', 'pm_away')
+                            ->first();
 
         $pm_away->day      = $pm_away_day;
         $pm_away->hour     = $pm_away_hour;
@@ -165,5 +157,9 @@ class TimeNodeController extends Controller
         $pm_away->second   = $pm_away_second;
 
         $pm_away->save();
+        
+        $request->session()->flash('flash_success', '修改成功');
+        $request->session()->flash('flash_important', true);
+        return redirect('/');
     }
 }

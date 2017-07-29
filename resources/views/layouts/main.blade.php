@@ -30,6 +30,25 @@
         </script> -->
     </head>
     <body>
+    
+        {{-- Session message   --}}
+        @if(session()->has('flash_success'))
+            @if(session()->has('flash_important'))
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                {{-- 没有手动关闭应该自动消失   --}}
+            @endif
+            <div class="alert alert-success">{{ session()->get('flash_success', 'default') }}</div>
+            
+        @endif
+
+        @if(session()->has('flash_warning'))
+            <div class="alert alert-warning">{{ session()->get('flash_warning', 'default') }}</div>
+        @endif
+
+        @if(session()->has('flash_error'))
+            <div class="alert alert-success">{{ session()->get('flash_error', 'default') }}</div>
+        @endif
+
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -88,6 +107,8 @@
                     </ul>    
                 </div>
                 @yield('content-in-main')
+                
+
             </div>
         </div>
     </body>

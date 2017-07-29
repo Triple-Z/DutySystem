@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Employee;
 use App\Record;
 use Carbon\Carbon;
+use App\TimeNode;
 
 
 class RouteController extends Controller
@@ -42,6 +43,10 @@ class RouteController extends Controller
     }
 
     public function timeedit() {
-        return view('timeedit');
+        $timenodes = TimeNode::all();
+
+        return view('timeedit', [
+            'timenodes' => $timenodes,
+        ]);
     }
 }
