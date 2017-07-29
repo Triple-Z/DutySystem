@@ -47,7 +47,6 @@ class Employee extends Model
         $am_start_timeNode = DB::table('time_nodes')
                         ->where('name', '=', 'am_start')
                         ->first();
-
         $am_start = Carbon::create(null, null, null, $am_start_timeNode->hour, $am_start_timeNode->minute, $am_start_timeNode->second);
         if ($am_start_timeNode->day) {
             $am_start->addDays($am_start_timeNode->day);
@@ -56,7 +55,6 @@ class Employee extends Model
         $am_end_timeNode = DB::table('time_nodes')
                         ->where('name', '=', 'am_end')
                         ->first();
-
         $am_end = Carbon::create(null, null, null, $am_end_timeNode->hour, $am_end_timeNode->minute, $am_end_timeNode->second);
         if ($am_end_timeNode->day) {
             $am_end->addDays($am_end_timeNode->day);
@@ -65,7 +63,6 @@ class Employee extends Model
 		$pm_start_timeNode = DB::table('time_nodes')
                         ->where('name', '=', 'pm_start')
                         ->first();
-
         $pm_start = Carbon::create(null, null, null, $pm_start_timeNode->hour, $pm_start_timeNode->minute, $pm_start_timeNode->second);
         if ($pm_start_timeNode->day) {
             $pm_start->addDays($pm_start_timeNode->day);
@@ -74,7 +71,6 @@ class Employee extends Model
         $pm_end_timeNode = DB::table('time_nodes')
                         ->where('name', '=', 'pm_end')
                         ->first();
-
         $pm_end = Carbon::create(null, null, null, $pm_end_timeNode->hour, $pm_end_timeNode->minute, $pm_end_timeNode->second);
         if ($pm_end_timeNode->day) {
             $pm_end->addDays($pm_end_timeNode->day);
@@ -83,7 +79,6 @@ class Employee extends Model
         $am_ddl_timeNode = DB::table('time_nodes')
                         ->where('name', '=', 'am_ddl')
                         ->first();
-
         $am_ddl = Carbon::create(null, null, null, $am_ddl_timeNode->hour, $am_ddl_timeNode->minute, $am_ddl_timeNode->second);
         if ($am_ddl_timeNode->day) {
             $am_ddl->addDays($am_ddl_timeNode->day);
@@ -92,7 +87,6 @@ class Employee extends Model
         $am_late_ddl_timeNode = DB::table('time_nodes')
                         ->where('name', '=', 'am_late_ddl')
                         ->first();
-        
         $am_late_ddl = Carbon::create(null, null, null, $am_late_ddl_timeNode->hour, $am_late_ddl_timeNode->minute, $am_late_ddl_timeNode->second);
         if ($am_late_ddl_timeNode->day) {
         	$am_late_ddl->addDays($am_late_ddl_timeNode->day);

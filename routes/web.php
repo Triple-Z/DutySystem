@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('valid/date/{date}', 'RouteController@valid_date');
 	Route::get('holiday', 'RouteController@holiday');
 	Route::get('timeedit', 'RouteController@timeedit');
+	Route::put('timeedit/update', 'TimeNodeController@update');
 });
 
 // Rotues for modifying admin info

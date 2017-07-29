@@ -144,9 +144,10 @@ $record->employee; // 返回某条指定签到记录的雇员信息
 - GET `/export`: 返回导出excel界面
 - GET `/holiday`： 返回节假日编辑界面
 - GET `/timeedit`: 返回有效时间编辑界面
+- PUT `/timeedit/update`: 更改出勤时间设置
 
 - GET `/employees/{work_number}`: 返回某个指定雇员信息
-- GET `/employees/{work_number}/records`: 返回某个指定雇员的签到记录
+- PUT `/employees/{work_number}/records/{id}`: 更改某个指定雇员的某条指定出勤记录
 
 - GET `/admin/actions`: 返回当前管理员操作信息
 - GET `/admin/actions/{id}`: 返回某个指定管理员的操作信息
