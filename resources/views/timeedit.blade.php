@@ -4,8 +4,9 @@
 	<div class="panel-heading" style="text-align: center;font-size: large;margin-top: 5%;">考勤时间编辑</div>
 	<div class="panel-body" style="margin-bottom: 5%;">
 	    <div class="table-responsive col-md-10 col-md-offset-1">
-		    <form class="form-horizontal" method="POST" action="">
+		    <form class="form-horizontal" method="POST" action="timeedit/update">
 		    	{{ csrf_field() }}
+				{{ method_field('PUT') }}
 		        <table class="table table-striped">
 		            <thead  style="text-align:center;">
 		                <tr>
@@ -41,75 +42,12 @@
 								@endif
 								
 								<th><input type="text" value="{{ $timenode->day }}" name="{{ $timenode->name . '_day' }}"/></th>
-								<th><input type="text" value="{{ $timenode->hour }}" name="{{ $timenode->hour . '_hour' }}"/></th>
-								<th><input type="text" value="{{ $timenode->minute }}" name="{{ $timenode->minute . '_minute' }}"/></th>
-								<th><input type="text" value="{{ $timenode->second }}" name="{{ $timenode->second . '_second' }}"/></th>
+								<th><input type="text" value="{{ $timenode->hour }}" name="{{ $timenode->name . '_hour' }}"/></th>
+								<th><input type="text" value="{{ $timenode->minute }}" name="{{ $timenode->name . '_minute' }}"/></th>
+								<th><input type="text" value="{{ $timenode->second }}" name="{{ $timenode->name . '_second' }}"/></th>
 		                	</tr>
 						@endforeach
 
-		                {{--  <tr>
-		                    <th title="2333"></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                </tr>             
-		                <tr>
-		                    <th title="2333">example_name</th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                </tr>  
-		                <tr>
-		                    <th title="2333">example_name</th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                </tr>  
-		                <tr>
-		                    <th title="2333">example_name</th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                </tr>  
-		                <tr>
-		                    <th title="2333">example_name</th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                </tr>  
-		                <tr>
-		                    <th title="2333">example_name</th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                </tr>  
-		                <tr>
-		                    <th title="2333">example_name</th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                </tr>  
-		                <tr>
-		                    <th title="2333">example_name</th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                </tr>  
-		                <tr>
-		                    <th title="2333">example_name</th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                    <th><input type="text" value="example_value" name=""/></th>
-		                </tr>       --}}
 		            </tbody>
 		        </table>
 	            <button type="submit" class="btn btn-primary pull-right">
