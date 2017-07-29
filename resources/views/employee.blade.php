@@ -23,8 +23,9 @@ th {
 <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-datetimepicker.min.css')}}">
 <script src="{{asset('js/bootstrap-datetimepicker.min.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
-    function get_record_id(value){
-        $("#record_id").val(value);
+    function set_action(work_number,record_id){
+        var action = "/employees/" + work_number + "/records/" + record_id;
+        $("#edit_form").attr("action",action);
     }
     function  getExplorer() {  
         var explorer = window.navigator.userAgent ;  
@@ -111,7 +112,7 @@ th {
     $(function () {
 
         var picker2 = $('#datetimepicker2').datetimepicker({  
-            format: 'YYYY-MM-DD',  
+            format: 'YYYY-MM-DD HH:mm',  
             locale: moment.locale('zh-cn'),
             maxDate: today
         });  
@@ -139,7 +140,7 @@ th {
                 <div id="modal-switch-label" class="modal-title" style="font-size: large;">记录修正</div>
             </div>
             <div class="modal-body">
-                <form role="form" style="margin:15px;" method="POST" action="">
+                <form id="edit_form" role="form" style="margin:15px;" method="POST" action="">
                     {{ csrf_field() }}
                     {{ method_field('PUT') }}
                     <div class="form-group">
@@ -166,7 +167,7 @@ th {
                     <div class="form-group">
                         <label class="control-label visible-ie8 visible-ie9">备注</label>
                         <input class="form-control placeholder-no-fix" type="note" autocomplete="off" id="register_password" name="note" required>
-                        <input id="record_id" type="record_id" name="record_id" hidden="hidden">
+                        <!-- <input id="record_id" type="record_id" name="record_id" hidden="hidden"> -->
                         <button type="submit" class="btn btn-primary" style="margin-top: 15px;margin-left: 90%;">提交</button>
                     </div>
                 </form>
@@ -238,7 +239,7 @@ th {
                     @endif
 
                     <th>
-                        <button data-toggle="modal" data-target="#modal-switch" value="{{$record->id}}" class="btn-primary btn" onclick="get_record_id(this.value)">修改</button>
+                        <button id="{{$record->id}}" data-toggle="modal" data-target="#modal-switch" class="btn-primary btn" value="{{$record->employee->work_number}}" onclick="set_action(this.value,this.id)">修改</button>
                     </th>
                 </tr>
                 @endforeach
