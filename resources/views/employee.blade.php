@@ -18,7 +18,10 @@ th {
 @endsection
 
 @section('script')
-
+<script src="{{asset('js/moment.js')}}" type="text/javascript"></script>
+<script src="{{asset('js/zh-cn.js')}}" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-datetimepicker.min.css')}}">
+<script src="{{asset('js/bootstrap-datetimepicker.min.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
     function get_record_id(value){
         $("#record_id").val(value);
@@ -96,6 +99,32 @@ th {
         }  
     })()  
 </script>  
+<script type="text/javascript">
+    function today() {
+        var dd = new Date();
+        var y = dd.getFullYear();
+        var m = dd.getMonth()+1;//获取当前月份的日期
+        var d = dd.getDate();
+        return y+"-"+m+"-"+d;
+    }
+    var today = today();
+    $(function () {
+
+        var picker2 = $('#datetimepicker2').datetimepicker({  
+            format: 'YYYY-MM-DD',  
+            locale: moment.locale('zh-cn'),
+            maxDate: today
+        });  
+        //动态设置最小值  
+        picker1.on('dp.change', function (e) {  
+            picker2.data('DateTimePicker').minDate(e.date);  
+        });  
+        //动态设置最大值  
+        picker2.on('dp.change', function (e) {  
+            picker1.data('DateTimePicker').maxDate(e.date);  
+        });  
+    }); 
+</script>
 @endsection
 
 @section('content-in-main')
@@ -126,12 +155,12 @@ th {
                     <br/>
                     <div class="form-group">  
                         <label>修改为：</label>  
-                        <div class='input-group date' id='datetimepicker2'>  
-                            <input type='text' class="form-control" />  
+                        <div class="input-group date" id="datetimepicker2">  
+                            <input id="calendar233" type="text" class="form-control" type="time" autocomplete="off" placeholder="显示日期" name="start_time" required/>  
                             <span class="input-group-addon">  
                                 <span class="glyphicon glyphicon-calendar"></span>  
-                            </span>  
-                        </div>  
+                            </span>
+                        </div>   
                     </div>  
                     <div class="form-group">
                         <label class="control-label visible-ie8 visible-ie9">备注</label>

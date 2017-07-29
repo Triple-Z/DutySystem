@@ -156,11 +156,12 @@ th {
     <div>
             <form class="form-horizontal" method="POST" action="">
                 {{ csrf_field() }}
+                {{ method_field('put')}}
                 <div class="col-md-2 col-md-offset-3">  
                     <div class="form-group">  
                         <label>起始时间：</label>  
                         <!--指定 date标记-->  
-                        <div class="input-group date" id="datetimepicker1" style="width: 81%;">  
+                        <div class="input-group date" id="datetimepicker1" style="width:95%;">  
                             <input type="text" class="form-control" type="time" autocomplete="off" placeholder="选择显示时段" name="start_time" required/>  
                             <span class="input-group-addon">  
                                 <span class="glyphicon glyphicon-calendar"></span>  
@@ -172,18 +173,22 @@ th {
                     <div class="form-group">  
                         <label>结束时间：</label>  
                         <!--指定 date标记-->  
-                        <div class="input-group date" id="datetimepicker2">  
+                        <div class="input-group date" id="datetimepicker2" style="width:95%;">  
                             <input type='text' class="form-control" type="time" autocomplete="off" placeholder="选择显示时段" name="end_time" required/>  
                             <span class="input-group-addon">  
                                 <span class="glyphicon glyphicon-calendar"></span>  
                             </span>  
-                            <button type="submit" class="btn btn-primary pull-right">
-                                确定
-                            </button>
+
                         </div>  
                     </div>
                 </div> 
-            </form>
+                <div class="col-md-1" style="margin-left: -2%;">
+                    <div class="form-group">
+                            <button type="submit" class="btn btn-primary pull-right" style="margin-top: 26px;">
+                                确定
+                            </button>
+                    </div>
+                </div>
     </div>
 </div>
 
