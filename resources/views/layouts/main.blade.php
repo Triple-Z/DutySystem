@@ -33,7 +33,12 @@
     
         {{-- Session message   --}}
         @if(session()->has('flash_success'))
+            @if(session()->has('flash_important'))
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                {{-- 没有手动关闭应该自动消失   --}}
+            @endif
             <div class="alert alert-success">{{ session()->get('flash_success', 'default') }}</div>
+            
         @endif
 
         @if(session()->has('flash_warning'))

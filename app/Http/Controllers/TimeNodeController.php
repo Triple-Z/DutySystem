@@ -159,6 +159,7 @@ class TimeNodeController extends Controller
         $pm_away->save();
         
         $request->session()->flash('flash_success', '修改成功');
+        $request->session()->flash('flash_important', true);
         return redirect('/');
     }
 }
