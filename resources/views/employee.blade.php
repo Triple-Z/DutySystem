@@ -140,7 +140,8 @@ th {
             </div>
             <div class="modal-body">
                 <form role="form" style="margin:15px;" method="POST" action="">
-                    {{csrf_field()}}
+                    {{ csrf_field() }}
+                    {{ method_field('PUT') }}
                     <div class="form-group">
                         <label class="control-label">选择修改项</label><br/>
                         <select id="period" class="selectpicker btn" data-live-search-style="begins" name="period" style="float: none;">
@@ -154,7 +155,7 @@ th {
                     </div>
                     <br/>
                     <div class="form-group">  
-                        <label>修改为：</label>  
+                        <label>修改为：</label>
                         <div class="input-group date" id="datetimepicker2">  
                             <input id="calendar233" type="text" class="form-control" type="time" autocomplete="off" placeholder="显示日期" name="start_time" required/>  
                             <span class="input-group-addon">  
