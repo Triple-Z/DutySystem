@@ -229,7 +229,7 @@ th {
             </tbody>
         </table>
         <div style="text-align: center;">
-            {{ $reports->links() }}
+            {{--  {{ $reports->links() }}  --}}
         </div>
     </div>
 </div>

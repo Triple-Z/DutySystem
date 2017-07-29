@@ -30,12 +30,12 @@ class RouteController extends Controller
         return view('graph');
     }
 
-    public function correct() {
-        return view('correct');
-    }
+    // public function correct() {
+    //     return view('correct');
+    // }
 
-    public function export() {
-        return view('export');
+    public function report() {
+        return view('report');
     }
 
     public function holiday() {
