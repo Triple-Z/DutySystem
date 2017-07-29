@@ -146,14 +146,39 @@ $record->employee; // 返回某条指定签到记录的雇员信息
 - GET `/holiday`： 返回节假日编辑界面
 - GET `/timeedit`: 返回有效时间编辑界面
 - PUT `/timeedit/update`: 更改出勤时间设置
+  > 请求变量：
+  > ```php
+  > $am_start_['day', 'hour', 'minute', 'second'] // 上班开始时间（时、分、秒）
+  > $am_end_['day', 'hour', 'minute', 'second'] // 上班结束时间（时、分、秒）
+  > $pm_start_['day', 'hour', 'minute', 'second'] // 下午开始时间（时、分、秒）
+  > $pm_end_['day', 'hour', 'minute', 'second'] // 下午结束时间（时、分、秒）
+  > $am_ddl_['day', 'hour', 'minute', 'second'] // 上午上班时间（时、分、秒）
+  > $am_late_ddl_['day', 'hour', 'minute', 'second'] // 上午迟到最晚时间（时、分、秒）
+  > $pm_ddl_['day', 'hour', 'minute', 'second'] // 下午上班时间（时、分、秒）
+  > $pm_early_ddl_['day', 'hour', 'minute', 'second'] // 下午早退最早时间（时、分、秒）
+  > $pm_away_['day', 'hour', 'minute', 'second'] // 下午下班时间（时、分、秒）
+  > ```
 
 - GET `/employees/{work_number}`: 返回某个指定雇员信息
 - PUT `/employees/{work_number}/records/{id}`: 更改某个指定雇员的某条指定出勤记录
+  > 请求变量：
+  > ```php
+  > $check_direction // 签到方向
+  > $check_method // 签到方式（car || card || 请假）
+  > $card_gate // 刷卡机器编号（可为空）
+  > $note // 备注
+  > ```
 
 - GET `/admin/actions`: 返回当前管理员操作信息
 - GET `/admin/actions/{id}`: 返回某个指定管理员的操作信息
 
 - POST `/admin/resetpassword` 重置管理员密码
+  > 请求变量：
+  > ```php
+  > $oldpassword // 旧密码
+  > $password // 新密码
+  > $password_confirmation // 确认密码
+  > ```
 
 
 ##  7. <a name='Databasetables'></a>Database tables
