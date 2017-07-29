@@ -112,7 +112,7 @@ th {
     $(function () {
 
         var picker2 = $('#datetimepicker2').datetimepicker({  
-            format: 'YYYY-MM-DD HH:mm',  
+            format: 'YYYY-MM-DD HH:mm:ss',  
             locale: moment.locale('zh-cn'),
             maxDate: today
         });  
