@@ -22,8 +22,15 @@ class RouteController extends Controller
         ]);
     }
 
-    public function valid_date($date) {
-        
+    public function valid_date(Request $request) {
+        $date = $request->input('date');
+
+        $employees = Employee::orderBy('work_number')->paginate(15);
+
+        return view('valid_date', [
+            'employees' => $employees,
+            'date' => $date,
+        ]);
     }
 
     public function graph() {

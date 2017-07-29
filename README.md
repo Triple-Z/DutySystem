@@ -142,12 +142,19 @@ $record->employee; // 返回某条指定签到记录的雇员信息
   > $start_time // 开始时间
   > $end_time // 结束时间
   > ```
-  
+
 - GET `/home` : 返回普通管理员登录界面
 - GET `/superhome` : 返回超级管理员登录界面
-- GET `/graph` : 返回图表界面
+<!-- - GET `/graph` : 返回图表界面
 - GET `/correct` : 返回数据修正界面
-- GET `/export` : 返回导出excel界面
+- GET `/export` : 返回导出excel界面 -->
+- GET `/valid` : 返回当日出勤情况界面
+- POST `/valid` : 返回指定某个日期的出勤情况界面
+  > 请求变量：
+  >```php
+  > $date // 请求日期
+  >```
+  
 - GET `/holiday` ： 返回节假日编辑界面
 - GET `/timeedit` : 返回有效时间编辑界面
 - PUT `/timeedit/update` : 更改出勤时间设置
