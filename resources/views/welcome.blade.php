@@ -154,9 +154,8 @@ th {
 <!-- filter choice -->
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <div>
-            <form class="form-horizontal" method="POST" action="">
+            <form class="form-horizontal" method="POST" action="/">
                 {{ csrf_field() }}
-                {{ method_field('put')}}
                 <div class="col-md-2 col-md-offset-3">  
                     <div class="form-group">  
                         <label>起始时间：</label>  

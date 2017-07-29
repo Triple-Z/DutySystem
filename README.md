@@ -135,17 +135,29 @@ $record->employee; // 返回某条指定签到记录的雇员信息
 
 应用程序接口
 
-- GET `/`: 返回所有记录界面
-- GET `/s/{start_time}/e/{end_time}`: 返回指定时间记录界面
-	> 建议改成 `POST` 方法
-- GET `/home`: 返回普通管理员登录界面
-- GET `/superhome`: 返回超级管理员登录界面
-- GET `/graph`: 返回图表界面
-- GET `/correct`: 返回数据修正界面
-- GET `/export`: 返回导出excel界面
-- GET `/holiday`： 返回节假日编辑界面
-- GET `/timeedit`: 返回有效时间编辑界面
-- PUT `/timeedit/update`: 更改出勤时间设置
+- GET `/` : 返回所有记录界面
+- POST `/` : 返回指定日期内记录界面
+  > 请求变量:
+  > ```php
+  > $start_time // 开始时间
+  > $end_time // 结束时间
+  > ```
+
+- GET `/home` : 返回普通管理员登录界面
+- GET `/superhome` : 返回超级管理员登录界面
+<!-- - GET `/graph` : 返回图表界面
+- GET `/correct` : 返回数据修正界面
+- GET `/export` : 返回导出excel界面 -->
+- GET `/valid` : 返回当日出勤情况界面
+- POST `/valid` : 返回指定某个日期的出勤情况界面
+  > 请求变量：
+  >```php
+  > $date // 请求日期
+  >```
+  
+- GET `/holiday` ： 返回节假日编辑界面
+- GET `/timeedit` : 返回有效时间编辑界面
+- PUT `/timeedit/update` : 更改出勤时间设置
   > 请求变量：
   > ```php
   > $am_start_['day', 'hour', 'minute', 'second'] // 上班开始时间（时、分、秒）
@@ -159,8 +171,8 @@ $record->employee; // 返回某条指定签到记录的雇员信息
   > $pm_away_['day', 'hour', 'minute', 'second'] // 下午下班时间（时、分、秒）
   > ```
 
-- GET `/employees/{work_number}`: 返回某个指定雇员信息
-- PUT `/employees/{work_number}/records/{id}`: 更改某个指定雇员的某条指定出勤记录
+- GET `/employees/{work_number}` : 返回某个指定雇员信息
+- PUT `/employees/{work_number}/records/{id}` : 更改某个指定雇员的某条指定出勤记录
   > 请求变量：
   > ```php
   > $check_direction // 签到方向
@@ -169,10 +181,10 @@ $record->employee; // 返回某条指定签到记录的雇员信息
   > $note // 备注
   > ```
 
-- GET `/admin/actions`: 返回当前管理员操作信息
-- GET `/admin/actions/{id}`: 返回某个指定管理员的操作信息
+- GET `/admin/actions` : 返回当前管理员操作信息
+- GET `/admin/actions/{id}` : 返回某个指定管理员的操作信息
 
-- POST `/admin/resetpassword` 重置管理员密码
+- POST `/admin/resetpassword` : 重置管理员密码
   > 请求变量：
   > ```php
   > $oldpassword // 旧密码

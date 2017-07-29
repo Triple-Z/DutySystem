@@ -169,7 +169,7 @@ th {
 <!-- filter choice -->
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <div style="margin-top: 20px;">
-            <form id="edit_form" class="form-horizontal" method="POST" action="/valid">
+            <form class="form-horizontal" method="POST" action="/valid">
                 {{ csrf_field() }}
                 <div class="col-md-2 col-md-offset-3">
                     <div style="font-size: 150%;">
@@ -180,7 +180,7 @@ th {
                     <div class="form-group">  
                         <!--指定 date标记-->  
                         <div class="input-group date" id="datetimepicker2">  
-                            <input id="input_date" type="text" class="form-control" type="time" autocomplete="off" placeholder="显示日期" name="date" required/>  
+                            <input type="text" class="form-control" type="time" autocomplete="off" placeholder="显示日期" name="date" required/>  
                             <span class="input-group-addon">  
                                 <span class="glyphicon glyphicon-calendar"></span>  
                             </span>  
@@ -227,47 +227,47 @@ th {
                     <tr>
                         <th><a href="/employees/{{ $employee->work_number }}">{{ $employee->work_number }}</a></th>
                         <th>{{ $employee->name }}</th>
-                        @if (strcmp($employee->special_records()['check_status'], "请假") == 0)
+                        @if (strcmp($employee->special_records_date($date)['check_status'], "请假") == 0)
                             <th>N/A</th>
                             <th>N/A</th>
                             <th>N/A</th>
                             <th>N/A</th>
                         @else 
 
-                            @if($employee->special_records()['today_am_earliest_record'])
-                                <th>{{ $employee->special_records()['today_am_earliest_record']->check_time }}</th> 
+                            @if($employee->special_records_date($date)['today_am_earliest_record'])
+                                <th>{{ $employee->special_records_date($date)['today_am_earliest_record']->check_time }}</th> 
                             @else
                                 <th>N/A</th>
                             @endif
 
-                            @if($employee->special_records()['today_am_latest_record'])
-                                <th>{{ $employee->special_records()['today_am_latest_record']->check_time }}</th> 
+                            @if($employee->special_records_date($date)['today_am_latest_record'])
+                                <th>{{ $employee->special_records_date($date)['today_am_latest_record']->check_time }}</th> 
                             @else
                                 <th>N/A</th>
                             @endif
 
-                            @if($employee->special_records()['today_pm_earliest_record'])
-                                <th>{{ $employee->special_records()['today_pm_earliest_record']->check_time }}</th> 
+                            @if($employee->special_records_date($date)['today_pm_earliest_record'])
+                                <th>{{ $employee->special_records_date($date)['today_pm_earliest_record']->check_time }}</th> 
                             @else
                                 <th>N/A</th>
                             @endif
 
-                            @if($employee->special_records()['today_pm_latest_record'])
-                                <th>{{ $employee->special_records()['today_pm_latest_record']->check_time }}</th> 
+                            @if($employee->special_records_date($date)['today_pm_latest_record'])
+                                <th>{{ $employee->special_records_date($date)['today_pm_latest_record']->check_time }}</th> 
                             @else
                                 <th>N/A</th>
                             @endif
 
                         @endif
 
-                        @if($employee->special_records()['check_status'])
-                            <th>{{ $employee->special_records()['check_status'] }}</th> 
+                        @if($employee->special_records_date($date)['check_status'])
+                            <th>{{ $employee->special_records_date($date)['check_status'] }}</th> 
                         @else
                             <th>N/A</th>
                         @endif
 
-                        @if($employee->special_records()['note'])
-                            <th>{{ $employee->special_records()['note'] }}</th> 
+                        @if($employee->special_records_date($date)['note'])
+                            <th>{{ $employee->special_records_date($date)['note'] }}</th> 
                         @else
                             <th></th>
                         @endif

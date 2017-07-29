@@ -1,7 +1,7 @@
 <?php
 
 Route::get('/', 'IndexController@index');
-Route::get('/s/{start_time}/e/{end_time}', 'IndexController@search');
+Route::post('/', 'IndexController@search');
 
 Auth::routes();
 
@@ -19,7 +19,7 @@ Route::group(['middleware' => 'auth'], function(){
 	// Route::get('graph', 'RouteController@graph');
 	// Route::get('correct', 'RouteController@correct');
 	Route::get('valid', 'RouteController@valid');
-	Route::get('valid/date/{date}', 'RouteController@valid_date');
+	Route::post('valid', 'RouteController@valid_date');
 	Route::get('report', 'RouteController@report');
 	Route::get('holiday', 'RouteController@holiday');
 	Route::get('timeedit', 'RouteController@timeedit');
