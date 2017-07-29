@@ -16,10 +16,11 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
 
 // ALl check in condition
 Route::group(['middleware' => 'auth'], function(){
-	Route::get('graph', 'RouteController@graph');
-	Route::get('correct', 'RouteController@correct');
+	// Route::get('graph', 'RouteController@graph');
+	// Route::get('correct', 'RouteController@correct');
 	Route::get('valid', 'RouteController@valid');
 	Route::get('valid/date/{date}', 'RouteController@valid_date');
+	Route::get('report', 'RouteController@report');
 	Route::get('holiday', 'RouteController@holiday');
 	Route::get('timeedit', 'RouteController@timeedit');
 	Route::put('timeedit/update', 'TimeNodeController@update');

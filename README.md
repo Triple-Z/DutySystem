@@ -18,22 +18,23 @@ A duty system for Drone Institution of NUAA.
 	* 7.4. [table name: `user_action_records`](#tablename:user_action_records)
 * 8. [Migrations](#Migrations)
 * 9. [Seeds](#Seeds)
-* 10. [Important Timestamp](#ImportantTimestamp)
-	* 10.1. [Default Timezone](#DefaultTimezone)
-* 11. [Refresh Frequency](#RefreshFrequency)
-* 12. [note](#note)
-	* 12.1. [Error message:](#Errormessage:)
-	* 12.2. [Solution](#Solution)
-	* 12.3. [Change Server Timezone](#ChangeServerTimezone)
-* 13. [Source Code rewrite](#SourceCoderewrite)
-	* 13.1. [modal position](#modalposition)
-	* 13.2. [positionmethod](#positionmethod)
-* 14. [Web-view Layouts Design](#Web-viewLayoutsDesign)
-	* 14.1. [general page](#generalpage)
-	* 14.2. [graph page](#graphpage)
-	* 14.3. [valid records](#validrecords)
-	* 14.4. [holiday page(option)](#holidaypageoption)
-	* 14.5. [timeedit page](#timeeditpage)
+* 10. [Employee Status](#EmployeeStatus)
+* 11. [Important Timestamp](#ImportantTimestamp)
+	* 11.1. [Default Timezone](#DefaultTimezone)
+* 12. [Scheduling task](#Schedulingtask)
+* 13. [note](#note)
+	* 13.1. [Error message:](#Errormessage:)
+	* 13.2. [Solution](#Solution)
+	* 13.3. [Change Server Timezone](#ChangeServerTimezone)
+* 14. [Source Code rewrite](#SourceCoderewrite)
+	* 14.1. [modal position](#modalposition)
+	* 14.2. [positionmethod](#positionmethod)
+* 15. [Web-view Layouts Design](#Web-viewLayoutsDesign)
+	* 15.1. [general page](#generalpage)
+	* 15.2. [graph page](#graphpage)
+	* 15.3. [valid records](#validrecords)
+	* 15.4. [holiday page(option)](#holidaypageoption)
+	* 15.5. [timeedit page](#timeeditpage)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -236,8 +237,20 @@ php artisan db:seed
 
 记得将需要 seed 的数据在 `database/seeds/DatabaseSeeder.php` 中注册。
 
+##  10. <a name='EmployeeStatus'></a>Employee Status
 
-##  10. <a name='ImportantTimestamp'></a>Important Timestamp
+雇员状态
+
+- 正常
+- 迟到
+- 早退
+- 迟到早退
+- 缺勤
+- 请假
+- 暂无
+
+
+##  11. <a name='ImportantTimestamp'></a>Important Timestamp
 
 重要时间戳
 
@@ -260,19 +273,20 @@ $pm_away = `18:00` // 下午离开最早时间
 $pm_early_ddl = `16:00` // 下午离开早退最早时间
 ```
 
-###  10.1. <a name='DefaultTimezone'></a>Default Timezone
+
+###  11.1. <a name='DefaultTimezone'></a>Default Timezone
 
 默认时区
 
 `UTC+8` `Asia/Shanghai`
 
-##  11. <a name='RefreshFrequency'></a>Scheduling task
+##  12. <a name='Schedulingtask'></a>Scheduling task
 
 计划任务
 
 
-##  12. <a name='note'></a>note
-###  12.1. <a name='Errormessage:'></a>Error message:
+##  13. <a name='note'></a>note
+###  13.1. <a name='Errormessage:'></a>Error message:
 ```
 $ php artisan migrate
 Migration table created successfully.
@@ -287,7 +301,7 @@ Migration table created successfully.
   SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was t
   oo long; max key length is 1000 bytes
 ```
-###  12.2. <a name='Solution'></a>Solution
+###  13.2. <a name='Solution'></a>Solution
 in file: `config\database.php`
 
 ```
@@ -296,7 +310,7 @@ in file: `config\database.php`
 'engine' => 'InnoDB ROW_FORMAT=DYNAMIC',
 ```
 
-###  12.3. <a name='ChangeServerTimezone'></a>Change Server Timezone
+###  13.3. <a name='ChangeServerTimezone'></a>Change Server Timezone
 
 ```bash
 sudo timedatectl set-timezone Asia/Shanghai
@@ -307,15 +321,15 @@ date
 >
 > `Caron::now('Asia/Shanghai')` **OR** `Carbon::now('CST')`
 
-##  13. <a name='SourceCoderewrite'></a>Source Code rewrite
+##  14. <a name='SourceCoderewrite'></a>Source Code rewrite
 
-###  13.1. <a name='modalposition'></a>modal position
+###  14.1. <a name='modalposition'></a>modal position
 
 demand:
 
 make the modal box be at a right position
 
-###  13.2. <a name='positionmethod'></a>positionmethod
+###  14.2. <a name='positionmethod'></a>positionmethod
 
 find the function 'Modal.prototype.adjustDialog' bootstrap.js(in this project is included in public/js/app.js),then replace them as the follow code:
 
@@ -344,9 +358,9 @@ Modal.prototype.adjustDialog = function () {
 ```
 
 
-##  14. <a name='Web-viewLayoutsDesign'></a>Web-view Layouts Design
+##  15. <a name='Web-viewLayoutsDesign'></a>Web-view Layouts Design
 
-###  14.1. <a name='generalpage'></a>general page
+###  15.1. <a name='generalpage'></a>general page
 
 function:display all the records ordered by time stamp
 
@@ -372,7 +386,7 @@ view structure:
 ```
 
 
-###  14.2. <a name='graphpage'></a>graph page
+###  15.2. <a name='graphpage'></a>graph page
 
 function: build a calendar, and display each employee duty status.
 
@@ -396,7 +410,7 @@ view structure:
 ```
 
 
-###  14.3. <a name='validrecords'></a>valid records
+###  15.3. <a name='validrecords'></a>valid records
 
 function: display all records by day.
 
@@ -420,7 +434,7 @@ view structure:
 ```
 
 
-###  14.4. <a name='holidaypageoption'></a>holiday page(option)
+###  15.4. <a name='holidaypageoption'></a>holiday page(option)
 
 function: mark up holiday.
 
@@ -444,7 +458,7 @@ view structure:
 ```
 
 
-###  14.5. <a name='timeeditpage'></a>timeedit page
+###  15.5. <a name='timeeditpage'></a>timeedit page
 
 function:define legal time
 
