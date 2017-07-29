@@ -94,11 +94,20 @@ th {
     })()  
 </script>  
 <script type="text/javascript">
+    function today() {
+        var dd = new Date();
+        var y = dd.getFullYear();
+        var m = dd.getMonth()+1;//获取当前月份的日期
+        var d = dd.getDate();
+        return y+"-"+m+"-"+d;
+    }
+    var today = today();
     $(function () {
 
         var picker2 = $('#datetimepicker2').datetimepicker({  
             format: 'YYYY-MM-DD',  
-            locale: moment.locale('zh-cn')  
+            locale: moment.locale('zh-cn'),
+            maxDate: today
         });  
         //动态设置最小值  
         picker1.on('dp.change', function (e) {  
@@ -162,6 +171,7 @@ th {
     <div style="margin-top: 20px;">
             <form class="form-horizontal" method="POST" action="">
                 {{ csrf_field() }}
+                {{ method_field('put')}}
                 <div class="col-md-2 col-md-offset-3">
                     <div style="font-size: 150%;">
                         选择显示日期：
@@ -170,7 +180,7 @@ th {
                 <div class="col-md-2" style="margin-left: -40px;">  
                     <div class="form-group">  
                         <!--指定 date标记-->  
-                        <div class="input-group date" id="datetimepicker2" style="width: 81%;">  
+                        <div class="input-group date" id="datetimepicker2">  
                             <input type="text" class="form-control" type="time" autocomplete="off" placeholder="显示日期" name="start_time" required/>  
                             <span class="input-group-addon">  
                                 <span class="glyphicon glyphicon-calendar"></span>  
