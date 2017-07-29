@@ -33,20 +33,24 @@
     
         {{-- Session message   --}}
         @if(session()->has('flash_success'))
-            @if(session()->has('flash_important'))
-                <a href="#" class="close" data-dismiss="alert">&times;</a>
-                {{-- 没有手动关闭应该自动消失   --}}
-            @endif
-            <div class="alert alert-success">{{ session()->get('flash_success', 'default') }}</div>
-            
+            <div class="alert alert-success col-md-10 col-md-offset-2">
+                {{ session()->get('flash_success', 'default') }}
+                <a class="close" onclick="$('.alert').attr('class','fade')">&times;</a>
+            </div>
         @endif
 
         @if(session()->has('flash_warning'))
-            <div class="alert alert-warning">{{ session()->get('flash_warning', 'default') }}</div>
+            <div class="alert alert-warning col-md-10 col-md-offset-2">
+                {{ session()->get('flash_warning', 'default') }}
+                <a class="close" onclick="$('.alert').attr('class','fade')">&times;</a>
+            </div>
         @endif
 
         @if(session()->has('flash_error'))
-            <div class="alert alert-success">{{ session()->get('flash_error', 'default') }}</div>
+            <div class="alert alert-success col-md-10 col-md-offset-2">
+                {{ session()->get('flash_error', 'default') }}
+                <a class="close" onclick="$('.alert').attr('class','fade')">&times;</a>
+            </div>
         @endif
 
         <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -103,7 +107,7 @@
                         <li><a href="{{url('/report')}}">每月报表</a></li>
 <!--                         <li><a href="{{url('/graph')}}">绘制出勤曲线</a></li> -->
                         <li><a href="{{url('/holiday')}}">节假日编辑</a></li>
-                        <li><a href="{{url('/timeedit')}}">考勤有效时间编辑</a></li>
+                        <li><a href="{{url('/timeedit')}}">考勤设置</a></li>
                     </ul>    
                 </div>
                 @yield('content-in-main')
