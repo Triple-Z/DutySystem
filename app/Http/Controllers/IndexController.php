@@ -27,7 +27,9 @@ class IndexController extends Controller
         ]);
     }
 
-    public function search($start_time, $end_time) {
+    public function search(Request $request) {
+        $start_time = $request->input('start_time');
+        $end_time = $request->input('end_time');
         $records = Record::where('check_time', '>', $start_time)
                             ->where('check_time', '<', $end_time)
                             ->latest('check_time')

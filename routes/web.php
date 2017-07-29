@@ -1,7 +1,7 @@
 <?php
 
 Route::get('/', 'IndexController@index');
-Route::get('/s/{start_time}/e/{end_time}', 'IndexController@search');
+Route::post('/', 'IndexController@search');
 
 Auth::routes();
 
