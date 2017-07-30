@@ -160,7 +160,7 @@ th {
 <!-- filter choice -->
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <div style="margin-top: 20px;">
-            <form class="form-horizontal" method="POST" action="">
+            <form class="form-horizontal" method="POST" action="/report">
                 {{ csrf_field() }}
                 <div class="col-md-2 col-md-offset-3">
                     <div style="font-size: 150%;">
@@ -215,21 +215,23 @@ th {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th>null</th>
-                    <th>null</th>
-                    <th>null</th>
-                    <th>null</th>
-                    <th>null</th>
-                    <th>null</th>
-                    <th>null</th>
-                    <th>null</th>
-                    <th>null</th>
-                </tr>
+                @foreach($employees as $employee)
+                    <tr>
+                        <th>{{ $employee->work_number }}</th>
+                        <th>{{ $employee->name }}</th>
+                        <th>Unknown</th>
+                        <th>{{ $employee->month_report_data($date)['normal'] }}</th>
+                        <th>{{ $employee->month_report_data($date)['absence_valid'] }}</th>
+                        <th>{{ $employee->month_report_data($date)['late'] }}</th>
+                        <th>{{ $employee->month_report_data($date)['early_leave'] }}</th>
+                        <th>{{ $employee->month_report_data($date)['absence_invalid'] }}</th>
+                        <th>{{ Carbon\Carbon::parse('2017-07')->year }}</th>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
         <div style="text-align: center;">
-            {{--  {{ $reports->links() }}  --}}
+             {{ $employees->links() }} 
         </div>
     </div>
 </div>

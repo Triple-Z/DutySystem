@@ -31,6 +31,10 @@ class RecordController extends Controller
             $record->note = $note;
 
             $record->save();
+
+            $request->session()->flash('flash_success', '记录修改成功');
+
+            return redirect('/employees/' . $work_number);
         }
     }
 }

@@ -451,4 +451,66 @@ class Employee extends Model
         return $special_records;
     }
 
+    public function month_report_data($date) {
+        
+        // $now = Carbon::now('Asia/Shanghai');
+
+        $select_month = Carbon::parse($date);
+
+        $year = $select_month->year;
+        $month = $select_month->month;
+
+
+        $daily_results = DB::table('daily_check_status')
+                            ->where('employee_id', '=', $this->id)
+                            ->whereYear('date', $year)
+                            ->whereMonth('date', $month)
+                            ->get();
+        
+        $normal = 0;
+        $late = 0;
+        $early_leave = 0;
+        $absence_invalid = 0;
+        $absence_valid = 0;
+        $unknown = 0;
+
+
+        foreach ($daily_results as $daily_result) {
+            switch ($daily_result->status) {
+                case "正常":
+                    $normal++;
+                    break;
+                case "迟到":
+                    $late++;
+                    break;
+                case "早退":
+                    $early_leave++;
+                    break;
+                case "迟到早退":
+                    $late++;
+                    $early_leave++;
+                    break;
+                case "缺勤":
+                    $absence_invalid++;
+                    break;
+                case "请假":
+                    $absence_valid++;
+                    break;
+                default:
+                    $unknown++;
+            }
+        }
+       
+        $data = array(
+            'normal' => $normal,
+            'late' => $late,
+            'early_leave' => $early_leave,
+            'absence_invalid' => $absence_invalid,
+            'absence_valid' => $absence_valid,
+            'unknown' => $unknown,
+        );
+
+        return $data;
+    }
+
 }
