@@ -199,7 +199,7 @@ th {
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <div>
         <div class="col-sm-2 col-md-2" style="font-size: 200%;float: left;">
-            所有记录
+            当天考勤情况
         </div>
         <div class="col-sm-2 col-md-2" style="float: right;">
             <button type="button" class="btn btn-primary" onclick="method('tableExcel')">
