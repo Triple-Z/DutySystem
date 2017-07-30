@@ -23,9 +23,226 @@ th {
 <link rel="stylesheet" type="text/css" href="{{asset('css/bootstrap-datetimepicker.min.css')}}">
 <script src="{{asset('js/bootstrap-datetimepicker.min.js')}}" type="text/javascript"></script>
 <script type="text/javascript">
-    function set_action(work_number,record_id){
+    function today() {
+        var dd = new Date();
+        var y = dd.getFullYear();
+        var m = dd.getMonth()+1;//获取当前月份的日期
+        var d = dd.getDate();
+        return y+"-"+m+"-"+d;
+    }
+    var today = today();
+    $(function () {
+
+        var picker2 = $('#datetimepicker2').datetimepicker({  
+            format: 'YYYY-MM-DD HH:mm:ss',  
+            locale: moment.locale('zh-cn'),
+            maxDate: today
+        });  
+        //动态设置最小值  
+        picker1.on('dp.change', function (e) {  
+            picker2.data('DateTimePicker').minDate(e.date);  
+        });  
+        //动态设置最大值  
+        picker2.on('dp.change', function (e) {  
+            picker1.data('DateTimePicker').maxDate(e.date);  
+        });  
+    }); 
+</script>
+@endsection
+
+@section('content-in-main')
+<!-- modal model -->
+<div id="modal-switch" tabindex="-1" role="dialog" aria-labelledby="modal-switch-label" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">记录修正</span></button>
+                <div id="modal-switch-label" class="modal-title" style="font-size: large;">记录修正</div>
+            </div>
+            <div class="modal-body">
+                <form id="edit_form" role="form" method="POST" action="">
+                    {{ csrf_field() }}
+                    {{ method_field('PUT') }}
+                    <table class="table table-hover" style="text-align: center;width: 90%;">
+                        <thead>
+                            <tr>
+                                <th style="width: 40%;">修改选项</th>
+                                <th>当前记录</th>
+                                <th>修改为</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+    <!--                         <tr>
+                                <td>刷卡时间</td>
+                                <td id="td_check_time"></td>
+                                <td>
+                                    <div class="input-group date" id="datetimepicker2" style="width: 70%;margin-left: 15%;">  
+                                        <input id="calendar233" type="text" class="form-control" type="time" autocomplete="off" placeholder="显示日期" name="start_time" required/>  
+                                        <span class="input-group-addon">  
+                                            <span class="glyphicon glyphicon-calendar"></span>  
+                                        </span>
+                                    </div>   
+                                </td>
+                            </tr> -->
+                            <tr>
+                                <td>刷卡位置</td>
+                                <td id="td_card_gate"></td>
+                                <td>
+                                    <select id="period" class="selectpicker btn" data-live-search-style="begins" name="card_gate">
+                                        <optgroup label="刷卡位置  ">
+                                            <option value="SN01">A</option>
+                                            <option value="SN02">B</option>
+                                            <option value="SN03">C</option>
+                                        </optgroup>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>进出方向</td>
+                                <td id="td_check_direction"></td>
+                                <td>
+                                    <select id="period" class="selectpicker btn" data-live-search-style="begins" name="check_direction">
+                                        <optgroup label="进出方向">
+                                            <option value="1">进</option>
+                                            <option value="0">出</option>
+                                        </optgroup>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>刷卡方式</td>
+                                <td id="td_check_method"></td>
+                                <td>
+                                    <select id="period" class="selectpicker btn" data-live-search-style="begins" name="check_method">
+                                        <optgroup label="刷卡方式">
+                                            <option value="card">门禁</option>
+                                            <option value="car">车闸</option>
+                                            <option value="请假">请假</option>
+                                        </optgroup>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>备注</td>
+                                <td id="td_note"></td>
+                                <td><input id="note" class="form-control placeholder-no-fix" type="note" name="note" style="width: 45%;margin-left: 27.5%;" required></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" style="margin-top: 15px;margin-left: 90%;">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <div>
+        <div class="col-sm-2 col-md-2" style="font-size: 200%;float: left;">
+            所有记录
+        </div>
+        <div class="col-sm-2 col-md-2" style="float: right;">
+            <button type="button" class="btn btn-primary" onclick="method('tableExcel')">
+                导出本页表格为excel
+            </button>
+        </div>
+    </div>
+
+    <div class="table-responsive col-md-11">
+        <table class="table table-striped" id="tableExcel">
+            <thead  style="text-align:center;">
+                <tr>
+                    <th>工号</th>
+                    <th>姓名</th>
+                    <th>记录时间</th>
+                    <th>刷卡位置</th>
+                    <th>进出方向</th>
+                    <th>刷卡方式</th>
+                    <th>备注</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($records as $record)
+                <tr>
+                    @if($record->employee)
+                        <th><a id="work_number_{{$record->id}}" href="/employees/{{ $record->employee->work_number }}">{{ $record->employee->work_number }}</a></th>
+                    @else
+                        <th id="work_number_{{$record->id}}">N/A</th>
+                    @endif
+                    
+                    @if($record->employee)
+                        <th id="name_{{$record->id}}">{{ $record->employee->name }}</th>
+                    @else
+                        <th id="name_{{$record->id}}">N/A</th>
+                    @endif
+
+                    @if($record->check_time)
+                        <th id="check_time_{{$record->id}}">{{ $record->check_time }}</th>
+                    @else
+                        <th id="check_time_{{$record->id}}">N/A</th>
+                    @endif
+
+                    @if($record->card_gate)
+                        <th id="card_gate_{{$record->id}}">{{ $record->card_gate }}</th>
+                    @else
+                        <th id="card_gate_{{$record->id}}">N/A</th>
+                    @endif
+
+                    @if($record->check_direction==1)
+                        <th id="check_direction_{{$record->id}}">进</th>
+                    @else
+                        <th id="check_direction_{{$record->id}}">出</th>
+                    @endif
+
+                    @if($record->check_method=="car")
+                        <th id="check_method_{{$record->id}}">车闸</th>
+                    @elseif($record->check_method=="card") 
+                        <th id="check_method_{{$record->id}}">门禁</th>
+                    @else
+                        <th id="check_method_{{$record->id}}">请假</th>
+                    @endif
+
+                    @if($record->note)
+                        <th id="note_{{$record->id}}">{{ $record->note }}</th>
+                    @else
+                        <th id="note_{{$record->id}}">N/A</th>
+                    @endif
+
+                    <th>
+                        <button id="{{$record->id}}" data-toggle="modal" data-target="#modal-switch" class="btn-primary btn" onclick="set_action(this.id)">修改</button>
+                    </th>
+                </tr>
+                @endforeach
+
+            </tbody>
+        </table>
+        <div style="text-align: center;">
+            {{ $records->links() }}
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function set_action(record_id){
+        var work_number = "work_number" + "_" + record_id;
+        var card_gate = "card_gate" + "_" + record_id;
+        var check_direction = "check_direction" + "_" + record_id;
+        var check_method = "check_method" + "_" + record_id;
+        var note = "note" + "_" + record_id;
+        work_number_value = document.getElementById(work_number).innerHTML;
+        card_gate_value = document.getElementById(card_gate).innerHTML;
+        check_direction_value = document.getElementById(check_direction).innerHTML;
+        check_method_value = document.getElementById(check_method).innerHTML;
+        note_value = document.getElementById(note).innerHTML;
+        document.getElementById("td_card_gate").innerHTML= card_gate_value;
+        document.getElementById("td_check_direction").innerHTML = check_direction_value;
+        document.getElementById("td_check_method").innerHTML = check_method_value;
+        document.getElementById("td_note").innerHTML = note_value;
         var action = "/employees/" + work_number + "/records/" + record_id;
         $("#edit_form").attr("action",action);
+
     }
     function  getExplorer() {  
         var explorer = window.navigator.userAgent ;  
@@ -100,155 +317,4 @@ th {
         }  
     })()  
 </script>  
-<script type="text/javascript">
-    function today() {
-        var dd = new Date();
-        var y = dd.getFullYear();
-        var m = dd.getMonth()+1;//获取当前月份的日期
-        var d = dd.getDate();
-        return y+"-"+m+"-"+d;
-    }
-    var today = today();
-    $(function () {
-
-        var picker2 = $('#datetimepicker2').datetimepicker({  
-            format: 'YYYY-MM-DD HH:mm:ss',  
-            locale: moment.locale('zh-cn'),
-            maxDate: today
-        });  
-        //动态设置最小值  
-        picker1.on('dp.change', function (e) {  
-            picker2.data('DateTimePicker').minDate(e.date);  
-        });  
-        //动态设置最大值  
-        picker2.on('dp.change', function (e) {  
-            picker1.data('DateTimePicker').maxDate(e.date);  
-        });  
-    }); 
-</script>
-@endsection
-
-@section('content-in-main')
-<!-- modal model -->
-<div id="modal-switch" tabindex="-1" role="dialog" aria-labelledby="modal-switch-label" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" data-dismiss="modal" class="close">
-                    <span aria-hidden="true">&times;</span>
-                    <span class="sr-only">记录修正</span></button>
-                <div id="modal-switch-label" class="modal-title" style="font-size: large;">记录修正</div>
-            </div>
-            <div class="modal-body">
-                <form id="edit_form" role="form" style="margin:15px;" method="POST" action="">
-                    {{ csrf_field() }}
-                    {{ method_field('PUT') }}
-                    <div class="form-group">
-                        <label class="control-label">选择修改项</label><br/>
-                        <select id="period" class="selectpicker btn" data-live-search-style="begins" name="period" style="float: none;">
-                            <optgroup label="选择显示周期">
-                                <option value="today_morning_earliest_record">上午签到时间</option>
-                                <option value="today_morning_latest_record">上午离班时间</option>
-                                <option value="today_afternoon_earliest_record">下午签到时间</option>
-                                <option value="today_afternoon_latest_record">下午离班时间</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                    <br/>
-                    <div class="form-group">  
-                        <label>修改为：</label>
-                        <div class="input-group date" id="datetimepicker2">  
-                            <input id="calendar233" type="text" class="form-control" type="time" autocomplete="off" placeholder="显示日期" name="start_time" required/>  
-                            <span class="input-group-addon">  
-                                <span class="glyphicon glyphicon-calendar"></span>  
-                            </span>
-                        </div>   
-                    </div>  
-                    <div class="form-group">
-                        <label class="control-label visible-ie8 visible-ie9">备注</label>
-                        <input class="form-control placeholder-no-fix" type="note" autocomplete="off" id="register_password" name="note" required>
-                        <!-- <input id="record_id" type="record_id" name="record_id" hidden="hidden"> -->
-                        <button type="submit" class="btn btn-primary" style="margin-top: 15px;margin-left: 90%;">提交</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <div>
-        <div class="col-sm-2 col-md-2" style="font-size: 200%;float: left;">
-            所有记录
-        </div>
-        <div class="col-sm-2 col-md-2" style="float: right;">
-            <button type="button" class="btn btn-primary" onclick="method('tableExcel')">
-                导出本页表格为excel
-            </button>
-        </div>
-    </div>
-
-    <div class="table-responsive col-md-11">
-        <table class="table table-striped" id="tableExcel">
-            <thead  style="text-align:center;">
-                <tr>
-                    <th>工号</th>
-                    <th>姓名</th>
-                    <th>记录时间</th>
-                    <th>刷卡位置</th>
-                    <th>刷卡方向</th>
-                    <th>备注</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($records as $record)
-                <tr>
-                    @if($record->employee)
-                        <th><a href="/employees/{{ $record->employee->work_number }}">{{ $record->employee->work_number }}</a></th>
-                    @else
-                        <th>N/A</th>
-                    @endif
-                    
-                    @if($record->employee)
-                        <th>{{ $record->employee->name }}</th>
-                    @else
-                        <th>N/A</th>
-                    @endif
-
-                    @if($record->check_time)
-                        <th>{{ $record->check_time }}</th>
-                    @else
-                        <th>N/A</th>
-                    @endif
-
-                    @if($record->card_gate)
-                        <th>{{ $record->card_gate }}</th>
-                    @else
-                        <th>N/A</th>
-                    @endif
-
-                    @if($record->check_direction==1)
-                        <th>进</th>
-                    @else
-                        <th>出</th>
-                    @endif
-                    
-                    @if($record->note)
-                        <th>{{ $record->note }}</th>
-                    @else
-                        <th>N/A</th>
-                    @endif
-
-                    <th>
-                        <button id="{{$record->id}}" data-toggle="modal" data-target="#modal-switch" class="btn-primary btn" value="{{$record->employee->work_number}}" onclick="set_action(this.value,this.id)">修改</button>
-                    </th>
-                </tr>
-                @endforeach
-
-            </tbody>
-        </table>
-        <div style="text-align: center;">
-            {{ $records->links() }}
-        </div>
-    </div>
-</div>
 @endsection
