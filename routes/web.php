@@ -21,6 +21,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('valid', 'RouteController@valid');
 	Route::post('valid', 'RouteController@valid_date');
 	Route::get('report', 'RouteController@report');
+	Route::post('report', 'RouteController@report');
 	Route::get('holiday', 'RouteController@holiday');
 	Route::get('timeedit', 'RouteController@timeedit');
 	Route::put('timeedit/update', 'TimeNodeController@update');

@@ -91,6 +91,7 @@ remote database:
 - CarRecord
 - CardRecord
 - TimeNode
+- DailyCheckStatus
 
 ###  3.1. <a name='ModelRelationship'></a>Model Relationship
 
@@ -102,6 +103,8 @@ $actions->user; // 返回某条指定记录的管理员信息
 
 $employee->records; // 返回某个指定雇员的签到记录
 $employee->special_records(); // 以数组返回某个指定雇员的重要签到记录
+$employee->month_report_data(); // 以数组返回某个指定雇员的月记录数据
+
 $record->employee; // 返回某条指定签到记录的雇员信息
 ```
 
@@ -154,7 +157,14 @@ $record->employee; // 返回某条指定签到记录的雇员信息
   >```php
   > $date // 请求日期
   >```
-  
+
+- GET `/report` : 返回月报表界面
+- POST `/report` : 返回某个指定月份的月报表界面
+  > 请求变量：
+  > ```php
+  > $month // 格式为 "YYYY-MM" 的月份
+  > ```
+
 - GET `/holiday` ： 返回节假日编辑界面
 - GET `/timeedit` : 返回有效时间编辑界面
 - PUT `/timeedit/update` : 更改出勤时间设置

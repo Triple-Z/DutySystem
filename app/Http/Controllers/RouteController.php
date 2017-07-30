@@ -41,9 +41,28 @@ class RouteController extends Controller
     //     return view('correct');
     // }
 
-    public function report() {
-        return view('report');
+    public function report(Request $request) {
+        if ($request->input('month')) {
+            $date = $request->input('month');
+        } else {
+            $date = Carbon::now('Asia/Shanghai')->toDateString();
+        }
+
+        $employees = Employee::orderBy('work_number')->paginate(15);
+
+        return view('report', [
+            'employees' => $employees,
+            'date' => $date,
+        ]);
     }
+
+    // public function report_date(Request $request) {
+    //     $date = $request->input('date');
+
+    //     return view('report', [
+    //         'employees' => $employees,
+    //     ])
+    // }
 
     public function holiday() {
         return view('holiday');
