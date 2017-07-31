@@ -94,11 +94,20 @@ th {
     })()  
 </script>  
 <script type="text/javascript">
+    function today() {
+        var dd = new Date();
+        var y = dd.getFullYear();
+        var m = dd.getMonth()+1;//获取当前月份的日期
+        var d = dd.getDate();
+        return y+"-"+m;
+    }
+    var today = today();
     $(function () {
 
         var picker2 = $('#datetimepicker2').datetimepicker({  
             format: 'YYYY-MM',  
-            locale: moment.locale('zh-cn')  
+            locale: moment.locale('zh-cn'),
+            maxDate: today
         });  
         //动态设置最小值  
         picker1.on('dp.change', function (e) {  
