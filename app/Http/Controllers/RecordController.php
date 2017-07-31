@@ -26,10 +26,12 @@ class RecordController extends Controller
             $note = $request->input('note');
             // Update record
             $record = Record::where('id', '=', $id)->first();
+            // $check_time = $record->check_time;
             $record->check_direction = $check_direction;
             $record->check_method = $check_method;
             $record->card_gate = $card_gate;
             $record->note = $note;
+            // $record->check_time = $check_time;
             // $record->check_time = "2017-06-08";
             $record->save();
 
