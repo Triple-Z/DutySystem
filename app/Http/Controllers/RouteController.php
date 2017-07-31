@@ -64,18 +64,22 @@ class RouteController extends Controller
     //     ])
     // }
 
-    public function holiday(Request $request) {
+    public function holidays(Request $request) {
 
 
         return view('holiday');
     }
 
-    public function holiday_create(Request $request) {
+    public function holidays_create(Request $request) {
 
     }
 
-    public function holiday_update(Request $request) {
-        
+    public function holidays_update(Request $request, $id) {
+
+    }
+
+    public function holidays_delete(Request $request, $id) {
+
     }
 
     public function timeedit() {
