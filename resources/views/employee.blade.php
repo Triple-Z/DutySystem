@@ -51,7 +51,7 @@ th {
 @endsection
 
 @section('content-in-main')
-<!-- modal model -->
+<!-- modal model for correct-->
 <div id="modal-switch" tabindex="-1" role="dialog" aria-labelledby="modal-switch-label" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -139,10 +139,90 @@ th {
         </div>
     </div>
 </div>
+
+<!-- modal model for profile -->
+<div id="modal-switch-profile" tabindex="-1" role="dialog" aria-labelledby="modal-switch-label" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" data-dismiss="modal" class="close">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">员工信息</span></button>
+                <div id="modal-switch-label" class="modal-title" style="font-size: large;">员工信息</div>
+                <table class="table table-hover" style="text-align: center;margin: 10%;width: 80%;">
+                  <tbody>
+                    <tr>
+                      <td style="font-weight: bold;">工号</td>
+                      @if($employee->work_number)
+                      <td>{{ $employee->work_number}}</td>
+                      @else
+                      <td></td>
+                      @endif
+                    </tr>
+                    <tr>
+                      <td style="font-weight: bold;">姓名</td>
+                      @if($employee->name)
+                      <td>{{ $employee->name }}</td>
+                      @else
+                      <td></td>
+                      @endif
+                    </tr>
+                    <tr>
+                      <td style="font-weight: bold;">电话</td>
+                      @if($employee->phone_number)
+                      <td>{{ $employee->phone_number }}</td>
+                      @else
+                      <td></td>
+                      @endif
+                    </tr>
+                    <tr>
+                      <td style="font-weight: bold;">部门</td>
+                      @if($employee->department)
+                      <td>{{ $employee->department }}</td>
+                      @else
+                      <td></td>
+                      @endif
+                    </tr>
+                    <tr>
+                      <td style="font-weight: bold;">职位</td>
+                      @if($employee->work_title)
+                      <td>{{ $employee->work_title }}</td>
+                      @else
+                      <td></td>
+                      @endif
+                    </tr>
+                    <tr>
+                      <td style="font-weight: bold;">考勤卡号</td>
+                      @if($employee->card_uid)
+                      <td>{{ $employee->card_uid }}</td>
+                      @else
+                      <td></td>
+                      @endif
+                      <tr>
+                      <td style="font-weight: bold;">车牌号</td>
+                      @if($employee->car_number)
+                      <td>{{ $employee->car_number }}</td>
+                      @else
+                      <td></td>
+                      @endif
+                    </tr>
+                    </tr>
+                  </tbody>
+                </table>
+
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <button data-toggle="modal" data-target="#modal-switch-profile" class="btn-primary btn btn-sm">员工信息</button><br><br><br>
     <div>
-        <div class="col-sm-2 col-md-2" style="font-size: 200%;float: left;">
-            所有记录
+        <div class="col-sm-2 col-md-2" style="font-size: 200%;text-align: center;">
+            人员所有记录
         </div>
         <div class="col-sm-2 col-md-2" style="float: right;">
             <button type="button" class="btn btn-primary" onclick="method('tableExcel')">
