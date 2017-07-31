@@ -18,7 +18,7 @@ class CreateRecordsTable extends Migration
             $table->integer('employee_id');
             $table->tinyInteger('check_direction')->nullable();
             $table->string('check_method');
-            $table->timestamp('check_time');
+            $table->timestamp('check_time')->nullable();
             $table->string('card_gate')->nullable();
             $table->string('note')->nullable();
             $table->timestamps();
