@@ -21,6 +21,7 @@ class CreateRecordsTable extends Migration
             $table->timestamp('check_time');
             $table->string('card_gate')->nullable();
             $table->string('note')->nullable();
+            $table->timestamps();
         });
     }
 

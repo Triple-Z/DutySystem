@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Record;
+use Carbon\Carbon;
 
 class RecordController extends Controller
 {
@@ -20,7 +21,7 @@ class RecordController extends Controller
         if ($request->isMethod('put')) {
             // Get vars
             $check_direction = $request->input('check_direction');
-            $check_method = $request->input('check_method');
+            $check_method = $request->input('check_method'); 
             $card_gate = $request->input('card_gate');
             $note = $request->input('note');
             // Update record
@@ -29,7 +30,7 @@ class RecordController extends Controller
             $record->check_method = $check_method;
             $record->card_gate = $card_gate;
             $record->note = $note;
-
+            // $record->check_time = "2017-06-08";
             $record->save();
 
             $request->session()->flash('flash_success', '记录修改成功');
