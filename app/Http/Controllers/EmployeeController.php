@@ -23,8 +23,8 @@ class EmployeeController extends Controller
         $records = $employee->records()->latest('check_time')->paginate(15);
         return view('employee', [
             'records' => $records,
+            'employee' => $employee
         ]);
     }
 
-    
 }

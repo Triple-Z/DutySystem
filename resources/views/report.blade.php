@@ -226,7 +226,7 @@ th {
             <tbody>
                 @foreach($employees as $employee)
                     <tr>
-                        <th>{{ $employee->work_number }}</th>
+                        <th><a href="/employees/{{ $employee->work_number }}">{{ $employee->work_number }}</a></th>
                         <th>{{ $employee->name }}</th>
                         <th>Unknown</th>
                         <th>{{ $employee->month_report_data($date)['normal'] }}</th>
