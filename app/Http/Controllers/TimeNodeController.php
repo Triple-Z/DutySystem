@@ -160,6 +160,7 @@ class TimeNodeController extends Controller
         
         $request->session()->flash('flash_success', '修改成功');
         $request->session()->flash('flash_important', true);
-        return redirect('/');
+
+        return redirect('/timeedit');
     }
 }

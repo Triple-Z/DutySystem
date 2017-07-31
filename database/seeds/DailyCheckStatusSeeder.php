@@ -16,7 +16,7 @@ class DailyCheckStatusSeeder extends Seeder
         for ($i = 1; $i <= 100; $i++) {
             App\DailyCheckStatus::create([
                 'employee_id' => $i,
-                'date' => '2017-07-28',
+                'date' => '2017-07-30',
                 'am_check' => Carbon::now(),
                 'am_away' => Carbon::now(),
                 'pm_check' => Carbon::now(),

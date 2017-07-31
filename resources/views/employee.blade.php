@@ -320,7 +320,7 @@ th {
         document.getElementById("td_check_direction").innerHTML = check_direction_value;
         document.getElementById("td_check_method").innerHTML = check_method_value;
         document.getElementById("td_note").innerHTML = note_value;
-        var action = "/employees/" + work_number + "/records/" + record_id;
+        var action = "/employees/" + work_number_value + "/records/" + record_id;
         $("#edit_form").attr("action",action);
 
     }
