@@ -162,10 +162,36 @@ $record->employee; // 返回某条指定签到记录的雇员信息
 - POST `/report` : 返回某个指定月份的月报表界面
   > 请求变量：
   > ```php
-  > $month // 格式为 "YYYY-MM" 的月份
+  > $month // 格式为 "YYYY-MM" 的某个指定月份
   > ```
 
-- GET `/holiday` ： 返回节假日编辑界面
+- GET `/holidays` ： 返回当前月节假日编辑界面
+- POST `/holidays` : 返回某个指定月份的节假日编辑界面
+  > 请求变量：
+  > ```php
+  > $month // 格式为 "YYYY-MM" 的某个指定月份
+  > ```
+- PUT `/holidays` : 更新某个指定月份的节假日数据
+  > 请求数据：(Content-Type: application/json)
+  > ```json
+  > {
+  >   "month": "2017-08",
+  >   "data": [
+  >     1,
+  >     2,
+  >     3
+  >   ]
+  > }
+  > ```
+  > 即 `2017-08-01`,  `2017-08-02`,  `2017-08-03` 为 `2017-08` 月的所有节假日
+
+- DELETE `/holidays` : 删除某个指定月份的节假日数据
+  > 请求变量：
+  > ```php
+  > $month // 格式为 "YYYY-MM" 的某个指定月份
+  > ```
+
+
 - GET `/timeedit` : 返回有效时间编辑界面
 - PUT `/timeedit/update` : 更改出勤时间设置
   > 请求变量：
