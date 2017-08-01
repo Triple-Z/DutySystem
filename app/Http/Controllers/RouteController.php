@@ -7,6 +7,7 @@ use App\Employee;
 use App\Record;
 use Carbon\Carbon;
 use App\TimeNode;
+use App\HolidayDate;
 
 
 class RouteController extends Controller
@@ -64,8 +65,80 @@ class RouteController extends Controller
     //     ])
     // }
 
-    public function holiday() {
-        return view('holiday');
+    public function holidays(Request $request) {
+
+        $now = Carbon::now('Asia/Shanghai');
+        $year = $now->year;
+        $month = $now->month;
+
+        $holidays = HolidayDate::where('year', '=', $year)
+                                ->where('month', '=', $month)
+                                ->orderBy('day')
+                                ->get();
+        
+        // Return JSON for test
+        return response()->json($holidays);
+
+        // return view('holiday', [
+        //     'holidays' => $holidays,
+        // ]);
+
+    }
+
+    public function holidays_search(Request $request) {
+        $date = Carbon::parse($request->input('month'));
+        $year = $date->year;
+        $month = $date->month;
+
+        $holidays = HolidayDate::where('year', '=', $year)
+                                ->where('month', '=', $month)
+                                ->orderBy('day')
+                                ->get();
+
+        // Return JSON for test
+        return response()->json($holidays);
+
+        // return view('holiday', [
+        //     'holidays' => $holidays,
+        // ]);
+    }
+
+    public function holidays_update(Request $request) {
+        $date = Carbon::parse($request->input('month'));
+        $year = $date->year;
+        $month = $date->month;
+
+        $new_holidays = $request->input('days');
+
+        $deleted_holidays = HolidayDate::where('year', '=', $year)
+                                        ->where('month', '=', $month)
+                                        ->delete();
+
+        foreach ($new_holidays as $holiday) {
+            HolidayDate::create([
+                'year' => year,
+                'month' => month,
+                'day' => $holiday,
+            ]);
+        }
+
+        $request->session()->flash('flash_success', '节假日数据更新成功');
+
+        return redirect('/holidays');
+    }
+
+    public function holidays_delete(Request $request) {
+        $date = Carbon::parse($request->input('month'));
+        $year = $date->year;
+        $month = $date->month;
+
+        $deleted_holidays = HolidayDate::where('year', '=', $year)
+                                        ->where('month', '=', $month)
+                                        ->delete();
+
+        $request->session()->flash('flash_success', '节假日数据删除成功');
+
+        return redirect('/holidays');
     }
 
     public function timeedit() {

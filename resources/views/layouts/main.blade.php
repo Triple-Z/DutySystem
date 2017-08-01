@@ -106,7 +106,7 @@
                         <li><a href="{{url('/valid')}}">每日出勤情况</a></li>
                         <li><a href="{{url('/report')}}">每月报表</a></li>
 <!--                         <li><a href="{{url('/graph')}}">绘制出勤曲线</a></li> -->
-                        <li><a href="{{url('/holiday')}}">节假日编辑</a></li>
+                        <li><a href="{{url('/holidays')}}">节假日编辑</a></li>
                         <li><a href="{{url('/timeedit')}}">考勤设置</a></li>
                     </ul>    
                 </div>

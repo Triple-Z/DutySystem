@@ -22,7 +22,10 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::post('valid', 'RouteController@valid_date');
 	Route::get('report', 'RouteController@report');
 	Route::post('report', 'RouteController@report');
-	Route::get('holiday', 'RouteController@holiday');
+	Route::get('holidays', 'RouteController@holidays');
+	Route::post('holidays', 'RouteController@holidays_search');
+	Route::put('holidays', 'RouteController@holidays_update');
+	Route::delete('holidays', 'RouteController@holidays_delete');
 	Route::get('timeedit', 'RouteController@timeedit');
 	Route::put('timeedit/update', 'TimeNodeController@update');
 });
