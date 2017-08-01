@@ -236,7 +236,11 @@ th {
                         <th>{{ $employee->month_report_data($date)['late'] }}</th>
                         <th>{{ $employee->month_report_data($date)['early_leave'] }}</th>
                         <th>{{ $employee->month_report_data($date)['absence_invalid'] }}</th>
-                        <th>{{ number_format(($employee->month_report_data($date)['normal'] / $valid_days) * 100, 2) . '%' }}</th>
+                        @if ($valid_days)
+                            <th>{{ number_format(($employee->month_report_data($date)['normal'] / $valid_days) * 100, 2) . '%' }}</th>
+                        @else
+                            <th>0.00%</th>
+                        @endif
                     </tr>
                 @endforeach
             </tbody>
