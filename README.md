@@ -241,6 +241,7 @@ $record->employee; // 返回某条指定签到记录的雇员信息
 ###  7.1. <a name='tablename:employees'></a>table name: `employees`
 
 columns:
+
 |ID*	|name	|gender	|eamil	|phone_number	|work_title	|department	|car_number	|
 |----|----|----|----|----|----|----|----|
 |1|TripleZ|man|me@triplez.cn|15240241051|CEO|Develop Department|null|
@@ -249,6 +250,7 @@ columns:
 ###  7.2. <a name='tablenames:records'></a>table names: `records`
 
 columns:
+
 |ID*	|employee_id^	|check_direction(Y/N)	|check_method	|check_time	|
 |----|----|----|----|---|
 |1|3|1|card|2017-07-21 13:22:13|
@@ -261,6 +263,7 @@ columns:
 ###  7.3. <a name='tablename:users'></a>table name: `users`
 
 columns:
+
 |ID*	|name	|email	|password	|admin(Y/N)	|phone_number	|created_at|updated_at|
 |-----|----|----|----|-----|-----|----|----|
 |1|TripleZ|me@triplez.cn|******|1|15240241051|
@@ -270,6 +273,7 @@ columns:
 ###  7.4. <a name='tablename:user_action_records'></a>table name: `user_action_records`
 
 columns:
+
 |ID*	|user_id^	|action	|timestamp	|
 |-----|----|----|----|
 |1|1|login|2017-07-23 15:47:35|
