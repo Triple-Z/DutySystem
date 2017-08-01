@@ -48,6 +48,7 @@ class RouteController extends Controller
         } else {
             $date = Carbon::now('Asia/Shanghai')->toDateString();
         }
+        $now = Carbon::now('Asia/Shanghai');
         $time = Carbon::parse($date);
         
         $employees = Employee::orderBy('work_number')->paginate(15);
@@ -56,11 +57,19 @@ class RouteController extends Controller
         $month = $time->month;
         $holidays = HolidayDate::where('year', '=', $year)
                                 ->where('month', '=', $month)
+                                ->orderBy('day')
                                 ->get();
 
-        $maxDay = $time->addMonth()->subDay()->day;
-
-        $valid_days = $maxDay - ($holidays->count());
+        if (($now->year == $time->year) && ($now->month == $time->month)) {// Same month
+            $holidays_in_month = HolidayDate::where('year', '=', $year)
+                                            ->where('month', '=', $month)
+                                            ->where('day', '<=', $time->day)
+                                            ->get();
+            $valid_days = ($time->day) - ($holidays_in_month->count());
+        } else { // Former month
+            $maxDay = $time->addMonth()->subDay()->day;
+            $valid_days = $maxDay - ($holidays->count());
+        }
 
         return view('report', [
             'employees' => $employees,
