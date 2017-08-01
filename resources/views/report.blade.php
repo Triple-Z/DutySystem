@@ -228,13 +228,13 @@ th {
                     <tr>
                         <th><a href="/employees/{{ $employee->work_number }}">{{ $employee->work_number }}</a></th>
                         <th>{{ $employee->name }}</th>
-                        <th>Unknown</th>
+                        <th>{{ $valid_days }}</th>
                         <th>{{ $employee->month_report_data($date)['normal'] }}</th>
                         <th>{{ $employee->month_report_data($date)['absence_valid'] }}</th>
                         <th>{{ $employee->month_report_data($date)['late'] }}</th>
                         <th>{{ $employee->month_report_data($date)['early_leave'] }}</th>
                         <th>{{ $employee->month_report_data($date)['absence_invalid'] }}</th>
-                        <th>{{ Carbon\Carbon::parse('2017-07')->year }}</th>
+                        <th>{{ number_format(($employee->month_report_data($date)['normal'] / $valid_days) * 100, 2) . '%' }}</th>
                     </tr>
                 @endforeach
             </tbody>

@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(CarRecordSeeder::class);
         // $this->call(CardRecordSeeder::class);
         // $this->call(TimeNodeSeeder::class);
-        // $this->call(DailyCheckStatusSeeder::class);
-        $this->call(HolidayDateSeeder::class);
+        $this->call(DailyCheckStatusSeeder::class);
+        // $this->call(HolidayDateSeeder::class);
     }
 }
