@@ -258,8 +258,6 @@ columns:
 |3|1|1|car|2017-07-22 07:22:13|
 |4|1|0|car|2017-07-22 12:22:13|
 
-
-
 ###  7.3. <a name='tablename:users'></a>table name: `users`
 
 columns:
@@ -268,7 +266,6 @@ columns:
 |-----|----|----|----|-----|-----|----|----|
 |1|TripleZ|me@triplez.cn|******|1|15240241051|
 |2|test|test@triplez.cn|******|0|88888888|
-
 
 ###  7.4. <a name='tablename:user_action_records'></a>table name: `user_action_records`
 
