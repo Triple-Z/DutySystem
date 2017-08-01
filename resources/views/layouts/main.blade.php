@@ -111,10 +111,9 @@
                     </ul>    
                 </div>
                 @yield('content-in-main')
-                
-
             </div>
         </div>
+        @yield('holidays-view')
     </body>
     <script type="text/javascript">
         $(function () {
