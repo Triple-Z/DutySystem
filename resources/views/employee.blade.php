@@ -287,7 +287,22 @@ th {
                     @endif
 
                     {{-- Out time duration  --}}
-                    <th>N/A</th>
+                    @php
+                        $hasDuration = false;
+                    @endphp
+                    @foreach ($in_out_duration as $duration)
+                        @if ($duration['in_id'] == $record->id)
+                            <th>{{ $duration['diff']->format('%H:%I:%S') }}</th>
+                            @php
+                                $hasDuration = true;
+                            @endphp
+                            @break
+                        @endif
+                    @endforeach
+
+                    @if (!$hasDuration)
+                        <th></th>
+                    @endif
 
                     @if($record->note)
                         <th id="note_{{$record->id}}">{{ $record->note }}</th>
