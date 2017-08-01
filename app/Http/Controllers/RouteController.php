@@ -48,12 +48,22 @@ class RouteController extends Controller
         } else {
             $date = Carbon::now('Asia/Shanghai')->toDateString();
         }
-
+        
         $employees = Employee::orderBy('work_number')->paginate(15);
+        
+        $year = $date->year;
+        $month = $date->month;
+        $holidays = HolidayDate::where('year', '=', $year)
+                                ->where('month', '=', $month)
+                                ->get();
+        
+        $valid_days = // max day of this month - holidays
 
         return view('report', [
             'employees' => $employees,
             'date' => $date,
+            'valid_days' => $valid_days,
+            'rate' => $rate,
         ]);
     }
 
