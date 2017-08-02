@@ -98,11 +98,11 @@ class RouteController extends Controller
                                 ->get();
         
         // Return JSON for test
-        return response()->json($holidays);
+        //return response()->json($holidays);
 
-        // return view('holiday', [
-        //     'holidays' => $holidays,
-        // ]);
+        return view('holidays', [
+            'holidays' => $holidays,
+        ]);
 
     }
 
