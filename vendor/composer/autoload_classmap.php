@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'ActionRecordSeeder' => $baseDir . '/database/seeds/ActionRecordSeeder.php',
+    'App\\AbsenceValidRecord' => $baseDir . '/app/AbsenceValidRecord.php',
     'App\\ActionRecord' => $baseDir . '/app/ActionRecord.php',
     'App\\CarRecord' => $baseDir . '/app/CarRecord.php',
     'App\\CardRecord' => $baseDir . '/app/CardRecord.php',
@@ -49,6 +50,7 @@ return array(
     'Carbon\\CarbonInterval' => $vendorDir . '/nesbot/carbon/src/Carbon/CarbonInterval.php',
     'Carbon\\Exceptions\\InvalidDateException' => $vendorDir . '/nesbot/carbon/src/Carbon/Exceptions/InvalidDateException.php',
     'CardRecordSeeder' => $baseDir . '/database/seeds/CardRecordSeeder.php',
+    'CreateAbsenceValidRecordsTable' => $baseDir . '/database/migrations/2017_08_02_153827_create_absence_valid_records_table.php',
     'CreateCarRecordsTable' => $baseDir . '/database/migrations/2017_07_24_130805_create_car_records_table.php',
     'CreateCardRecordsTable' => $baseDir . '/database/migrations/2017_07_24_132509_create_card_records_table.php',
     'CreateDailyCheckStatusesTable' => $baseDir . '/database/migrations/2017_07_30_052229_create_daily_check_statuses_table.php',
