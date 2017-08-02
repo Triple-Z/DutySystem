@@ -99,13 +99,13 @@ th {
         var y = dd.getFullYear();
         var m = dd.getMonth()+1;//获取当前月份的日期
         var d = dd.getDate();
-        return y+"-"+m+"-"+d;
+        return y+"-"+m;
     }
     var today = today();
     $(function () {
 
         var picker2 = $('#datetimepicker2').datetimepicker({  
-            format: 'YYYY-MM-DD',  
+            format: 'YYYY-MM',  
             locale: moment.locale('zh-cn'),
             maxDate: today
         });  
@@ -169,18 +169,18 @@ th {
 <!-- filter choice -->
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <div style="margin-top: 20px;">
-            <form id="edit_form" class="form-horizontal" method="POST" action="/valid">
+            <form class="form-horizontal" method="POST" action="/report">
                 {{ csrf_field() }}
                 <div class="col-md-2 col-md-offset-3">
                     <div style="font-size: 150%;">
-                        选择显示日期：
+                        选择显示月份：
                     </div>
                 </div>
                 <div class="col-md-2" style="margin-left: -40px;">  
                     <div class="form-group">  
                         <!--指定 date标记-->  
-                        <div class="input-group date" id="datetimepicker2">  
-                            <input id="input_date" type="text" class="form-control" type="time" autocomplete="off" placeholder="显示日期" name="date" required/>  
+                        <div class="input-group date" id="datetimepicker2" style="width: 81%;">  
+                            <input type="text" class="form-control" type="time" autocomplete="off" placeholder="显示月份" name="month" required/>  
                             <span class="input-group-addon">  
                                 <span class="glyphicon glyphicon-calendar"></span>  
                             </span>  
@@ -199,7 +199,7 @@ th {
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <div>
         <div class="col-sm-2 col-md-2" style="font-size: 200%;float: left;">
-            当天考勤情况
+            所有记录
         </div>
         <div class="col-sm-2 col-md-2" style="float: right;">
             <button type="button" class="btn btn-primary" onclick="method('tableExcel')">
@@ -214,70 +214,39 @@ th {
                 <tr>
                     <th>工号</th>
                     <th>姓名</th>
-                    <th>上午签到时间</th>
-                    <th>上午离班时间</th>
-                    <th>下午签到时间</th>
-                    <th>下午离班时间</th>
-                    <th>出勤情况</th>
-                    <th>备注</th>
+                    <th>应出勤天数</th>
+                    <th>实际出勤天数</th>
+                    <th>事假</th>
+                    <th>病假</th>
+                    <th>迟到</th>
+                    <th>早退</th>
+                    <th>旷工</th>
+                    <th>出勤率</th>
                 </tr>
             </thead>
             <tbody>
-                 @foreach($employees as $employee) 
+                @foreach($employees as $employee)
                     <tr>
                         <th><a href="/employees/{{ $employee->work_number }}">{{ $employee->work_number }}</a></th>
                         <th>{{ $employee->name }}</th>
-                        @if (strcmp($employee->special_records()['check_status'], "请假") == 0)
-                            <th>N/A</th>
-                            <th>N/A</th>
-                            <th>N/A</th>
-                            <th>N/A</th>
-                        @else 
-
-                            @if($employee->special_records()['today_am_earliest_record'])
-                                <th>{{ $employee->special_records()['today_am_earliest_record']->check_time }}</th> 
-                            @else
-                                <th>N/A</th>
-                            @endif
-
-                            @if($employee->special_records()['today_am_latest_record'])
-                                <th>{{ $employee->special_records()['today_am_latest_record']->check_time }}</th> 
-                            @else
-                                <th>N/A</th>
-                            @endif
-
-                            @if($employee->special_records()['today_pm_earliest_record'])
-                                <th>{{ $employee->special_records()['today_pm_earliest_record']->check_time }}</th> 
-                            @else
-                                <th>N/A</th>
-                            @endif
-
-                            @if($employee->special_records()['today_pm_latest_record'])
-                                <th>{{ $employee->special_records()['today_pm_latest_record']->check_time }}</th> 
-                            @else
-                                <th>N/A</th>
-                            @endif
-
-                        @endif
-
-                        @if($employee->special_records()['check_status'])
-                            <th>{{ $employee->special_records()['check_status'] }}</th> 
+                        <th>{{ $valid_days }}</th>
+                        <th>{{ $employee->month_report_data($date)['normal'] }}</th>
+                        <th>{{ $employee->month_report_data($date)['absence_valid_work'] }}</th>
+                        <th>{{ $employee->month_report_data($date)['absence_valid_ill'] }}</th>
+                        <th>{{ $employee->month_report_data($date)['late'] }}</th>
+                        <th>{{ $employee->month_report_data($date)['early_leave'] }}</th>
+                        <th>{{ $employee->month_report_data($date)['absence_invalid'] }}</th>
+                        @if ($valid_days)
+                            <th>{{ number_format(($employee->month_report_data($date)['normal'] / $valid_days) * 100, 2) . '%' }}</th>
                         @else
-                            <th>N/A</th>
+                            <th>0.00%</th>
                         @endif
-
-                        @if($employee->special_records()['note'])
-                            <th>{{ $employee->special_records()['note'] }}</th> 
-                        @else
-                            <th></th>
-                        @endif
-
                     </tr>
-                 @endforeach
+                @endforeach
             </tbody>
         </table>
         <div style="text-align: center;">
-            {{ $employees->links() }}
+             {{ $employees->links() }} 
         </div>
     </div>
 </div>

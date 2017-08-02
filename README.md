@@ -18,18 +18,23 @@ A duty system for Drone Institution of NUAA.
 	* 7.4. [table name: `user_action_records`](#tablename:user_action_records)
 * 8. [Migrations](#Migrations)
 * 9. [Seeds](#Seeds)
-* 10. [Check In](#CheckIn)
-* 11. [Check Out](#CheckOut)
-* 12. [Refresh Frequency](#RefreshFrequency)
+* 10. [Employee Status](#EmployeeStatus)
+* 11. [Important Timestamp](#ImportantTimestamp)
+	* 11.1. [Default Timezone](#DefaultTimezone)
+* 12. [Scheduling task](#Schedulingtask)
 * 13. [note](#note)
 	* 13.1. [Error message:](#Errormessage:)
 	* 13.2. [Solution](#Solution)
-* 14. [Web-view Layouts Design](#Web-viewLayoutsDesign)
-	* 14.1. [general page](#generalpage)
-	* 14.2. [graph page](#graphpage)
-	* 14.3. [valid records](#validrecords)
-	* 14.4. [holiday page(option)](#holidaypageoption)
-	* 14.5. [timeedit page](#timeeditpage)
+	* 13.3. [Change Server Timezone](#ChangeServerTimezone)
+* 14. [Source Code rewrite](#SourceCoderewrite)
+	* 14.1. [modal position](#modalposition)
+	* 14.2. [positionmethod](#positionmethod)
+* 15. [Web-view Layouts Design](#Web-viewLayoutsDesign)
+	* 15.1. [general page](#generalpage)
+	* 15.2. [graph page](#graphpage)
+	* 15.3. [valid records](#validrecords)
+	* 15.4. [holiday page(option)](#holidaypageoption)
+	* 15.5. [timeedit page](#timeeditpage)
 
 <!-- vscode-markdown-toc-config
 	numbering=true
@@ -65,6 +70,12 @@ php artisan migrate
 > 
 > password: `secret`
 
+remote database:
+
+- IP: `119.29.150.233:3306`
+- Account: `root`
+- Password: `DutySystem`
+
 # Service Logic
 
 业务逻辑
@@ -77,17 +88,24 @@ php artisan migrate
 - Employee
 - Record (For employees)
 - ActionRecord (For admins)
+- CarRecord
+- CardRecord
+- TimeNode
+- DailyCheckStatus
 
 ###  3.1. <a name='ModelRelationship'></a>Model Relationship
 
 模型间关系
 
 ```php
-$user->actions(); // 返回某个指定管理员操作记录
-$actions->user(); // 返回某条指定记录的管理员信息
+$user->actions; // 返回某个指定管理员操作记录
+$actions->user; // 返回某条指定记录的管理员信息
 
-$employee->records(); // 返回某个指定雇员的签到记录
-$record->employee(); // 返回某条指定签到记录的雇员信息
+$employee->records; // 返回某个指定雇员的签到记录
+$employee->special_records(); // 以数组返回某个指定雇员的重要签到记录
+$employee->month_report_data(); // 以数组返回某个指定雇员的月记录数据
+
+$record->employee; // 返回某条指定签到记录的雇员信息
 ```
 
 
@@ -120,22 +138,95 @@ $record->employee(); // 返回某条指定签到记录的雇员信息
 
 应用程序接口
 
-- GET `/`: 返回认证状态
-- GET `/home`: 返回普通管理员登录界面
-- GET `/superhome`: 返回超级管理员登录界面
-- GET `/graph`: 返回图表界面
-- GET `/correct`: 返回数据修正界面
-- GET `/export`: 返回导出excel界面
-- GET `/holiday`： 返回节假日编辑界面
-- GET `/timeedit`: 返回有效时间编辑界面
+- GET `/` : 返回所有记录界面
+- POST `/` : 返回指定日期内记录界面
+  > 请求变量:
+  > ```php
+  > $start_time // 开始时间
+  > $end_time // 结束时间
+  > ```
 
-- GET `/employees/{id}`: 返回某个指定雇员信息
-- GET `/employees/{id}/records`: 返回某个指定雇员的签到记录
+- GET `/home` : 返回普通管理员登录界面
+- GET `/superhome` : 返回超级管理员登录界面
+<!-- - GET `/graph` : 返回图表界面
+- GET `/correct` : 返回数据修正界面
+- GET `/export` : 返回导出excel界面 -->
+- GET `/valid` : 返回当日出勤情况界面
+- POST `/valid` : 返回指定某个日期的出勤情况界面
+  > 请求变量：
+  >```php
+  > $date // 请求日期
+  >```
 
-- GET `/admin/actions`: 返回当前管理员操作信息
-- GET `/admin/actions/{id}`: 返回某个指定管理员的操作信息
+- GET `/report` : 返回月报表界面
+- POST `/report` : 返回某个指定月份的月报表界面
+  > 请求变量：
+  > ```php
+  > $month // 格式为 "YYYY-MM" 的某个指定月份
+  > ```
 
-- POST `/admin/resetpassword` 重置管理员密码
+- GET `/holidays` ： 返回当前月节假日编辑界面
+- POST `/holidays` : 返回某个指定月份的节假日编辑界面
+  > 请求变量：
+  > ```php
+  > $month // 格式为 "YYYY-MM" 的某个指定月份
+  > ```
+- PUT `/holidays` : 更新某个指定月份的节假日数据
+  > 请求数据：(Content-Type: application/json)
+  > ```json
+  > {
+  >   "month": "2017-08",
+  >   "data": [
+  >     1,
+  >     2,
+  >     3
+  >   ]
+  > }
+  > ```
+  > 即 `2017-08-01`,  `2017-08-02`,  `2017-08-03` 为 `2017-08` 月的所有节假日
+
+- DELETE `/holidays` : 删除某个指定月份的节假日数据
+  > 请求变量：
+  > ```php
+  > $month // 格式为 "YYYY-MM" 的某个指定月份
+  > ```
+
+
+- GET `/timeedit` : 返回有效时间编辑界面
+- PUT `/timeedit/update` : 更改出勤时间设置
+  > 请求变量：
+  > ```php
+  > $am_start_['day', 'hour', 'minute', 'second'] // 上班开始时间（时、分、秒）
+  > $am_end_['day', 'hour', 'minute', 'second'] // 上班结束时间（时、分、秒）
+  > $pm_start_['day', 'hour', 'minute', 'second'] // 下午开始时间（时、分、秒）
+  > $pm_end_['day', 'hour', 'minute', 'second'] // 下午结束时间（时、分、秒）
+  > $am_ddl_['day', 'hour', 'minute', 'second'] // 上午上班时间（时、分、秒）
+  > $am_late_ddl_['day', 'hour', 'minute', 'second'] // 上午迟到最晚时间（时、分、秒）
+  > $pm_ddl_['day', 'hour', 'minute', 'second'] // 下午上班时间（时、分、秒）
+  > $pm_early_ddl_['day', 'hour', 'minute', 'second'] // 下午早退最早时间（时、分、秒）
+  > $pm_away_['day', 'hour', 'minute', 'second'] // 下午下班时间（时、分、秒）
+  > ```
+
+- GET `/employees/{work_number}` : 返回某个指定雇员信息
+- PUT `/employees/{work_number}/records/{id}` : 更改某个指定雇员的某条指定出勤记录
+  > 请求变量：
+  > ```php
+  > $check_direction // 签到方向
+  > $check_method // 签到方式（car || card || 请假）
+  > $card_gate // 刷卡机器编号（可为空）
+  > $note // 备注
+  > ```
+
+- GET `/admin/actions` : 返回当前管理员操作信息
+- GET `/admin/actions/{id}` : 返回某个指定管理员的操作信息
+
+- POST `/admin/resetpassword` : 重置管理员密码
+  > 请求变量：
+  > ```php
+  > $oldpassword // 旧密码
+  > $password // 新密码
+  > $password_confirmation // 确认密码
+  > ```
 
 
 ##  7. <a name='Databasetables'></a>Database tables
@@ -150,6 +241,7 @@ $record->employee(); // 返回某条指定签到记录的雇员信息
 ###  7.1. <a name='tablename:employees'></a>table name: `employees`
 
 columns:
+
 |ID*	|name	|gender	|eamil	|phone_number	|work_title	|department	|car_number	|
 |----|----|----|----|----|----|----|----|
 |1|TripleZ|man|me@triplez.cn|15240241051|CEO|Develop Department|null|
@@ -158,6 +250,7 @@ columns:
 ###  7.2. <a name='tablenames:records'></a>table names: `records`
 
 columns:
+
 |ID*	|employee_id^	|check_direction(Y/N)	|check_method	|check_time	|
 |----|----|----|----|---|
 |1|3|1|card|2017-07-21 13:22:13|
@@ -165,20 +258,19 @@ columns:
 |3|1|1|car|2017-07-22 07:22:13|
 |4|1|0|car|2017-07-22 12:22:13|
 
-
-
 ###  7.3. <a name='tablename:users'></a>table name: `users`
 
 columns:
+
 |ID*	|name	|email	|password	|admin(Y/N)	|phone_number	|created_at|updated_at|
 |-----|----|----|----|-----|-----|----|----|
 |1|TripleZ|me@triplez.cn|******|1|15240241051|
 |2|test|test@triplez.cn|******|0|88888888|
 
-
 ###  7.4. <a name='tablename:user_action_records'></a>table name: `user_action_records`
 
 columns:
+
 |ID*	|user_id^	|action	|timestamp	|
 |-----|----|----|----|
 |1|1|login|2017-07-23 15:47:35|
@@ -191,14 +283,26 @@ columns:
 - 2017_07_22_053844_create_employees_table
 - 2017_07_23_074658_create_records_table
 - 2017_07_23_142002_create_login_records_table
+- 2017_07_24_130805_create_car_records_table
+- 2017_07_24_132509_create_card_records_table
+- 2017_07_28_080332_create_time_nodes_table
+
+```bash
+php artisan migrate:reset
+php artisan migrate
+```
 
 ##  9. <a name='Seeds'></a>Seeds
 
 填充假数据
 
+- UsersTableSeeder
 - EmployeeSeeder
 - RecordSeeder
 - ActionRecordSeeder
+- CarRecordSeeder
+- CardRecordSeeder
+- TimeNodeSeeder
 
 ```bash
 composer dump-autoload
@@ -207,18 +311,53 @@ php artisan db:seed
 
 记得将需要 seed 的数据在 `database/seeds/DatabaseSeeder.php` 中注册。
 
+##  10. <a name='EmployeeStatus'></a>Employee Status
 
-##  10. <a name='CheckIn'></a>Check In
+雇员状态
 
-签到
+- 正常
+- 迟到
+- 早退
+- 迟到早退
+- 缺勤
+- 事假
+- 病假
+- 暂无
 
-##  11. <a name='CheckOut'></a>Check Out
 
-签出
+##  11. <a name='ImportantTimestamp'></a>Important Timestamp
 
-##  12. <a name='RefreshFrequency'></a>Refresh Frequency
+重要时间戳
 
-刷新频率
+- Global
+```php
+$am_start = `3:00` // 上午记录开始时间
+$am_end = `14:00` // 上午记录结束时间
+$pm_start = `12:00` // 下午记录开始时间
+$pm_end = `+1Day 3:00` // 下午记录结束时间
+```
+- AM
+```php
+$am_ddl = `8:00` // 上午签到最晚时间
+$am_late_ddl = `10:00` // 上午签到迟到最晚时间
+```
+- PM
+```php
+$pm_ddl = `14:00` // 下午签到最晚时间
+$pm_away = `18:00` // 下午离开最早时间
+$pm_early_ddl = `16:00` // 下午离开早退最早时间
+```
+
+
+###  11.1. <a name='DefaultTimezone'></a>Default Timezone
+
+默认时区
+
+`UTC+8` `Asia/Shanghai`
+
+##  12. <a name='Schedulingtask'></a>Scheduling task
+
+计划任务
 
 
 ##  13. <a name='note'></a>note
@@ -246,9 +385,57 @@ in file: `config\database.php`
 'engine' => 'InnoDB ROW_FORMAT=DYNAMIC',
 ```
 
-##  14. <a name='Web-viewLayoutsDesign'></a>Web-view Layouts Design
+###  13.3. <a name='ChangeServerTimezone'></a>Change Server Timezone
 
-###  14.1. <a name='generalpage'></a>general page
+```bash
+sudo timedatectl set-timezone Asia/Shanghai
+date
+```
+
+> Add timezone when written data into database!
+>
+> `Caron::now('Asia/Shanghai')` **OR** `Carbon::now('CST')`
+
+##  14. <a name='SourceCoderewrite'></a>Source Code rewrite
+
+###  14.1. <a name='modalposition'></a>modal position
+
+demand:
+
+make the modal box be at a right position
+
+###  14.2. <a name='positionmethod'></a>positionmethod
+
+find the function 'Modal.prototype.adjustDialog' bootstrap.js(in this project is included in public/js/app.js),then replace them as the follow code:
+
+```
+Modal.prototype.adjustDialog = function () {  
+    var modalIsOverflowing = this.$element[0].scrollHeight > document.documentElement.clientHeight  
+  
+    this.$element.css({  
+      paddingLeft:  !this.bodyIsOverflowing && modalIsOverflowing ? this.scrollbarWidth : '',  
+      paddingRight: this.bodyIsOverflowing && !modalIsOverflowing ? this.scrollbarWidth : ''  
+    });  
+  
+
+    var $modal_dialog = $(this.$element[0]).find('.modal-dialog');  
+    //get the view heigh
+    var clientHeight = (document.body.clientHeight < document.documentElement.clientHeight) ? document.body.clientHeight: document.documentElement.clientHeight;  
+    //get dialog heigh 
+    var dialogHeight = $modal_dialog.height();  
+    //compute the distance to the top 
+    var m_top = (clientHeight - dialogHeight)/3;  
+    // console.log("clientHeight : " + clientHeight);  
+    // console.log("dialogHeight : " + dialogHeight);  
+    // console.log("m_top : " + m_top);  
+    $modal_dialog.css({'margin': m_top + 'px auto'});  
+}  
+```
+
+
+##  15. <a name='Web-viewLayoutsDesign'></a>Web-view Layouts Design
+
+###  15.1. <a name='generalpage'></a>general page
 
 function:display all the records ordered by time stamp
 
@@ -274,7 +461,7 @@ view structure:
 ```
 
 
-###  14.2. <a name='graphpage'></a>graph page
+###  15.2. <a name='graphpage'></a>graph page
 
 function: build a calendar, and display each employee duty status.
 
@@ -298,7 +485,7 @@ view structure:
 ```
 
 
-###  14.3. <a name='validrecords'></a>valid records
+###  15.3. <a name='validrecords'></a>valid records
 
 function: display all records by day.
 
@@ -322,7 +509,7 @@ view structure:
 ```
 
 
-###  14.4. <a name='holidaypageoption'></a>holiday page(option)
+###  15.4. <a name='holidaypageoption'></a>holiday page(option)
 
 function: mark up holiday.
 
@@ -346,7 +533,7 @@ view structure:
 ```
 
 
-###  14.5. <a name='timeeditpage'></a>timeedit page
+###  15.5. <a name='timeeditpage'></a>timeedit page
 
 function:define legal time
 

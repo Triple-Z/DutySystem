@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRecordsTable extends Migration
+class CreateDailyCheckStatusesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,15 @@ class CreateRecordsTable extends Migration
      */
     public function up()
     {
-        Schema::create('records', function (Blueprint $table) {
+        Schema::create('daily_check_status', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('employee_id');
-            $table->tinyInteger('check_direction')->nullable();
-            $table->string('check_method');
-            $table->timestamp('check_time')->nullable();
-            $table->string('card_gate')->nullable();
-            $table->string('note')->nullable();
+            $table->date('date');
+            $table->timestamp('am_check')->nullable();
+            $table->timestamp('am_away')->nullable();
+            $table->timestamp('pm_check')->nullable();
+            $table->timestamp('pm_away')->nullable();
+            $table->string('status');
             $table->timestamps();
         });
     }
@@ -32,6 +33,6 @@ class CreateRecordsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('records');
+        Schema::dropIfExists('daily_check_status');
     }
 }

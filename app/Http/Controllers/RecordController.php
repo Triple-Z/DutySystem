@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Record;
+use Carbon\Carbon;
 
 class RecordController extends Controller
 {
@@ -12,11 +13,28 @@ class RecordController extends Controller
     }
 
     public function show_records() {
-        // $records = Record::latest('check_time')->paginate(15);
-        // $records->withPath('records');// custom page url -> `records?page=x`
-        // return response()->json($records);
-        $record = Record::find(1)->first();
-        $employee = $record->employee;
-        return $employee->name;
+        $records = Record::latest('check_time')->get();
+        return response()->json($records);
+    }
+
+    public function update(Request $request, $work_number, $id) {
+        if ($request->isMethod('put')) {
+            // Get vars
+            $check_direction = $request->input('check_direction');
+            $check_method = $request->input('check_method'); 
+            $card_gate = $request->input('card_gate');
+            $note = $request->input('note');
+            // Update record
+            $record = Record::where('id', '=', $id)->first();
+            $record->check_direction = $check_direction;
+            $record->check_method = $check_method;
+            $record->card_gate = $card_gate;
+            $record->note = $note;
+            $record->save();
+
+            $request->session()->flash('flash_success', '记录修改成功');
+
+            return redirect('/employees/' . $work_number);
+        }
     }
 }

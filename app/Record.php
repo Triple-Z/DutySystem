@@ -7,17 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 class Record extends Model
 {
     // No need created_at & updated_at
-    public $timestamps = false;
+    // public $timestamps = false;
 
     protected $fillable = [
         'employee_id',
         'check_direction',
         'check_method',
         'check_time',
+        'card_gate',
+        'note',
     ];
 
     protected $guarded = [
         'id',
+        'created_at',
+        'updated_at',
     ];
 
     public function employee() {

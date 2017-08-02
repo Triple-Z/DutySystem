@@ -21,6 +21,7 @@
             }
             @yield('style')
         </style>
+        @yield('script')
 <!--         <script type="text/javascript">
             $(document).ready(function(){  
                 url = document.domain;
@@ -29,6 +30,29 @@
         </script> -->
     </head>
     <body>
+    
+        {{-- Session message   --}}
+        @if(session()->has('flash_success'))
+            <div class="alert alert-success col-md-10 col-md-offset-2">
+                {{ session()->get('flash_success', 'default') }}
+                <a class="close" onclick="$('.alert').attr('class','fade')">&times;</a>
+            </div>
+        @endif
+
+        @if(session()->has('flash_warning'))
+            <div class="alert alert-warning col-md-10 col-md-offset-2">
+                {{ session()->get('flash_warning', 'default') }}
+                <a class="close" onclick="$('.alert').attr('class','fade')">&times;</a>
+            </div>
+        @endif
+
+        @if(session()->has('flash_error'))
+            <div class="alert alert-success col-md-10 col-md-offset-2">
+                {{ session()->get('flash_error', 'default') }}
+                <a class="close" onclick="$('.alert').attr('class','fade')">&times;</a>
+            </div>
+        @endif
+
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -63,7 +87,7 @@
                     <form class="navbar-form navbar-right" role="search">
                         {{csrf_field()}}
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="按名字搜索" name="employee_name">
+                            <input type="text" class="form-control" placeholder="按工号搜索" name="employee_id">
                             <div class="input-group-btn">
                                 <button class="btn btn-default" type="submit">
                                     <i class="glyphicon glyphicon-search"></i>
@@ -77,17 +101,31 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar">
-                    <ul class="nav nav-sidebar">
-                        <li id="general" class="active"><a href={{url('/')}}>进出记录总览</a></li>
-                        <li id="valid"><a href="{{url('/valid')}}">有效出勤记录</a></li>
-                        <li id="graph"><a href="{{url('/graph')}}">绘制出勤曲线</a></li>
-                        <li id="holiday"><a href="{{url('/holiday')}}">节假日编辑</a></li>
-                        <li id="timeedit"><a href="{{url('/timeedit')}}">考勤有效时间编辑</a></li>
-                        <li id="export"><a href="{{url('/export')}}">导出报表</a></li>
+                    <ul class="nav nav-sidebar" id="left-nav">
+                        <li><a href="{{url('/')}}/">进出记录总览</a></li>
+                        <li><a href="{{url('/valid')}}">每日出勤情况</a></li>
+                        <li><a href="{{url('/report')}}">每月报表</a></li>
+<!--                         <li><a href="{{url('/graph')}}">绘制出勤曲线</a></li> -->
+                        <li><a href="{{url('/holidays')}}">节假日编辑</a></li>
+                        <li><a href="{{url('/timeedit')}}">考勤设置</a></li>
                     </ul>    
                 </div>
                 @yield('content-in-main')
+                
+
             </div>
         </div>
     </body>
+    <script type="text/javascript">
+        $(function () {
+            $("#left-nav").find("li").each(function () {
+                var a = $(this).find("a:first")[0];
+                if ($(a).attr("href") == location.href) {
+                    $(this).addClass("active");
+                } else {
+                    $(this).removeClass("active");
+                }
+            });
+        });
+    </script>
 </html>

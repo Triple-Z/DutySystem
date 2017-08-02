@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Employee;
+use App\Record;
+use Carbon\Carbon;
+use App\TimeNode;
+use App\HolidayDate;
+
 
 class RouteController extends Controller
 {
@@ -10,26 +16,157 @@ class RouteController extends Controller
         $this->middleware('auth');
     }
     public function valid() {
-        return view('valid');
+        $employees = Employee::orderBy('work_number')->paginate(15);
+        
+        return view('valid', [
+            'employees' => $employees,
+        ]);
+    }
+
+    public function valid_date(Request $request) {
+        $date = $request->input('date');
+
+        $employees = Employee::orderBy('work_number')->paginate(15);
+
+        return view('valid_date', [
+            'employees' => $employees,
+            'date' => $date,
+        ]);
     }
 
     public function graph() {
         return view('graph');
     }
 
-    public function correct() {
-        return view('correct');
+    // public function correct() {
+    //     return view('correct');
+    // }
+
+    public function report(Request $request) {
+        if ($request->input('month')) {
+            $date = $request->input('month');
+        } else {
+            $date = Carbon::now('Asia/Shanghai')->toDateString();
+        }
+        $now = Carbon::now('Asia/Shanghai');
+        $time = Carbon::parse($date);
+        
+        $employees = Employee::orderBy('work_number')->paginate(15);
+        
+        $year = $time->year;
+        $month = $time->month;
+        $holidays = HolidayDate::where('year', '=', $year)
+                                ->where('month', '=', $month)
+                                ->orderBy('day')
+                                ->get();
+
+        if (($now->year == $time->year) && ($now->month == $time->month)) {// Same month
+            $holidays_in_month = HolidayDate::where('year', '=', $year)
+                                            ->where('month', '=', $month)
+                                            ->where('day', '<=', $time->day)
+                                            ->get();
+            $valid_days = ($time->day) - ($holidays_in_month->count());
+        } else { // Former month
+            $maxDay = $time->addMonth()->subDay()->day;
+            $valid_days = $maxDay - ($holidays->count());
+        }
+
+        return view('report', [
+            'employees' => $employees,
+            'date' => $date,
+            'valid_days' => $valid_days,
+        ]);
     }
 
-    public function export() {
-        return view('export');
+    // public function report_date(Request $request) {
+    //     $date = $request->input('date');
+
+    //     return view('report', [
+    //         'employees' => $employees,
+    //     ])
+    // }
+
+    public function holidays(Request $request) {
+
+        $now = Carbon::now('Asia/Shanghai');
+        $year = $now->year;
+        $month = $now->month;
+
+        $holidays = HolidayDate::where('year', '=', $year)
+                                ->where('month', '=', $month)
+                                ->orderBy('day')
+                                ->get();
+        
+        // Return JSON for test
+        return response()->json($holidays);
+
+        // return view('holiday', [
+        //     'holidays' => $holidays,
+        // ]);
+
     }
 
-    public function holiday() {
-        return view('holiday');
+    public function holidays_search(Request $request) {
+        $date = Carbon::parse($request->input('month'));
+        $year = $date->year;
+        $month = $date->month;
+
+        $holidays = HolidayDate::where('year', '=', $year)
+                                ->where('month', '=', $month)
+                                ->orderBy('day')
+                                ->get();
+
+        // Return JSON for test
+        return response()->json($holidays);
+
+        // return view('holiday', [
+        //     'holidays' => $holidays,
+        // ]);
+    }
+
+    public function holidays_update(Request $request) {
+        $date = Carbon::parse($request->input('month'));
+        $year = $date->year;
+        $month = $date->month;
+
+        $new_holidays = $request->input('days');
+
+        $deleted_holidays = HolidayDate::where('year', '=', $year)
+                                        ->where('month', '=', $month)
+                                        ->delete();
+
+        foreach ($new_holidays as $holiday) {
+            HolidayDate::create([
+                'year' => year,
+                'month' => month,
+                'day' => $holiday,
+            ]);
+        }
+
+        $request->session()->flash('flash_success', '节假日数据更新成功');
+
+        return redirect('/holidays');
+    }
+
+    public function holidays_delete(Request $request) {
+        $date = Carbon::parse($request->input('month'));
+        $year = $date->year;
+        $month = $date->month;
+
+        $deleted_holidays = HolidayDate::where('year', '=', $year)
+                                        ->where('month', '=', $month)
+                                        ->delete();
+
+        $request->session()->flash('flash_success', '节假日数据删除成功');
+
+        return redirect('/holidays');
     }
 
     public function timeedit() {
-        return view('timeedit');
+        $timenodes = TimeNode::all();
+
+        return view('timeedit', [
+            'timenodes' => $timenodes,
+        ]);
     }
 }
