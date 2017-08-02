@@ -252,7 +252,7 @@ th {
                     @if($record->note)
                         <th>{{ $record->note }}</th>
                     @else
-                        <th>N/A</th>
+                        <th></th>
                     @endif
 
 <!--                     <th>
