@@ -92,6 +92,8 @@ remote database:
 - CardRecord
 - TimeNode
 - DailyCheckStatus
+- HolidayDate
+- AbsenceValidRecord
 
 ###  3.1. <a name='ModelRelationship'></a>Model Relationship
 
@@ -286,6 +288,8 @@ columns:
 - 2017_07_24_130805_create_car_records_table
 - 2017_07_24_132509_create_card_records_table
 - 2017_07_28_080332_create_time_nodes_table
+- 2017_07_31_105738_create_holiday_dates_table
+- 2017_08_02_153827_create_absence_valid_records_table
 
 ```bash
 php artisan migrate:reset
@@ -303,6 +307,9 @@ php artisan migrate
 - CarRecordSeeder
 - CardRecordSeeder
 - TimeNodeSeeder
+- DailyCheckStatusSeeder
+- HolidayDateSeeder
+- AbsenceValidRecordSeeder
 
 ```bash
 composer dump-autoload

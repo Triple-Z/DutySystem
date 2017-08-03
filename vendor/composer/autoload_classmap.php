@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AbsenceValidRecordSeeder' => $baseDir . '/database/seeds/AbsenceValidRecordSeeder.php',
     'ActionRecordSeeder' => $baseDir . '/database/seeds/ActionRecordSeeder.php',
     'App\\AbsenceValidRecord' => $baseDir . '/app/AbsenceValidRecord.php',
     'App\\ActionRecord' => $baseDir . '/app/ActionRecord.php',

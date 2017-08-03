@@ -272,6 +272,7 @@ class ComposerStaticInit653fc3158113dd68e6cd4948295098bc
     );
 
     public static $classMap = array (
+        'AbsenceValidRecordSeeder' => __DIR__ . '/../..' . '/database/seeds/AbsenceValidRecordSeeder.php',
         'ActionRecordSeeder' => __DIR__ . '/../..' . '/database/seeds/ActionRecordSeeder.php',
         'App\\AbsenceValidRecord' => __DIR__ . '/../..' . '/app/AbsenceValidRecord.php',
         'App\\ActionRecord' => __DIR__ . '/../..' . '/app/ActionRecord.php',
