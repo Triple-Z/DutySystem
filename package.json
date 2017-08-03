@@ -16,6 +16,5 @@
     "laravel-mix": "^1.0"
   },
   "dependencies": {
-    "axios": "^0.16.2"
   }
 }

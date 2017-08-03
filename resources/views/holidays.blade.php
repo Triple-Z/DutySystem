@@ -1,11 +1,6 @@
 @extends('layouts.main')
 
 @section('script')
-<script type="text/javascript" src="{{asset('js/axios.js')}}"></script>
-<script type="text/javascript">
-	var test = {!!$holidays!!};
-	alert(test[1].id)
-</script>
 @endsection
 
 @section('holidays-view')
