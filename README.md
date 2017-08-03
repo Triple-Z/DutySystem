@@ -230,6 +230,8 @@ $record->employee; // 返回某条指定签到记录的雇员信息
   > $password_confirmation // 确认密码
   > ```
 
+- GET `absence` : 返回所有请假信息
+
 
 ##  7. <a name='Databasetables'></a>Database tables
 
