@@ -92,6 +92,8 @@ remote database:
 - CardRecord
 - TimeNode
 - DailyCheckStatus
+- HolidayDate
+- AbsenceValidRecord
 
 ###  3.1. <a name='ModelRelationship'></a>Model Relationship
 
@@ -228,6 +230,8 @@ $record->employee; // 返回某条指定签到记录的雇员信息
   > $password_confirmation // 确认密码
   > ```
 
+- GET `absence` : 返回所有请假信息
+
 
 ##  7. <a name='Databasetables'></a>Database tables
 
@@ -258,8 +262,6 @@ columns:
 |3|1|1|car|2017-07-22 07:22:13|
 |4|1|0|car|2017-07-22 12:22:13|
 
-
-
 ###  7.3. <a name='tablename:users'></a>table name: `users`
 
 columns:
@@ -268,7 +270,6 @@ columns:
 |-----|----|----|----|-----|-----|----|----|
 |1|TripleZ|me@triplez.cn|******|1|15240241051|
 |2|test|test@triplez.cn|******|0|88888888|
-
 
 ###  7.4. <a name='tablename:user_action_records'></a>table name: `user_action_records`
 
@@ -289,6 +290,8 @@ columns:
 - 2017_07_24_130805_create_car_records_table
 - 2017_07_24_132509_create_card_records_table
 - 2017_07_28_080332_create_time_nodes_table
+- 2017_07_31_105738_create_holiday_dates_table
+- 2017_08_02_153827_create_absence_valid_records_table
 
 ```bash
 php artisan migrate:reset
@@ -306,6 +309,9 @@ php artisan migrate
 - CarRecordSeeder
 - CardRecordSeeder
 - TimeNodeSeeder
+- DailyCheckStatusSeeder
+- HolidayDateSeeder
+- AbsenceValidRecordSeeder
 
 ```bash
 composer dump-autoload
@@ -323,7 +329,8 @@ php artisan db:seed
 - 早退
 - 迟到早退
 - 缺勤
-- 请假
+- 事假
+- 病假
 - 暂无
 
 

@@ -216,7 +216,8 @@ th {
                     <th>姓名</th>
                     <th>应出勤天数</th>
                     <th>实际出勤天数</th>
-                    <th>请假</th>
+                    <th>事假</th>
+                    <th>病假</th>
                     <th>迟到</th>
                     <th>早退</th>
                     <th>旷工</th>
@@ -230,11 +231,16 @@ th {
                         <th>{{ $employee->name }}</th>
                         <th>{{ $valid_days }}</th>
                         <th>{{ $employee->month_report_data($date)['normal'] }}</th>
-                        <th>{{ $employee->month_report_data($date)['absence_valid'] }}</th>
+                        <th>{{ $employee->month_report_data($date)['absence_valid_work'] }}</th>
+                        <th>{{ $employee->month_report_data($date)['absence_valid_ill'] }}</th>
                         <th>{{ $employee->month_report_data($date)['late'] }}</th>
                         <th>{{ $employee->month_report_data($date)['early_leave'] }}</th>
                         <th>{{ $employee->month_report_data($date)['absence_invalid'] }}</th>
-                        <th>{{ number_format(($employee->month_report_data($date)['normal'] / $valid_days) * 100, 2) . '%' }}</th>
+                        @if ($valid_days)
+                            <th>{{ number_format(($employee->month_report_data($date)['normal'] / $valid_days) * 100, 2) . '%' }}</th>
+                        @else
+                            <th>0.00%</th>
+                        @endif
                     </tr>
                 @endforeach
             </tbody>

@@ -471,9 +471,9 @@ class Employee extends Model
         $late = 0;
         $early_leave = 0;
         $absence_invalid = 0;
-        $absence_valid = 0;
+        $absence_valid_ill = 0;
+        $absence_valid_work = 0;
         $unknown = 0;
-
 
         foreach ($daily_results as $daily_result) {
             switch ($daily_result->status) {
@@ -493,8 +493,11 @@ class Employee extends Model
                 case "缺勤":
                     $absence_invalid++;
                     break;
-                case "请假":
-                    $absence_valid++;
+                case "事假":
+                    $absence_valid_work++;
+                    break;
+                case "病假":
+                    $absence_valid_ill++;
                     break;
                 default:
                     $unknown++;
@@ -506,7 +509,8 @@ class Employee extends Model
             'late' => $late,
             'early_leave' => $early_leave,
             'absence_invalid' => $absence_invalid,
-            'absence_valid' => $absence_valid,
+            'absence_valid_ill' => $absence_valid_ill,
+            'absence_valid_work' => $absence_valid_work,
             'unknown' => $unknown,
         );
 

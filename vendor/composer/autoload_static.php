@@ -272,7 +272,9 @@ class ComposerStaticInit653fc3158113dd68e6cd4948295098bc
     );
 
     public static $classMap = array (
+        'AbsenceValidRecordSeeder' => __DIR__ . '/../..' . '/database/seeds/AbsenceValidRecordSeeder.php',
         'ActionRecordSeeder' => __DIR__ . '/../..' . '/database/seeds/ActionRecordSeeder.php',
+        'App\\AbsenceValidRecord' => __DIR__ . '/../..' . '/app/AbsenceValidRecord.php',
         'App\\ActionRecord' => __DIR__ . '/../..' . '/app/ActionRecord.php',
         'App\\CarRecord' => __DIR__ . '/../..' . '/app/CarRecord.php',
         'App\\CardRecord' => __DIR__ . '/../..' . '/app/CardRecord.php',
@@ -315,6 +317,7 @@ class ComposerStaticInit653fc3158113dd68e6cd4948295098bc
         'Carbon\\CarbonInterval' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/CarbonInterval.php',
         'Carbon\\Exceptions\\InvalidDateException' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Exceptions/InvalidDateException.php',
         'CardRecordSeeder' => __DIR__ . '/../..' . '/database/seeds/CardRecordSeeder.php',
+        'CreateAbsenceValidRecordsTable' => __DIR__ . '/../..' . '/database/migrations/2017_08_02_153827_create_absence_valid_records_table.php',
         'CreateCarRecordsTable' => __DIR__ . '/../..' . '/database/migrations/2017_07_24_130805_create_car_records_table.php',
         'CreateCardRecordsTable' => __DIR__ . '/../..' . '/database/migrations/2017_07_24_132509_create_card_records_table.php',
         'CreateDailyCheckStatusesTable' => __DIR__ . '/../..' . '/database/migrations/2017_07_30_052229_create_daily_check_statuses_table.php',

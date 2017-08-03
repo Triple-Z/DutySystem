@@ -241,6 +241,7 @@ th {
                     <th>刷卡位置</th>
                     <th>进出方向</th>
                     <th>刷卡方式</th>
+                    <th>外出时间</th>
                     <th>备注</th>
                 </tr>
             </thead>
@@ -282,13 +283,31 @@ th {
                     @elseif($record->check_method=="card") 
                         <th id="check_method_{{$record->id}}">门禁</th>
                     @else
-                        <th id="check_method_{{$record->id}}">请假</th>
+                        <th id="check_method_{{$record->id}}">{{ $record->check_method }}</th>
+                    @endif
+
+                    {{-- Out time duration  --}}
+                    @php
+                        $hasDuration = false;
+                    @endphp
+                    @foreach ($in_out_duration as $duration)
+                        @if ($duration['in_id'] == $record->id)
+                            <th>{{ $duration['diff']->format('%H:%I:%S') }}</th>
+                            @php
+                                $hasDuration = true;
+                            @endphp
+                            @break
+                        @endif
+                    @endforeach
+
+                    @if (!$hasDuration)
+                        <th></th>
                     @endif
 
                     @if($record->note)
                         <th id="note_{{$record->id}}">{{ $record->note }}</th>
                     @else
-                        <th id="note_{{$record->id}}">N/A</th>
+                        <th id="note_{{$record->id}}"></th>
                     @endif
 
                     <th>
