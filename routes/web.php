@@ -29,7 +29,11 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('timeedit', 'RouteController@timeedit');
 	Route::put('timeedit/update', 'TimeNodeController@update');
 
+	Route::get('holidays_content', 'RouteController@holidays_content');
+
+
 	Route::get('absence', 'AbsenceValidRecordController@show_all');
+
 });
 
 // Rotues for modifying admin info

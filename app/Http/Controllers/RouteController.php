@@ -88,6 +88,23 @@ class RouteController extends Controller
 
     public function holidays(Request $request) {
 
+        // $now = Carbon::now('Asia/Shanghai');
+        // $year = $now->year;
+        // $month = $now->month;
+
+        // $holidays = HolidayDate::where('year', '=', $year)
+        //                         ->where('month', '=', $month)
+        //                         ->orderBy('day')
+        //                         ->get();
+        
+        // Return JSON for test
+        //return response()->json($holidays);
+
+        return view('holidays');
+
+    }
+
+    public function holidays_content(Request $request) {
         $now = Carbon::now('Asia/Shanghai');
         $year = $now->year;
         $month = $now->month;
@@ -96,17 +113,12 @@ class RouteController extends Controller
                                 ->where('month', '=', $month)
                                 ->orderBy('day')
                                 ->get();
-        
         // Return JSON for test
-        //return response()->json($holidays);
-
-        return view('holidays', [
-            'holidays' => $holidays,
-        ]);
-
+        // return response()->json(['date'=>'2017-08-04']);
+        return response()->json($holidays);
     }
 
-    public function holidays_search(Request $request) {
+    public function holidays_search() {
         $date = Carbon::parse($request->input('month'));
         $year = $date->year;
         $month = $date->month;
