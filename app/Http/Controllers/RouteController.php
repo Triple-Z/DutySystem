@@ -128,6 +128,8 @@ class RouteController extends Controller
         }
         
         return response()->json($holidays_formatted);
+        // if it cannot return normal JSON array, use the code following.
+        // return json_encode($holidays_formatted);
     }
 
     public function holidays_search() {
