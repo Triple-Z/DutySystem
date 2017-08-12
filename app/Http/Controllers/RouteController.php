@@ -115,7 +115,19 @@ class RouteController extends Controller
                                 ->get();
         // Return JSON for test
         // return response()->json(['date'=>'2017-08-04']);
-        return response()->json($holidays);
+        //return response()->json($holidays);
+        
+        $holidays_formatted = array();
+        
+        foreach ($holidays as $holiday) {
+            // Format the date
+            $temp_time = Carbon::create($holiday->year, $holiday->month, $holiday->day, null, null, null);
+            array_push($holidays_formatted, [
+            	'date' => $temp_time->toDateString(),
+            ]);
+        }
+        
+        return response()->json($holidays_formatted);
     }
 
     public function holidays_search() {
