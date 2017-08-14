@@ -119,7 +119,7 @@ class RouteController extends Controller
         //return response()->json($holidays);
 
         
-        $holidays_formatted = new ArrayObject(array());
+        $holidays_formatted = array();
         
         foreach ($holidays as $holiday) {
             // Format the date
