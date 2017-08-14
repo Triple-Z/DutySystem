@@ -13,10 +13,10 @@
         <button type="button"
                 class="schedule-calendar-arrow double-arrow"
                 @click="nextYear">&gt;&gt;</button>
-        <button type="button"
+        <button type="button" data-toggle="modal" data-target="#modal-switch-add"
                 class="schedule-calendar-add" 
                 id="addHoliday">添加假期</button>
-        <button type="button"
+        <button type="button" 
                 class="schedule-calendar-delete" 
                 id="deleteHoliday">删除假期</button>
     </header>
