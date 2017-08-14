@@ -119,12 +119,11 @@ class RouteController extends Controller
         //return response()->json($holidays);
 
         
-        $holidays_formatted = array();
+        $holidays_formatted = new ArrayObject(array());
         
         foreach ($holidays as $holiday) {
             // Format the date
             $temp_time = Carbon::create($holiday->year, $holiday->month, $holiday->day, null, null, null);
-// <<<<<<< fix-date-return
             array_push($holidays_formatted, [
             	'date' => $temp_time->toDateString(),
             ]);
