@@ -88,6 +88,12 @@ class RouteController extends Controller
 
     public function holidays(Request $request) {
 
+        return view('holidays');
+
+    }
+
+    public function holidays_data(Request $request) {
+
         $now = Carbon::now('Asia/Shanghai');
         $year = $now->year;
         $month = $now->month;
@@ -107,13 +113,11 @@ class RouteController extends Controller
             ]);
         }
         
-        // Return JSON for test
-        // return json_encode(array(
-        //     'year' => $year,
-        //     'dates' => $data,
-        // ));
-
-        return view('holidays');
+        // Return JSON
+        return json_encode(array(
+            'year' => $year,
+            'dates' => $data,
+        ));
 
     }
 
@@ -179,27 +183,27 @@ class RouteController extends Controller
         // ]);
     }
 
-    public function holidays_update(Request $request) {
+    public function holidays_add(Request $request) {
         $date = Carbon::parse($request->input('month'));
         $year = $date->year;
         $month = $date->month;
 
-        $new_holidays = $request->input('days');// New holidays from JSON
+        $new_days = $request->input('days');// Add holidays from JSON
 
-        $deleted_holidays = HolidayDate::where('year', '=', $year)
-                                        ->where('month', '=', $month)
-                                        ->delete();
+        // $deleted_holidays = HolidayDate::where('year', '=', $year)
+        //                                 ->where('month', '=', $month)
+        //                                 ->delete();
 
-        foreach ($new_holidays as $holiday) {
-            $temp_date = Carbon::parse($holiday);
-            $h_year = $temp_date->year;
-            $h_month = $temp_date->month;
-            $h_day = $temp_date->day;
+        foreach ($new_days as $day) {
+            // $temp_date = Carbon::parse($holiday);
+            // $h_year = $temp_date->year;
+            // $h_month = $temp_date->month;
+            // $h_day = $temp_date->day;
 
             HolidayDate::create([
-                'year' => $h_year,
-                'month' => $h_month,
-                'day' => $h_day,
+                'year' => $year,
+                'month' => $month,
+                'day' => $day,
             ]);
         }
 
@@ -208,19 +212,24 @@ class RouteController extends Controller
         return redirect('/holidays');
     }
 
-    // public function holidays_delete(Request $request) {
-    //     $date = Carbon::parse($request->input('month'));
-    //     $year = $date->year;
-    //     $month = $date->month;
+    public function holidays_delete(Request $request) {
+        $date = Carbon::parse($request->input('month'));
+        $year = $date->year;
+        $month = $date->month;
 
-    //     $deleted_holidays = HolidayDate::where('year', '=', $year)
-    //                                     ->where('month', '=', $month)
-    //                                     ->delete();
+        $deleted_days = $request->input('days');// Delete holidays from JSON
 
-    //     $request->session()->flash('flash_success', '节假日数据删除成功');
+        foreach($deleted_days as $day) {// Tranverse to delete holidays
+            HolidayDate::where('year', '=', $year)
+                        ->where('month', '=', $month)
+                        ->where('day', '=', $day)
+                        ->delete();
+        }
 
-    //     return redirect('/holidays');
-    // }
+        $request->session()->flash('flash_success', '节假日数据删除成功');
+
+        return redirect('/holidays');
+    }
 
     public function timeedit() {
         $timenodes = TimeNode::all();
