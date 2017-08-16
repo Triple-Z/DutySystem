@@ -23,7 +23,7 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::get('report', 'RouteController@report');
 	Route::post('report', 'RouteController@report');
 	Route::get('holidays', 'RouteController@holidays');
-	Route::get('holidays/dates', 'RouteController@holidays_data')
+	Route::get('holidays/dates', 'RouteController@holidays_data');
 	Route::post('holidays', 'RouteController@holidays_search');
 	Route::put('holidays', 'RouteController@holidays_add');
 	Route::delete('holidays', 'RouteController@holidays_delete');
