@@ -15,8 +15,7 @@
     }
     var today = today();
     $(function () {
-
-        var picker2 = $('#addHolidayCalendar').datetimepicker({  
+        var picker2 = $('#updateHolidayCalendar').datetimepicker({  
             format: 'YYYY-MM',  
             locale: moment.locale('zh-cn'),
             maxDate: today
@@ -34,17 +33,17 @@
 @endsection
 
 @section('holidays-view')
-    <div id="modal-switch-add" tabindex="-1" role="dialog" aria-labelledby="modal-switch-label" class="modal fade">
+    <div id="modal-switch-update" tabindex="-1" role="dialog" aria-labelledby="modal-switch-label" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" data-dismiss="modal" class="close">
                         <span aria-hidden="true">&times;</span>
-                        <span class="sr-only">记录修正</span></button>
-                    <div id="modal-switch-label" class="modal-title" style="font-size: large;">添加假期</div>
+                        <span class="sr-only">更新假期</span></button>
+                    <div id="modal-switch-label" class="modal-title" style="font-size: large;">更新假期</div>
                 </div>
                 <div class="modal-body">
-                    <form id="edit_form" role="form" method="POST" action="/holidays_update">
+                    <form id="edit_form" role="form" method="POST" action="/holidays">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                         <table class="table table-hover" style="text-align: center;width: 90%;">
@@ -52,7 +51,7 @@
                                  <tr>
                                     <td>选择月份</td>
                                     <td>
-                                        <div class="input-group date" id="addHolidayCalendar" style="width: 70%;margin-left: 15%;">  
+                                        <div class="input-group date" id="updateHolidayCalendar" style="width: 70%;margin-left: 15%;">  
                                             <input id="calendar233" type="text" class="form-control" type="time" autocomplete="off" placeholder="选择月份" name="month" required/>  
                                             <span class="input-group-addon">  
                                                 <span class="glyphicon glyphicon-calendar"></span>  
@@ -80,10 +79,12 @@
     </div>
     <div id="app" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main"></div>
     <script src="{{asset('vue-schedule-calendar/dist/demo.js')}}"></script>
-    <div class="col-md-9 col-md-offset-3">
-	    <button class="btn btn-default">提交</button>
-    </div>
-    <script>
-
-    </script>
+    <!-- <script>
+        $(document).ready(function(){
+            $("#preMonth").click(function(){
+                var month = document.getElementById("now").innerHTML;
+                $.post("/holidays",{month:month});
+            });
+        });
+    </script> -->
 @endsection

@@ -20,16 +20,16 @@ export default {
         this.$http.get('holidays_content').then(response => {
             this.data = response.data;
         }, response => {
-            this.data = [
-                {
-                    id: 111,
-                    date: '2017-08-02',
-                },
-                {
-                    id:222,
-                    date: '2017-08-03'
-                }
-            ]
+            // this.data = [
+            //     {
+            //         id: 111,
+            //         date: '2017-08-02',
+            //     },
+            //     {
+            //         id:222,
+            //         date: '2017-08-03'
+            //     }
+            // ]
         })
         return {
             data: this.data

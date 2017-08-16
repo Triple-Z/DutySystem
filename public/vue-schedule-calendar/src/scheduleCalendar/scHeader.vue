@@ -5,20 +5,21 @@
                 @click="prevYear">&lt;&lt;</button>
         <button type="button"
                 class="schedule-calendar-arrow"
+                id="preMonth"
                 @click="prevMonth">&lt;</button>
-        <span class="schedule-calendar-display">{{year}} 年 {{month + 1}} 月</span>
+        <span class="schedule-calendar-display" id="now">{{year}}-{{month + 1}}</span>
         <button type="button"
                 class="schedule-calendar-arrow"
+                id="nextMonth"
                 @click="nextMonth">&gt;</button>
         <button type="button"
                 class="schedule-calendar-arrow double-arrow"
                 @click="nextYear">&gt;&gt;</button>
-        <button type="button" data-toggle="modal" data-target="#modal-switch-add"
-                class="schedule-calendar-add" 
-                id="addHoliday">添加假期</button>
         <button type="button" 
-                class="schedule-calendar-delete" 
-                id="deleteHoliday">删除假期</button>
+                data-toggle="modal" 
+                data-target="#modal-switch-update"
+                class="schedule-calendar-update" 
+                id="updateHoliday">更新假期</button>
     </header>
 </template>
 <script>
@@ -112,21 +113,13 @@ export default {
         padding: 0 1em;
         height: 100%;
     }
-    &add {
+    &update {
         position: absolute;
         margin-left:45%;
         &:hover {
             color: #fff;
             background: @sc-primary-dark-color
         }
-    }
-    &delete {
-        position: absolute;
-        margin-left:35%;
-        &:hover {
-            color: #fff;
-            background: @sc-primary-dark-color
-		}
-	}    
+    } 
 }
 </style>
