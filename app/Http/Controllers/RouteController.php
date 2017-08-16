@@ -99,6 +99,7 @@ class RouteController extends Controller
 
         $data = array();
 
+
         foreach ($holidays as $holiday) {
             $date = Carbon::create($holiday->year, $holiday->month, $holiday->day, null, null, null);
             array_push($data, [
