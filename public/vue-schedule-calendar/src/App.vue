@@ -18,7 +18,7 @@ export default {
 
     data() {
         this.$http.get('holidays_content').then(response => {
-            this.data = response.data;
+            this.data = response.data.dates;
         }, response => {
             // this.data = [
             //     {
