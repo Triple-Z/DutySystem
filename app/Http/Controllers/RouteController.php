@@ -108,12 +108,12 @@ class RouteController extends Controller
         }
         
         // Return JSON for test
-        return json_encode(array(
-            'year' => $year,
-            'dates' => $data,
-        ));
+        // return json_encode(array(
+        //     'year' => $year,
+        //     'dates' => $data,
+        // ));
 
-        // return view('holidays');
+        return view('holidays');
 
     }
 
