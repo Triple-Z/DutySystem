@@ -17,9 +17,14 @@
                 @click="nextYear">&gt;&gt;</button>
         <button type="button" 
                 data-toggle="modal" 
-                data-target="#modal-switch-update"
-                class="schedule-calendar-update" 
-                id="updateHoliday">更新假期</button>
+                data-target="#modal-switch-add"
+                class="schedule-calendar-add" 
+                id="addHoliday">添加假期</button>
+        <button type="button" 
+                data-toggle="modal" 
+                data-target="#modal-switch-delete"
+                class="schedule-calendar-delete" 
+                id="deleteHoliday">删除假期</button>
     </header>
 </template>
 <script>
@@ -113,7 +118,15 @@ export default {
         padding: 0 1em;
         height: 100%;
     }
-    &update {
+    &add {
+        position: absolute;
+        margin-left:35%;
+        &:hover {
+            color: #fff;
+            background: @sc-primary-dark-color
+        }
+    }
+    &delete {
         position: absolute;
         margin-left:45%;
         &:hover {
