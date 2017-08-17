@@ -192,7 +192,7 @@ class RouteController extends Controller
         $newDaysString = $request->input('day');// Add holidays from JSON
         // echo "<br>" . $newDaysString;
         
-        $newDays = explode(',', $newDaysString, -1);
+        $newDays = explode(',', $newDaysString);
 
         // $json_array = json_decode($all, true);
         // $new_days = $json_array['dates'];
@@ -201,7 +201,7 @@ class RouteController extends Controller
         //                                 ->where('month', '=', $month)
         //                                 ->delete();
 
-        if (empty($newDays)) {
+        if (is_numeric($newDays[0])) {
             $request->session()->flash('flash_error', '节假日数据添加失败');
         } else {
             foreach ($newDays as $day) {
@@ -231,9 +231,9 @@ class RouteController extends Controller
 
         $deleted_days = $request->input('day');// Delete holidays from JSON
 
-        $targetDays = explode(",", $deleted_days, -1);
+        $targetDays = explode(",", $deleted_days);
 
-        if (empty($targetDays)) {
+        if (is_numeric($targetDays[0])) {
             $request->session()->flash('flash_error', '节假日数据删除失败！');
         } else {
             foreach($targetDays as $day) {// Tranverse to delete holidays
