@@ -187,27 +187,39 @@ class RouteController extends Controller
         $date = Carbon::parse($request->input('month'));
         $year = $date->year;
         $month = $date->month;
+        // echo $date;
 
-        $new_days = $request->input('days');// Add holidays from JSON
+        $newDaysString = $request->input('day');// Add holidays from JSON
+        // echo "<br>" . $newDaysString;
+        
+        $newDays = explode(',', $newDaysString, -1);
+
+        // $json_array = json_decode($all, true);
+        // $new_days = $json_array['dates'];
 
         // $deleted_holidays = HolidayDate::where('year', '=', $year)
         //                                 ->where('month', '=', $month)
         //                                 ->delete();
 
-        foreach ($new_days as $day) {
-            // $temp_date = Carbon::parse($holiday);
-            // $h_year = $temp_date->year;
-            // $h_month = $temp_date->month;
-            // $h_day = $temp_date->day;
-
-            HolidayDate::create([
-                'year' => $year,
-                'month' => $month,
-                'day' => $day,
-            ]);
+        if (empty($newDays)) {
+            $request->session()->flash('flash_error', '节假日数据添加失败');
+        } else {
+            foreach ($newDays as $day) {
+                // $temp_date = Carbon::parse($holiday);
+                // $h_year = $temp_date->year;
+                // $h_month = $temp_date->month;
+                // $h_day = $temp_date->day;
+    
+                HolidayDate::create([
+                    'year' => $year,
+                    'month' => $month,
+                    'day' => $day,
+                ]);
+            }
+    
+            $request->session()->flash('flash_success', '节假日数据添加成功');
         }
 
-        $request->session()->flash('flash_success', '节假日数据更新成功');
 
         return redirect('/holidays');
     }
@@ -217,16 +229,22 @@ class RouteController extends Controller
         $year = $date->year;
         $month = $date->month;
 
-        $deleted_days = $request->input('days');// Delete holidays from JSON
+        $deleted_days = $request->input('day');// Delete holidays from JSON
 
-        foreach($deleted_days as $day) {// Tranverse to delete holidays
-            HolidayDate::where('year', '=', $year)
-                        ->where('month', '=', $month)
-                        ->where('day', '=', $day)
-                        ->delete();
+        $targetDays = explode(",", $deleted_days, -1);
+
+        if (empty($targetDays)) {
+            $request->session()->flash('flash_error', '节假日数据删除失败！');
+        } else {
+            foreach($targetDays as $day) {// Tranverse to delete holidays
+                HolidayDate::where('year', '=', $year)
+                            ->where('month', '=', $month)
+                            ->where('day', '=', $day)
+                            ->delete();
+            }
+    
+            $request->session()->flash('flash_success', '节假日数据删除成功');
         }
-
-        $request->session()->flash('flash_success', '节假日数据删除成功');
 
         return redirect('/holidays');
     }
