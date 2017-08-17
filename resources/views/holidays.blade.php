@@ -20,6 +20,11 @@
             locale: moment.locale('zh-cn'),
             maxDate: today
         });  
+        var picker1 = $('#deleteHolidayCalendar').datetimepicker({  
+            format: 'YYYY-MM',  
+            locale: moment.locale('zh-cn'),
+            maxDate: today
+        });  
         //动态设置最小值  
         picker1.on('dp.change', function (e) {  
             picker2.data('DateTimePicker').minDate(e.date);  
@@ -89,7 +94,7 @@
                 <div class="modal-body">
                     <form id="edit_form" role="form" method="POST" action="/holidays">
                         {{ csrf_field() }}
-                        {{ method_field('PUT') }}
+                        {{ method_field('DELETE') }}
                         <table class="table table-hover" style="text-align: center;width: 90%;">
                             <tbody>
                                  <tr>
