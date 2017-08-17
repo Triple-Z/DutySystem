@@ -184,9 +184,12 @@ class RouteController extends Controller
     }
 
     public function holidays_add(Request $request) {
+        $success = true;
+
         $date = Carbon::parse($request->input('month'));
         $year = $date->year;
         $month = $date->month;
+        $maxDay = $date->addMonth()->subDay()->day;
         // echo $date;
 
         $newDaysString = $request->input('day');// Add holidays from JSON
@@ -201,7 +204,9 @@ class RouteController extends Controller
         //                                 ->where('month', '=', $month)
         //                                 ->delete();
 
-        if (is_numeric($newDays[0])) {
+
+        if (!is_numeric($newDays[0])) {
+            $success = false;
             $request->session()->flash('flash_error', '节假日数据添加失败');
         } else {
             foreach ($newDays as $day) {
@@ -209,15 +214,23 @@ class RouteController extends Controller
                 // $h_year = $temp_date->year;
                 // $h_month = $temp_date->month;
                 // $h_day = $temp_date->day;
+
+                if ($day <= 0 || $day > $maxDay) {
+                    $success = false;
+                    $request->session()->flash('flash_warning', '节假日数据有误');
+                } else {
+                    HolidayDate::create([
+                        'year' => $year,
+                        'month' => $month,
+                        'day' => $day,
+                    ]);
+                }
     
-                HolidayDate::create([
-                    'year' => $year,
-                    'month' => $month,
-                    'day' => $day,
-                ]);
             }
-    
-            $request->session()->flash('flash_success', '节假日数据添加成功');
+            
+            if ($success) {
+                $request->session()->flash('flash_success', '节假日数据添加成功');
+            }
         }
 
 
@@ -233,7 +246,7 @@ class RouteController extends Controller
 
         $targetDays = explode(",", $deleted_days);
 
-        if (is_numeric($targetDays[0])) {
+        if (!is_numeric($targetDays[0])) {
             $request->session()->flash('flash_error', '节假日数据删除失败！');
         } else {
             foreach($targetDays as $day) {// Tranverse to delete holidays
