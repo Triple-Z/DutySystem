@@ -1,7 +1,7 @@
 <template>
     <div id="app"
          class="demo">
-        <h1 class="demo-title">Vue Schedule Calendar</h1>
+        <h1 class="demo-title">假期更新</h1>
         <div class="demo-container">
             <schedule-calendar :originData="data"></schedule-calendar>
         </div>
@@ -17,7 +17,7 @@ export default {
     },
 
     data() {
-        this.$http.get('holidays_content').then(response => {
+        this.$http.get('holidays/dates').then(response => {
             this.data = response.data.dates;
         }, response => {
             // this.data = [
