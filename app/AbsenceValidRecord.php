@@ -21,4 +21,8 @@ class AbsenceValidRecord extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function employee() {
+        return $this->belongsTo('App\Employee', 'employee_id', 'id');
+    }
 }
