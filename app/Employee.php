@@ -38,6 +38,10 @@ class Employee extends Model
         return $this->hasMany('App\Record', 'employee_id', 'id');
     }
 
+    public function absence_records() {
+        return $this->hasMany('App\AbsenceValidRecord', 'employee_id', 'id');
+    }
+
     public function special_records() {
         // default timezone is "Asia/Shanghai"
 
