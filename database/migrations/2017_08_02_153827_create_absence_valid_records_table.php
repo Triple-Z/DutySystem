@@ -20,6 +20,7 @@ class CreateAbsenceValidRecordsTable extends Migration
             $table->integer('month');
             $table->integer('day');
             $table->string('type')->nullable();
+            $table->string('note')->nullable();
             $table->timestamps();
         });
     }
