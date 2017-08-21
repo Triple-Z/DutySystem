@@ -280,7 +280,45 @@ $absenceValidRecord->employee;// 返回某条指定请假记录的雇员信息
   > ```
 
 - GET `/admin/actions` : 返回当前管理员操作信息
-- GET `/admin/actions/{id}` : 返回某个指定管理员的操作信息
+
+  > 返回 `JSON` 数据：
+  > ```json
+  > {
+  >   "current_page": 1,
+  >   "data": [
+  >     {
+  >       "id": 29,
+  >       "user_id": 1,
+  >       "action": "login",
+  >       "timestamp": "2017-08-21 08:50:20"
+  >     },
+  >     {
+  >       "id": 28,
+  >       "user_id": 1,
+  >       "action": "logout",
+  >       "timestamp": "2017-08-21 08:50:18"
+  >     },
+  >     {
+  >       "id": 27,
+  >       "user_id": 1,
+  >       "action": "login",
+  >       "timestamp": "2017-08-21 08:41:59"
+  >     }
+  >   ],
+  >   "from": 1,
+  >   "last_page": 2,
+  >   "next_page_url": "http://homestead.app/admin/actions?page=2",
+  >   "path": "http://homestead.app/admin/actions",
+  >   "per_page": 15,
+  >   "prev_page_url": null,
+  >   "to": 15,
+  >   "total": 19
+  > }
+  > ```
+
+- GET `/admin/actions/{id}` (SuperAdmin ONLY): 返回某个指定管理员的操作信息
+
+- GET `/admin/all` (SuperAdmin ONLY): 返回所有管理员信息
 
 - POST `/admin/resetpassword` : 重置管理员密码
   > 请求变量：
