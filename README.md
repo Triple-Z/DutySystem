@@ -318,7 +318,50 @@ $absenceValidRecord->employee;// 返回某条指定请假记录的雇员信息
 
 - GET `/admin/actions/{id}` (SuperAdmin ONLY): 返回某个指定管理员的操作信息
 
-- GET `/admin/all` (SuperAdmin ONLY): 返回所有管理员信息
+- GET `/admin/users` (SuperAdmin ONLY): 返回所有管理员信息
+  > 返回 `JSON` 数据：
+  > ```json
+  > {
+  >   "current_page": 1,
+  >   "data": [
+  >     {
+  >       "id": 3,
+  >       "name": "Foxwest",
+  >       "email": "foxwest@403forbidden.website",
+  >       "admin": 1,
+  >       "phone_number": "15952055009",
+  >       "created_at": "2017-08-02 21:31:24",
+  >       "updated_at": "2017-08-02 21:31:24"
+  >     },
+  >     {
+  >       "id": 1,
+  >       "name": "TripleZ",
+  >       "email": "me@triplez.cn",
+  >       "admin": 1,
+  >       "phone_number": "15240241051",
+  >       "created_at": "2017-08-02 21:31:24",
+  >       "updated_at": "2017-08-02 21:31:24"
+  >     },
+  >     {
+  >       "id": 2,
+  >       "name": "test",
+  >       "email": "test@triplez.cn",
+  >       "admin": 0,
+  >       "phone_number": "15240241052",
+  >       "created_at": "2017-08-02 21:31:24",
+  >       "updated_at": "2017-08-02 21:31:24"
+  >     }
+  >   ],
+  >   "from": 1,
+  >   "last_page": 1,
+  >   "next_page_url": null,
+  >   "path": "http://homestead.app/admin/users",
+  >   "per_page": 15,
+  >   "prev_page_url": null,
+  >   "to": 3,
+  >   "total": 3
+  > }
+  > ```
 
 - POST `/admin/resetpassword` : 重置管理员密码
   > 请求变量：

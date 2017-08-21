@@ -12,6 +12,7 @@ Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function() {
 	Route::get('actions', 'HomeController@show_action');
 	Route::get('actions_all', 'ActionRecordController@show_all_action_records');
 	Route::get('actions/{id}', 'HomeController@show_action_test');
+	Route::get('users', 'HomeController@show_all_users');
 });
 
 // ALl check in condition
