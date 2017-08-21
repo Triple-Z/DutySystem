@@ -41,14 +41,22 @@ class HomeController extends Controller
 
     public function show_action() {
         $user = Auth::user();
-        $actions = $user->actions()->latest('timestamp')->get();
+        $actions = $user->actions()->latest('timestamp')->paginate(15);
         return response()->json($actions);
     }
     
     public function show_action_test($id) {
         // user for test...
         $user = User::where('id', '=', $id)->first();
-        $actions = $user->actions()->latest('timestamp')->get();
+        $actions = $user->actions()->latest('timestamp')->paginate(15);
         return response()->json($actions);
+    }
+
+    public function show_all_users() {
+        $users = User::orderBy('admin', 'desc')
+                    ->orderBy('name')
+                    ->paginate(15);
+
+        return json_encode($users);
     }
 }

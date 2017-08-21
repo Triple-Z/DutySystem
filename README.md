@@ -280,7 +280,88 @@ $absenceValidRecord->employee;// 返回某条指定请假记录的雇员信息
   > ```
 
 - GET `/admin/actions` : 返回当前管理员操作信息
-- GET `/admin/actions/{id}` : 返回某个指定管理员的操作信息
+
+  > 返回 `JSON` 数据：
+  > ```json
+  > {
+  >   "current_page": 1,
+  >   "data": [
+  >     {
+  >       "id": 29,
+  >       "user_id": 1,
+  >       "action": "login",
+  >       "timestamp": "2017-08-21 08:50:20"
+  >     },
+  >     {
+  >       "id": 28,
+  >       "user_id": 1,
+  >       "action": "logout",
+  >       "timestamp": "2017-08-21 08:50:18"
+  >     },
+  >     {
+  >       "id": 27,
+  >       "user_id": 1,
+  >       "action": "login",
+  >       "timestamp": "2017-08-21 08:41:59"
+  >     }
+  >   ],
+  >   "from": 1,
+  >   "last_page": 2,
+  >   "next_page_url": "http://homestead.app/admin/actions?page=2",
+  >   "path": "http://homestead.app/admin/actions",
+  >   "per_page": 15,
+  >   "prev_page_url": null,
+  >   "to": 15,
+  >   "total": 19
+  > }
+  > ```
+
+- GET `/admin/actions/{id}` (SuperAdmin ONLY): 返回某个指定管理员的操作信息
+
+- GET `/admin/users` (SuperAdmin ONLY): 返回所有管理员信息
+  > 返回 `JSON` 数据：
+  > ```json
+  > {
+  >   "current_page": 1,
+  >   "data": [
+  >     {
+  >       "id": 3,
+  >       "name": "Foxwest",
+  >       "email": "foxwest@403forbidden.website",
+  >       "admin": 1,
+  >       "phone_number": "15952055009",
+  >       "created_at": "2017-08-02 21:31:24",
+  >       "updated_at": "2017-08-02 21:31:24"
+  >     },
+  >     {
+  >       "id": 1,
+  >       "name": "TripleZ",
+  >       "email": "me@triplez.cn",
+  >       "admin": 1,
+  >       "phone_number": "15240241051",
+  >       "created_at": "2017-08-02 21:31:24",
+  >       "updated_at": "2017-08-02 21:31:24"
+  >     },
+  >     {
+  >       "id": 2,
+  >       "name": "test",
+  >       "email": "test@triplez.cn",
+  >       "admin": 0,
+  >       "phone_number": "15240241052",
+  >       "created_at": "2017-08-02 21:31:24",
+  >       "updated_at": "2017-08-02 21:31:24"
+  >     }
+  >   ],
+  >   "from": 1,
+  >   "last_page": 1,
+  >   "next_page_url": null,
+  >   "path": "http://homestead.app/admin/users",
+  >   "per_page": 15,
+  >   "prev_page_url": null,
+  >   "to": 3,
+  >   "total": 3
+  > }
+  > ```
 
 - POST `/admin/resetpassword` : 重置管理员密码
   > 请求变量：
