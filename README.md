@@ -243,6 +243,7 @@ $absenceValidRecord->employee;// 返回某条指定请假记录的雇员信息
   > $end_date = '2017-08-14'; // 结束日期， 格式为 YYYY-MM-DD (包括该日期)
   > $employee_id = 21; // 雇员唯一 ID 号
   > $type = '病假'; // 请假类型
+  > $note = '这是一条备注'; // 备注
   > ```
 
 - DELETE `/leave` : 删除指定请假信息

@@ -42,6 +42,7 @@ class AbsenceValidRecordController extends Controller
 
         $employeeId = $request->input('employee_id');
         $type = $request->input('type');
+        $note = $request->input('note');
         
         if ($start_date->isSameDay($end_date)) {
             $year = $start_date->year;
@@ -53,6 +54,7 @@ class AbsenceValidRecordController extends Controller
                 'month' => $month,
                 'day' => $day,
                 'type' => $type,
+                'note' => $note,
             ]);
         } else {
             $temp_date = $start_date;
@@ -68,6 +70,7 @@ class AbsenceValidRecordController extends Controller
                     'month' => $month,
                     'day' => $day,
                     'type' => $type,
+                    'note' => $note,
                 ]);
 
                 $temp_date = $temp_date->addDay();
@@ -94,13 +97,12 @@ class AbsenceValidRecordController extends Controller
             $month = $start_date->month;
             $day = $start_date->day;
 
-             AbsenceValidRecord::create([
-                'employee_id' => $employeeId,
-                'year' => $year,
-                'month' => $month,
-                'day' => $day,
-                'type' => $type,
-            ]);
+            AbsenceValidRecord::where('year', '=', $year)
+                                ->where('month', '=', $month)
+                                ->where('day', '=', $day)
+                                ->where('employee_id', '=', $employeeId)
+                                ->delete();
+             
         } else {
             $temp_date = $start_date;
             $temp_end_date = $end_date->addDay();
@@ -109,13 +111,11 @@ class AbsenceValidRecordController extends Controller
                 $month = $temp_date->month;
                 $day = $temp_date->day;
 
-                AbsenceValidRecord::create([
-                    'employee_id' => $employeeId,
-                    'year' => $year,
-                    'month' => $month,
-                    'day' => $day,
-                    'type' => $type,
-                ]);
+                AbsenceValidRecord::where('year', '=', $year)
+                                ->where('month', '=', $month)
+                                ->where('day', '=', $day)
+                                ->where('employee_id', '=', $employeeId)
+                                ->delete();
 
                 $temp_date = $temp_date->addDay();
             }

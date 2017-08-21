@@ -14,6 +14,7 @@ class AbsenceValidRecord extends Model
         'month',
         'day',
         'type',
+        'note',
     ];
 
     protected $guarded = [
