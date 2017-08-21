@@ -68,7 +68,7 @@
                                     <td>输入日期</td>
                                     <td>
                                         <div>
-                                            <textarea name="day" id="day" placeholder='例：选择月份为"2017-08",输入日期的某一天如"1,2,3(英文逗号)",则将添加的假期为"2017-08-01,2017-08-02,2017-08-03"' cols="30" rows="10" /require></textarea>
+                                            <textarea name="day" id="day" placeholder='例：选择月份为"2017-08",输入日期的某一天如"1,2,3(英文逗号)",则将添加的假期为"2017-08-01,2017-08-02,2017-08-03"' cols="30" rows="10" /required></textarea>
                                         </div>
                                     </td>
                                 </tr> 
@@ -100,7 +100,7 @@
                                  <tr>
                                     <td>选择月份</td>
                                     <td>
-                                        <div class="input-group date" id="addHolidayCalendar" style="width: 70%;margin-left: 15%;">  
+                                        <div class="input-group date" id="deleteHolidayCalendar" style="width: 70%;margin-left: 15%;">  
                                             <input id="calendar233" type="text" class="form-control" type="time" autocomplete="off" placeholder="选择月份" name="month" required/>  
                                             <span class="input-group-addon">  
                                                 <span class="glyphicon glyphicon-calendar"></span>  
@@ -112,7 +112,7 @@
                                     <td>输入日期</td>
                                     <td>
                                         <div>
-                                            <textarea name="day" id="day" placeholder='例：选择月份为"2017-08",输入日期的某一天如"1,2,3(英文逗号)",则将删除的假期为"2017-08-01,2017-08-02,2017-08-03"' cols="30" rows="10" /require></textarea>
+                                            <textarea name="day" id="day" placeholder='例：选择月份为"2017-08",输入日期的某一天如"1,2,3(英文逗号)",则将删除的假期为"2017-08-01,2017-08-02,2017-08-03"' cols="30" rows="10" /required></textarea>
                                         </div>
                                     </td>
                                 </tr> 

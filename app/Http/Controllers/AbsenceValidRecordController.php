@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\AbsenceValidRecord;
 use Carbon\Carbon;
+use App\Employee;
 
 class AbsenceValidRecordController extends Controller
 {
@@ -13,18 +14,29 @@ class AbsenceValidRecordController extends Controller
     }
 
     public function view(Request $request) {
-        return view('leave');
+        // $absenceRecords = AbsenceValidRecord::orderBy('year', 'desc')
+        //                                     ->orderBy('month', 'desc')
+        //                                     ->orderBy('day', 'desc')
+        //                                     ->paginate(15);
+        $absenceRecords = AbsenceValidRecord::orderBy('id')
+                                            ->paginate(15);
+        $employees = Employee::orderBy('work_number')->get();
+        // return json_encode($absenceRecords);
+        return view('leave',[
+            'absenceRecords' => $absenceRecords,
+            'employees' => $employees,
+        ]);
     }
 
     // write GET/POST/PUT/DELETE method here
 
     public function all_absence(Request $request) {
-        $absenceRecords = AbsenceValidRecord::orderBy('year', 'desc')
-                                            ->orderBy('month', 'desc')
-                                            ->orderBy('day', 'desc')
-                                            ->paginate(15);
+        // $absenceRecords = AbsenceValidRecord::orderBy('year', 'desc')
+        //                                     ->orderBy('month', 'desc')
+        //                                     ->orderBy('day', 'desc')
+        //                                     ->paginate(15);
         
-        return json_encode($absenceRecords);
+        // return json_encode($absenceRecords);
 
     }
 
