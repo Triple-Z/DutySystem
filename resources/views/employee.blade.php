@@ -147,7 +147,8 @@ th {
             <div class="modal-header">
                 <button type="button" data-dismiss="modal" class="close">
                     <span aria-hidden="true">&times;</span>
-                    <span class="sr-only">员工信息</span></button>
+                    <span class="sr-only">员工信息</span>
+                </button>
                 <div id="modal-switch-label" class="modal-title" style="font-size: large;">员工信息</div>
                 <table class="table table-hover" style="text-align: center;margin: 10%;width: 80%;">
                   <tbody>
