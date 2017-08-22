@@ -239,7 +239,7 @@ th {
                             <tr>
                                 <td>工号</td>
                                 <td>
-                                    <input id="td_leave_employee_id" class="form-control placeholder-no-fix" type="note" name="employee_id" style="width:40%;margin-left:30%;" readonly="readonly" value=""/>
+                                    <input id="td_leave_employee_worknumber" class="form-control placeholder-no-fix" type="note" style="width:40%;margin-left:30%;" readonly="readonly" value=""/>
                                 </td>
                             </tr>
                             <tr>
@@ -271,6 +271,7 @@ th {
                                     <input id="td_leave_type" class="form-control placeholder-no-fix" type="note" name="type" style="width:40%;margin-left:30%;" readonly="readonly" value=""/>
                                 </td>
                             </tr>
+                            <input id="td_leave_employee_id" class="form-control placeholder-no-fix" type="note" name="employee_id" style="width:40%;margin-left:30%;display:none;" readonly="readonly" value=""/>
                         </tbody>
                     </table>
                     <div class="form-group">
@@ -336,7 +337,7 @@ th {
                         @else
                             <th><span id="leave_date_{{ $absenceRecord->id }}" hidden>{{ $absenceRecord->year }}-{{ $absenceRecord->month }}-{{ $absenceRecord->day }}</span></th>
                         @endif
-                        <th><a id="leave_employee_id_{{ $absenceRecord->id }}" href="/employees/{{ $absenceRecord->employee->work_number }}">{{ $absenceRecord->employee->work_number }}</a></th>
+                        <th><a id="leave_employee_worknumber_{{ $absenceRecord->id }}" href="/employees/{{ $absenceRecord->employee->work_number }}">{{ $absenceRecord->employee->work_number }}</a><span id="leave_employee_id_{{ $absenceRecord->id }}" hidden>{{ $absenceRecord->employee->id }}</span></th>
                         <th id="leave_name_{{ $absenceRecord->id }}">{{ $absenceRecord->employee->name }}</th>
                         <th id="leave_type_{{ $absenceRecord->id }}">{{ $absenceRecord->type }}</th>
                         @if ($absenceRecord->note)
@@ -366,14 +367,17 @@ th {
         var employee_id = "leave_employee_id_" + record_id;
         var type = "leave_type_" + record_id;
         var name = "leave_name_" + record_id;
+        var worknumber = "leave_employee_worknumber_" + record_id;
         start_date_value = document.getElementById(start_date).innerHTML;
         employee_id_value = document.getElementById(employee_id).innerHTML;
         type_value = document.getElementById(type).innerHTML;
         name_value = document.getElementById(name).innerHTML;
+        employee_worknumber_value = document.getElementById(worknumber).innerHTML;
         document.getElementById("td_leave_start_date").value = start_date_value;
         document.getElementById("td_leave_employee_id").value = employee_id_value;
         document.getElementById("td_leave_type").value = type_value;
         document.getElementById("td_leave_name").value = name_value;
+        document.getElementById("td_leave_employee_worknumber").value = employee_worknumber_value;
         $('#submit_end_date_timepicker').datetimepicker({  
             format: 'YYYY-MM-DD',  
             locale: moment.locale('zh-cn'),
