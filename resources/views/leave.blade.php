@@ -338,14 +338,14 @@ th {
                         @endif
                         <th><a id="leave_employee_id_{{ $absenceRecord->id }}" href="/employees/{{ $absenceRecord->employee->work_number }}">{{ $absenceRecord->employee->work_number }}</a></th>
                         <th id="leave_name_{{ $absenceRecord->id }}">{{ $absenceRecord->employee->name }}</th>
-                        <th id="leave_type_{{ $absenceRecord->id }}">{{ $absenceRecord->type }}
+                        <th id="leave_type_{{ $absenceRecord->id }}">{{ $absenceRecord->type }}</th>
                         @if ($absenceRecord->note)
                             <th>{{ $absenceRecord->note }}</th>
                         @else
                             <th></th>
                         @endif
                         <th>
-                            <button id="{{ $absenceRecord->id }}" data-toggle="modal" data-target="#modal-switch-changeleave" class="btn-primary btn" onclick="change(this.id)">撤销</button>
+                            <button id="{{ $absenceRecord->id }}" data-toggle="modal" data-target="#modal-switch-changeleave" class="btn-primary btn" onclick="change(this.id)">修改</button>
                         </th>
                         @php
                             $date = $absenceRecord->year."-".$absenceRecord->month."-".$absenceRecord->day

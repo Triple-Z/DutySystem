@@ -49,7 +49,29 @@
             <div class="tab-pane panel panel-default fade" id="history">
                 <div class="panel-heading">登录历史</div>
                 <div class="panel-body">
-                    You are logged in!
+                    <div class="table-responsive col-md-11">
+                        <table class="table table-striped" id="tableExcel">
+                            <thead style="text-align:center;">
+                                <tr>
+                                    <th>用户</th>
+                                    <th>时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($actions as $action)
+                                    <tr>
+                                        <th>{{ $action->user_id }}</th>
+                                        <th>{{ $action->timestamp }}</th>
+                                        <th>{{ $action->action }}
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        <div style="text-align: center;">
+                            {{ $actions->links() }} 
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="tab-pane panel panel-default fade" id="password">
