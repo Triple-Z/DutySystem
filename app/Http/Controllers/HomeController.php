@@ -26,17 +26,24 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $actions = $user->actions()->latest('timestamp')->paginate(15);
         if ($user->admin) {
             // super admin
             return redirect('superhome');
         } else {
-            return view('home');
+            return view('home',[
+                'actions'=>$actions,
+            ]);
         }
     }
 
     public function superadmin()
     {
-        return view('superhome');
+        $user = Auth::user();
+        $actions = $user->actions()->latest('timestamp')->paginate(15);
+        return view('superhome',[
+            'actions'=>$actions,
+        ]);
     }
 
     public function show_action() {
