@@ -55,27 +55,13 @@ class AbsenceValidRecordController extends Controller
         $employeeId = $request->input('employee_id');
         $type = $request->input('type');
         $note = $request->input('note');
-        
-        if ($start_date->isSameDay($end_date)) {
-            $year = $start_date->year;
-            $month = $start_date->month;
-            $day = $start_date->day;
-            AbsenceValidRecord::create([
-                'employee_id' => $employeeId,
-                'year' => $year,
-                'month' => $month,
-                'day' => $day,
-                'type' => $type,
-                'note' => $note,
-            ]);
-        } else {
-            $temp_date = $start_date;
-            $temp_end_date = $end_date->addDay();
-            while (!$temp_date->isSameDay($temp_end_date)) {
-                $year = $temp_date->year;
-                $month = $temp_date->month;
-                $day = $temp_date->day;
 
+        if ($request->input('start_date') && $request->input('end_date')) {
+        
+            if ($start_date->isSameDay($end_date)) {
+                $year = $start_date->year;
+                $month = $start_date->month;
+                $day = $start_date->day;
                 AbsenceValidRecord::create([
                     'employee_id' => $employeeId,
                     'year' => $year,
@@ -84,13 +70,34 @@ class AbsenceValidRecordController extends Controller
                     'type' => $type,
                     'note' => $note,
                 ]);
+            } else {
+                $temp_date = $start_date;
+                $temp_end_date = $end_date->addDay();
+                while (!$temp_date->isSameDay($temp_end_date)) {
+                    $year = $temp_date->year;
+                    $month = $temp_date->month;
+                    $day = $temp_date->day;
 
-                $temp_date = $temp_date->addDay();
+                    AbsenceValidRecord::create([
+                        'employee_id' => $employeeId,
+                        'year' => $year,
+                        'month' => $month,
+                        'day' => $day,
+                        'type' => $type,
+                        'note' => $note,
+                    ]);
+
+                    $temp_date = $temp_date->addDay();
+                }
             }
+        } else {
+            $success = false;
         }
 
         if ($success) {
             $request->session()->flash('flash_success', '请假记录添加成功');
+        } else {
+            $request->session()->flash('flash_error', '请假记录添加失败');
         }
 
         return redirect('leave');
@@ -106,37 +113,49 @@ class AbsenceValidRecordController extends Controller
         $employeeId = $request->input('employeeId');
         $type = $request->input('type');
 
-        if ($start_date->isSameDay($end_date)) {
-            $year = $start_date->year;
-            $month = $start_date->month;
-            $day = $start_date->day;
+        if ($request->input('start_date') && $request->input('end_date')) {
 
-            AbsenceValidRecord::where('year', '=', $year)
-                                ->where('month', '=', $month)
-                                ->where('day', '=', $day)
-                                ->where('employee_id', '=', $employeeId)
-                                ->delete();
-             
-        } else {
-            $temp_date = $start_date;
-            $temp_end_date = $end_date->addDay();
-            while (!$temp_date->isSameDay($temp_end_date)) {
-                $year = $temp_date->year;
-                $month = $temp_date->month;
-                $day = $temp_date->day;
-
+            if ($start_date->isSameDay($end_date)) {
+                $year = $start_date->year;
+                $month = $start_date->month;
+                $day = $start_date->day;
+                
                 AbsenceValidRecord::where('year', '=', $year)
-                                ->where('month', '=', $month)
-                                ->where('day', '=', $day)
-                                ->where('employee_id', '=', $employeeId)
-                                ->delete();
+                                    ->where('month', '=', $month)
+                                    ->where('day', '=', $day)
+                                    ->where('employee_id', '=', $employeeId)
+                                    ->delete();
 
-                $temp_date = $temp_date->addDay();
+                echo 'Simple Delete!';
+                
+            } else {
+                $temp_date = $start_date;
+                $temp_end_date = $end_date->addDay();
+                while (!$temp_date->isSameDay($temp_end_date)) {
+                    $year = $temp_date->year;
+                    $month = $temp_date->month;
+                    $day = $temp_date->day;
+                    
+                    AbsenceValidRecord::where('year', '=', $year)
+                                        ->where('month', '=', $month)
+                                        ->where('day', '=', $day)
+                                        ->where('employee_id', '=', $employeeId)
+                                        ->delete();
+                    
+                    $temp_date = $temp_date->addDay();
+
+                    echo 'Multi Delete!';
+                }
             }
+            
+        } else {
+            $success = false;
         }
 
         if ($success) {
             $request->session()->flash('flash_success', '请假记录删除成功');
+        } else {
+            $request->session()->flash('flash_error', '请假记录删除失败');
         }
 
         return redirect('leave');
