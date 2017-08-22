@@ -94,27 +94,7 @@ th {
     })()  
 </script>  
 <script type="text/javascript">
-    function change(record_id){
-        var start_date = "leave_start_" + record_id;
-        var end_date = "leave_end_" + record_id;
-        var employee_id = "leave_employee_id_" + record_id;
-        var type = "leave_type_" + record_id;
-        var id = "leave_id_" + record_id;
-        var name = "leave_name_" + record_id;
-        start_date_value = document.getElementById(start_date).innerHTML;
-        end_date_value = document.getElementById(end_date).innerHTML;
-        employee_id_value = document.getElementById(employee_id).innerHTML;
-        type_value = document.getElementById(type).innerHTML;
-        id_value = document.getElementById(id).innerHTML;
-        name_value = document.getElementById(name).innerHTML;
-        document.getElementById("td_leave_start_date").value = start_date_value;
-        document.getElementById("td_leave_end_date").value = end_date_value;
-        document.getElementById("td_leave_employee_id").value = employee_id_value;
-        document.getElementById("td_leave_type").value = type_value;
-        document.getElementById("td_leave_id").value = id_value;
-        document.getElementById("td_leave_name").value = name_value;
 
-    }
     function today() {
         var dd = new Date();
         var y = dd.getFullYear();
@@ -133,6 +113,7 @@ th {
             format: 'YYYY-MM-DD',  
             locale: moment.locale('zh-cn')  
         });  
+
         //动态设置最小值  
         picker1.on('dp.change', function (e) {  
             picker2.data('DateTimePicker').minDate(e.date);  
@@ -175,7 +156,7 @@ th {
                                 </td>
                             </tr>
                             <tr>
-                                <td>开始时间</td>
+                                <td>开始日期</td>
                                 <td>
                                     <div class="input-group date" id="start_date_timepicker" style="width:40%;margin-left:30%;">  
                                         <input type="text" class="form-control" type="time" autocomplete="off" placeholder="开始时间" name="start_date" required/>  
@@ -186,7 +167,7 @@ th {
                                 </td>
                             </tr>
                             <tr>
-                                <td>结束时间</td>
+                                <td>结束日期</td>
                                 <td>
                                     <div class="input-group date" id="end_date_timepicker" style="width:40%;margin-left:30%;">  
                                         <input type="text" class="form-control" type="time" autocomplete="off" placeholder="结束时间" name="end_date" required/>  
@@ -249,12 +230,12 @@ th {
                                     </select>
                                 </td>
                             </tr>
-                            <tr>
+                            <!-- <tr>
                                 <td>假条编号</td>
                                 <td>
                                     <input id="td_leave_id" class="form-control placeholder-no-fix" type="note" style="width:40%;margin-left:30%;" readonly="readonly" value=""/>
                                 </td>
-                            </tr>
+                            </tr> -->
                             <tr>
                                 <td>工号</td>
                                 <td>
@@ -268,7 +249,7 @@ th {
                                 </td>
                             </tr>
                             <tr>
-                                <td>开始日期</td>
+                                <td>起始日期</td>
                                 <td>
                                     <input id="td_leave_start_date" class="form-control placeholder-no-fix" type="note" name="start_date" style="width:40%;margin-left:30%;" readonly="readonly" value=""/>
                                 </td>
@@ -276,11 +257,16 @@ th {
                             <tr>
                                 <td>结束日期</td>
                                 <td>
-                                    <input id="td_leave_end_date" class="form-control placeholder-no-fix" type="note" name="end_date" style="width:40%;margin-left:30%;" readonly="readonly" value=""/>
+                                    <div class="input-group date" id="submit_end_date_timepicker" style="width:40%;margin-left:30%;">  
+                                        <input id="submit_end_date" type="text" class="form-control" type="time" autocomplete="off" placeholder="结束时间" name="end_date" required/>  
+                                        <span class="input-group-addon">  
+                                            <span class="glyphicon glyphicon-calendar"></span>  
+                                        </span>  
+                                    </div> 
                                 </td>
                             </tr>
                             <tr>
-                                <td>累心</td>
+                                <td>类型</td>
                                 <td>
                                     <input id="td_leave_type" class="form-control placeholder-no-fix" type="note" name="type" style="width:40%;margin-left:30%;" readonly="readonly" value=""/>
                                 </td>
@@ -304,6 +290,23 @@ th {
         <div class="col-sm-2 col-md-2" style="font-size: 200%;float: left;">
             请假情况
         </div>
+        <div style="margin-left:30%;">
+            <form id="leave_form" role="form" method="POST" action="/leave">
+                {{ csrf_field() }}  
+                    <div class="form-group">  
+                        <!--指定 date标记-->  
+                        显示指定员工
+                        <select class="selectpicker btn" name="employee_id" required/>
+                        <optgroup label="姓名">
+                            @foreach($employees as $employee)
+                                <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                            @endforeach
+                        </optgroup>
+                        </select>
+                    <button type="submit" class="btn btn-primary btn-sm">提交</button>
+                    </div> 
+            </form>
+        </div>
         <div class="col-sm-2 col-md-2" style="float: right;">
             <button type="button" class="btn btn-primary" onclick="method('tableExcel')">
                 导出本页表格为excel
@@ -315,13 +318,10 @@ th {
         <table class="table table-striped" id="tableExcel">
             <thead style="text-align:center;">
                 <tr>
-                    <th>假条编号</th>
+                    <th>日期</th>
                     <th>工号</th>
                     <th>姓名</th>
                     <th>请假类型</th>
-                    <th>开始日期</th>
-                    <th>结束日期</th>
-                    <th>天数</th>
                     <th>备注</th>
                     <th></th>
                 </tr>
@@ -329,13 +329,16 @@ th {
             <tbody>
                 @foreach($absenceRecords as $absenceRecord)
                     <tr>
-                        <th id="leave_id_{{ $absenceRecord->id }}">{{ $absenceRecord->id }}</th>
+                        @if($loop->first)
+                            <th id="leave_date_{{ $absenceRecord->id }}">{{ $absenceRecord->year }}-{{ $absenceRecord->month }}-{{ $absenceRecord->day }}</th>
+                        @elseif($date != $absenceRecord->year."-".$absenceRecord->month."-".$absenceRecord->day)
+                            <th id="leave_date_{{ $absenceRecord->id }}">{{ $absenceRecord->year }}-{{ $absenceRecord->month }}-{{ $absenceRecord->day }}</th>
+                        @else
+                            <th><span id="leave_date_{{ $absenceRecord->id }}" hidden>{{ $absenceRecord->year }}-{{ $absenceRecord->month }}-{{ $absenceRecord->day }}</span></th>
+                        @endif
                         <th><a id="leave_employee_id_{{ $absenceRecord->id }}" href="/employees/{{ $absenceRecord->employee->work_number }}">{{ $absenceRecord->employee->work_number }}</a></th>
                         <th id="leave_name_{{ $absenceRecord->id }}">{{ $absenceRecord->employee->name }}</th>
                         <th id="leave_type_{{ $absenceRecord->id }}">{{ $absenceRecord->type }}
-                        <th id="leave_start_{{ $absenceRecord->id }}">{{ $absenceRecord->start_date }}</th>
-                        <th id="leave_end_{{ $absenceRecord->id }}">{{ $absenceRecord->end_date }}</th>
-                        <th id="leave_day_{{ $absenceRecord->id }}">{{ $absenceRecord->day }}</th>
                         @if ($absenceRecord->note)
                             <th>{{ $absenceRecord->note }}</th>
                         @else
@@ -344,6 +347,9 @@ th {
                         <th>
                             <button id="{{ $absenceRecord->id }}" data-toggle="modal" data-target="#modal-switch-changeleave" class="btn-primary btn" onclick="change(this.id)">撤销</button>
                         </th>
+                        @php
+                            $date = $absenceRecord->year."-".$absenceRecord->month."-".$absenceRecord->day
+                        @endphp
                     </tr>
                 @endforeach
             </tbody>
@@ -353,4 +359,26 @@ th {
         </div>
     </div>
 </div>
+<script>
+    function change(record_id){
+        document.getElementById("submit_end_date").value = null;
+        var start_date = "leave_date_" + record_id;
+        var employee_id = "leave_employee_id_" + record_id;
+        var type = "leave_type_" + record_id;
+        var name = "leave_name_" + record_id;
+        start_date_value = document.getElementById(start_date).innerHTML;
+        employee_id_value = document.getElementById(employee_id).innerHTML;
+        type_value = document.getElementById(type).innerHTML;
+        name_value = document.getElementById(name).innerHTML;
+        document.getElementById("td_leave_start_date").value = start_date_value;
+        document.getElementById("td_leave_employee_id").value = employee_id_value;
+        document.getElementById("td_leave_type").value = type_value;
+        document.getElementById("td_leave_name").value = name_value;
+        $('#submit_end_date_timepicker').datetimepicker({  
+            format: 'YYYY-MM-DD',  
+            locale: moment.locale('zh-cn'),
+            minDate: start_date_value
+        });  
+    }
+</script>
 @endsection
