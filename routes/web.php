@@ -35,8 +35,8 @@ Route::group(['middleware' => 'auth'], function(){
 	Route::put('timeedit/update', 'TimeNodeController@update');
 
 	Route::get('leave', 'AbsenceValidRecordController@view');
-	Route::get('leave/data', 'AbsenceValidRecordController@all_absence');
-	// Route::post('leave', 'AbsenceValidRecordController@search_absence');
+	// Route::get('leave/data', 'AbsenceValidRecordController@all_absence');
+	Route::post('leave', 'AbsenceValidRecordController@search_absence');
 	Route::put('leave', 'AbsenceValidRecordController@add_absence');
 	Route::delete('leave','AbsenceValidRecordController@delete_absence');
 

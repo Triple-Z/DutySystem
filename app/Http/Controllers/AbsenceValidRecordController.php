@@ -30,7 +30,7 @@ class AbsenceValidRecordController extends Controller
 
     // write GET/POST/PUT/DELETE method here
 
-    public function all_absence(Request $request) {
+    // public function all_absence(Request $request) {
         // $absenceRecords = AbsenceValidRecord::orderBy('year', 'desc')
         //                                     ->orderBy('month', 'desc')
         //                                     ->orderBy('day', 'desc')
@@ -38,7 +38,7 @@ class AbsenceValidRecordController extends Controller
         
         // return json_encode($absenceRecords);
 
-    }
+    // }
 
     public function search_absence(Request $request) {
         $success = true;
@@ -93,9 +93,11 @@ class AbsenceValidRecordController extends Controller
             $request->session()->flash('flash_success', '请假记录添加成功');
         }
 
+        return redirect('leave');
+
     }
 
-    public function delete_absence(Request $requset) {// DELETE
+    public function delete_absence(Request $request) {// DELETE
         $success = true;
 
         $start_date = Carbon::parse($request->input('start_date'));
@@ -136,6 +138,8 @@ class AbsenceValidRecordController extends Controller
         if ($success) {
             $request->session()->flash('flash_success', '请假记录删除成功');
         }
+
+        return redirect('leave');
 
     }
 }
