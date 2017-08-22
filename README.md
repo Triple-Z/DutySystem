@@ -122,6 +122,10 @@ $absenceValidRecord->employee;// 返回某条指定请假记录的雇员信息
 - HomeController
 - RouteController
 - EmployeeController
+- RecordController
+- TimeNodeController
+- ActionRecordController
+- AbsenceValidRecordController
 
 - Auth
 	- RegisterController
@@ -137,6 +141,12 @@ $absenceValidRecord->employee;// 返回某条指定请假记录的雇员信息
 - RedirectIfAuthenticated
 - TrimStrings
 - VerifyCsrfToken
+
+## Listener
+
+监听器
+
+
 
 ##  6. <a name='API'></a>API
 
@@ -228,7 +238,6 @@ $absenceValidRecord->employee;// 返回某条指定请假记录的雇员信息
   > ```
 
 - GET `/leave` : 返回请假界面
-- GET `/leave/data` : 返回所有请假信息
 
 - POST `/leave` : 请求指定日期的请假信息
   > 请求变量：
@@ -371,8 +380,6 @@ $absenceValidRecord->employee;// 返回某条指定请假记录的雇员信息
   > $password // 新密码
   > $password_confirmation // 确认密码
   > ```
-
-
 
 
 ##  7. <a name='Databasetables'></a>Database tables
