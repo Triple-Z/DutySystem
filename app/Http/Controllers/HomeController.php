@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use App\ActionRecord;
 
 class HomeController extends Controller
 {
@@ -32,7 +33,7 @@ class HomeController extends Controller
             return redirect('superhome');
         } else {
             return view('home',[
-                'actions'=>$actions,
+                'actions' => $actions,
             ]);
         }
     }
@@ -40,9 +41,14 @@ class HomeController extends Controller
     public function superadmin()
     {
         $user = Auth::user();
-        $actions = $user->actions()->latest('timestamp')->paginate(15);
+        $users = User::all();
+        $user_actions = $user->actions()->latest('timestamp')->paginate(15);
+
+        $all_actions = ActionRecord::latest('timestamp')
+                                ->paginate(15);
         return view('superhome',[
-            'actions'=>$actions,
+            'user_actions'  => $user_actions,
+            'all_actions'   => $all_actions,
         ]);
     }
 
