@@ -63,7 +63,13 @@
                                     <tr>
                                         <th>{{ $action->user_id }}</th>
                                         <th>{{ $action->timestamp }}</th>
-                                        <th>{{ $action->action }}
+                                        @if ($action->action == 'login')
+                                            <th>登录</th>
+                                        @elseif ($action->action == 'logout')
+                                            <th>注销</th>
+                                        @else
+                                            <th></th>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -110,7 +110,7 @@ class AbsenceValidRecordController extends Controller
         $start_date = Carbon::parse($request->input('start_date'));
         $end_date = Carbon::parse($request->input('end_date'));
 
-        $employeeId = $request->input('employeeId');
+        $employeeId = $request->input('employee_id');
         $type = $request->input('type');
 
         if ($request->input('start_date') && $request->input('end_date')) {
