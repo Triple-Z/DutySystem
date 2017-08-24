@@ -21,19 +21,19 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a data-toggle="tab" href="#last">上次登录记录</a></li>
-                <li><a data-toggle="tab" href="#history">历史登录记录</a></li>
+                {{--  <li class="active"><a data-toggle="tab" href="#last">上次登录记录</a></li>  --}}
+                <li class="active"><a data-toggle="tab" href="#history">登录记录</a></li>
                 <li><a data-toggle="tab" href="#name">修改用户名</a></li>
                 <li><a data-toggle="tab" href="#password">修改密码</a></li>
             </ul> 
         </div>
         <div class="col-md-8 tab-content">
-            <div class="tab-pane panel panel-default fade active in" id="last">
+            {{--  <div class="tab-pane panel panel-default fade active in" id="last">
                 <div class="panel-heading">上次登录记录</div>
                 <div class="panel-body">
                     You are logged in!
                 </div>
-            </div>
+            </div>  --}}
             <div class="tab-pane panel panel-default fade" id="email">
                 <div class="panel-heading">修改邮箱</div>
                 <div class="panel-body">
@@ -46,8 +46,8 @@
                     You are logged in!
                 </div>
             </div>
-            <div class="tab-pane panel panel-default fade" id="history">
-                <div class="panel-heading">登录历史</div>
+            <div class="tab-pane panel panel-default fade active in" id="history">
+                <div class="panel-heading">该用户登录历史</div>
                 <div class="panel-body">
                     <div class="table-responsive col-md-11">
                         <table class="table table-striped" id="tableExcel">
@@ -61,7 +61,7 @@
                             <tbody>
                                 @foreach($actions as $action)
                                     <tr>
-                                        <th>{{ $action->user_id }}</th>
+                                        <th>{{ $action->user->name }}</th>
                                         <th>{{ $action->timestamp }}</th>
                                         @if ($action->action == 'login')
                                             <th>登录</th>

@@ -37,7 +37,7 @@ class User extends Authenticatable
         ActionRecord::create([
             'user_id' => $this->id,
             'action' => 'login',
-            'timestamp' => Carbon::now(),
+            'timestamp' => Carbon::now('Asia/Shanghai'),
         ]);
     }
 
@@ -45,7 +45,7 @@ class User extends Authenticatable
         ActionRecord::create([
             'user_id' => $this->id,
             'action' => 'logout',
-            'timestamp' => Carbon::now(),
+            'timestamp' => Carbon::now('Asia/Shanghai'),
         ]);
     }
 }
