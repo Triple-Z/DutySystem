@@ -21,19 +21,13 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
-                <li class="active"><a data-toggle="tab" href="#last">上次登录记录</a></li>
+                <li class="active"><a data-toggle="tab" href="#last">登录记录</a></li>
                 <li><a data-toggle="tab" href="#history">历史登录记录</a></li>
                 <li><a data-toggle="tab" href="#name">修改用户名</a></li>
                 <li><a data-toggle="tab" href="#password">修改密码</a></li>
             </ul> 
         </div>
         <div class="col-md-8 tab-content">
-            <div class="tab-pane panel panel-default fade active in" id="last">
-                <div class="panel-heading">上次登录记录</div>
-                <div class="panel-body">
-                    You are logged in!
-                </div>
-            </div>
             <div class="tab-pane panel panel-default fade" id="email">
                 <div class="panel-heading">修改邮箱</div>
                 <div class="panel-body">
@@ -46,11 +40,73 @@
                     You are logged in!
                 </div>
             </div>
+            <div class="tab-pane panel panel-default fade active in" id="last">
+                <div class="panel-heading">该用户登录记录</div>
+                <div class="panel-body">
+                    <div class="table-responsive col-md-11">
+                    <table class="table table-striped" id="tableExcel">
+                        <thead style="text-align:center;">
+                            <tr>
+                                <th style="width:30%;">用户</th>
+                                <th>时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($user_actions as $action)
+                                <tr>
+                                    <th>{{ $action->user->name }}</th>
+                                    <th>{{ $action->timestamp }}</th>
+                                    @if ($action->action == 'login')
+                                        <th>登录</th>
+                                    @elseif ($action->action == 'logout')
+                                        <th>注销</th>
+                                    @else
+                                        <th></th>
+                                    @endif
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <div style="text-align: center;">
+                        {{ $user_actions->links() }} 
+                    </div>
+                </div>
+                </div>
+            </div>
             <div class="tab-pane panel panel-default fade" id="history">
                 <div class="panel-heading">登录历史</div>
                 <div class="panel-body">
-                    You are logged in!
+                <div class="table-responsive col-md-11">
+                    <table class="table table-striped" id="tableExcel">
+                        <thead style="text-align:center;">
+                            <tr>
+                                <th style="width:30%;">用户</th>
+                                <th>时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($all_actions as $action)
+                                <tr>
+                                    <th>{{ $action->user->name }}</th>
+                                    <th>{{ $action->timestamp }}</th>
+                                    @if ($action->action == 'login')
+                                        <th>登录</th>
+                                    @elseif ($action->action == 'logout')
+                                        <th>注销</th>
+                                    @else
+                                        <th></th>
+                                    @endif
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <div style="text-align: center;">
+                        {{ $all_actions->links() }} 
+                    </div>
                 </div>
+            </div>
             </div>
             <div class="tab-pane panel panel-default fade" id="password">
                 <div class="panel-body">

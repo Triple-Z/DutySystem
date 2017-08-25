@@ -109,11 +109,6 @@ th {
             locale: moment.locale('zh-cn'),
             maxDate: today
         });  
-        //动态设置最小值  
-        picker1.on('dp.change', function (e) {  
-            picker2.data('DateTimePicker').minDate(e.date);  
-        });  
-        //动态设置最大值  
         picker2.on('dp.change', function (e) {  
             picker1.data('DateTimePicker').maxDate(e.date);  
         });  

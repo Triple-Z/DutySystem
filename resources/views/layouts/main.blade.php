@@ -40,14 +40,14 @@
         @endif
 
         @if(session()->has('flash_warning'))
-            <div class="alert alert-warning col-md-10 col-md-offset-2">
+            <div class="alert alert-info col-md-10 col-md-offset-2">
                 {{ session()->get('flash_warning', 'default') }}
                 <a class="close" onclick="$('.alert').attr('class','fade')">&times;</a>
             </div>
         @endif
 
         @if(session()->has('flash_error'))
-            <div class="alert alert-success col-md-10 col-md-offset-2">
+            <div class="alert alert-danger col-md-10 col-md-offset-2">
                 {{ session()->get('flash_error', 'default') }}
                 <a class="close" onclick="$('.alert').attr('class','fade')">&times;</a>
             </div>
@@ -108,13 +108,13 @@
 <!--                         <li><a href="{{url('/graph')}}">绘制出勤曲线</a></li> -->
                         <li><a href="{{url('/holidays')}}">节假日编辑</a></li>
                         <li><a href="{{url('/timeedit')}}">考勤设置</a></li>
+                        <li><a href="{{url('/leave')}}">请假</a></li>
                     </ul>    
                 </div>
                 @yield('content-in-main')
-                
-
             </div>
         </div>
+        @yield('holidays-view')
     </body>
     <script type="text/javascript">
         $(function () {

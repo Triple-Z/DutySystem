@@ -92,6 +92,8 @@ remote database:
 - CardRecord
 - TimeNode
 - DailyCheckStatus
+- HolidayDate
+- AbsenceValidRecord
 
 ###  3.1. <a name='ModelRelationship'></a>Model Relationship
 
@@ -106,6 +108,8 @@ $employee->special_records(); // 以数组返回某个指定雇员的重要签�
 $employee->month_report_data(); // 以数组返回某个指定雇员的月记录数据
 
 $record->employee; // 返回某条指定签到记录的雇员信息
+
+$absenceValidRecord->employee;// 返回某条指定请假记录的雇员信息
 ```
 
 
@@ -118,6 +122,10 @@ $record->employee; // 返回某条指定签到记录的雇员信息
 - HomeController
 - RouteController
 - EmployeeController
+- RecordController
+- TimeNodeController
+- ActionRecordController
+- AbsenceValidRecordController
 
 - Auth
 	- RegisterController
@@ -133,6 +141,12 @@ $record->employee; // 返回某条指定签到记录的雇员信息
 - RedirectIfAuthenticated
 - TrimStrings
 - VerifyCsrfToken
+
+## Listener
+
+监听器
+
+
 
 ##  6. <a name='API'></a>API
 
@@ -165,32 +179,90 @@ $record->employee; // 返回某条指定签到记录的雇员信息
   > $month // 格式为 "YYYY-MM" 的某个指定月份
   > ```
 
-- GET `/holidays` ： 返回当前月节假日编辑界面
-- POST `/holidays` : 返回某个指定月份的节假日编辑界面
-  > 请求变量：
-  > ```php
-  > $month // 格式为 "YYYY-MM" 的某个指定月份
-  > ```
-- PUT `/holidays` : 更新某个指定月份的节假日数据
-  > 请求数据：(Content-Type: application/json)
+
+- GET `/holidays` : 返回假期日历界面
+
+- GET `/holidays/dates` : 请求当前**年**的假期信息
+
+  > 返回 `JSON` 数据：
   > ```json
   > {
-  >   "month": "2017-08",
-  >   "data": [
-  >     1,
-  >     2,
-  >     3
-  >   ]
+  >     "year": "2017",
+  >     "dates": [
+  >         { "date": "2017-08-01" },
+  >         { "date": "2017-08-02" },
+  >         { "date": "2017-08-03" },
+  >         { "date": "2017-08-04" },
+  >         { "date": "2017-08-05" },
+  >         { "date": "2017-08-06" }
+  >     ]
   > }
   > ```
-  > 即 `2017-08-01`,  `2017-08-02`,  `2017-08-03` 为 `2017-08` 月的所有节假日
 
-- DELETE `/holidays` : 删除某个指定月份的节假日数据
-  > 请求变量：
+- POST `/holidays` : 请求指定**月**的假期信息
+
+  > 请求内容：
   > ```php
-  > $month // 格式为 "YYYY-MM" 的某个指定月份
+  > $month = "2017-07"
   > ```
 
+  > 返回 `JSON` 数据：
+  > ```json
+  > {
+  >     "month": "2017-07",
+  >     "dates": [
+  >         { "date": "2017-07-01" },
+  >         { "date": "2017-07-02" },
+  >         { "date": "2017-07-03" },
+  >         { "date": "2017-07-04" },
+  >         { "date": "2017-07-05" },
+  >         { "date": "2017-07-06" }
+  >     ]
+  > }
+  > ```
+
+- PUT `/holidays` : 添加指定**月**的假期日期
+
+  > 请求变量：
+  > ```php
+  > $month = "2017-08"; // 格式为 YYYY-MM 的月份
+  > $day = "1, 2, 3, 4, 5"; // 以英文逗号分隔的数字（在 1 到 $maxDay 之间）
+  > ```
+
+- DELETE `/holidays` :  删除指定**月**的假期日期
+
+  > 请求 `JSON` 数据：
+  > ```php
+  > $month = "2017-08"; // 格式为 YYYY-MM 的月份
+  > $day = "1, 2, 3, 4, 5"; // 以英文逗号分隔的数字（在 1 到 $maxDay 之间）
+  > ```
+
+- GET `/leave` : 返回请假界面
+
+- POST `/leave` : 请求指定日期的请假信息
+  > 请求变量：
+  > ```php
+  > // Undeterminated
+  > ```
+
+- PUT `/leave` : 添加请假信息
+  > 请求变量：
+  > ```php
+  > $start_date = '2017-08-03'; // 起始日期，格式为 YYYY-MM-DD
+  > $end_date = '2017-08-14'; // 结束日期， 格式为 YYYY-MM-DD (包括该日期)
+  > $employee_id = 21; // 雇员唯一 ID 号
+  > $type = '病假'; // 请假类型
+  > $note = '这是一条备注'; // 备注
+  > ```
+
+- DELETE `/leave` : 删除指定请假信息
+  > 请求变量：
+  > ```php
+  > $start_date = '2017-08-10'; // 起始日期，格式为 YYYY-MM-DD
+  > $end_date = '2017-08-19'; // 结束日期， 格式为 YYYY-MM-DD (包括该日期)
+  > $employee_id = 21; // 雇员唯一 ID 号
+  > $type = '病假'; // 请假类型
+  > ```
 
 - GET `/timeedit` : 返回有效时间编辑界面
 - PUT `/timeedit/update` : 更改出勤时间设置
@@ -218,7 +290,88 @@ $record->employee; // 返回某条指定签到记录的雇员信息
   > ```
 
 - GET `/admin/actions` : 返回当前管理员操作信息
-- GET `/admin/actions/{id}` : 返回某个指定管理员的操作信息
+
+  > 返回 `JSON` 数据：
+  > ```json
+  > {
+  >   "current_page": 1,
+  >   "data": [
+  >     {
+  >       "id": 29,
+  >       "user_id": 1,
+  >       "action": "login",
+  >       "timestamp": "2017-08-21 08:50:20"
+  >     },
+  >     {
+  >       "id": 28,
+  >       "user_id": 1,
+  >       "action": "logout",
+  >       "timestamp": "2017-08-21 08:50:18"
+  >     },
+  >     {
+  >       "id": 27,
+  >       "user_id": 1,
+  >       "action": "login",
+  >       "timestamp": "2017-08-21 08:41:59"
+  >     }
+  >   ],
+  >   "from": 1,
+  >   "last_page": 2,
+  >   "next_page_url": "http://homestead.app/admin/actions?page=2",
+  >   "path": "http://homestead.app/admin/actions",
+  >   "per_page": 15,
+  >   "prev_page_url": null,
+  >   "to": 15,
+  >   "total": 19
+  > }
+  > ```
+
+- GET `/admin/actions/{id}` (SuperAdmin ONLY): 返回某个指定管理员的操作信息
+
+- GET `/admin/users` (SuperAdmin ONLY): 返回所有管理员信息
+  > 返回 `JSON` 数据：
+  > ```json
+  > {
+  >   "current_page": 1,
+  >   "data": [
+  >     {
+  >       "id": 3,
+  >       "name": "Foxwest",
+  >       "email": "foxwest@403forbidden.website",
+  >       "admin": 1,
+  >       "phone_number": "15952055009",
+  >       "created_at": "2017-08-02 21:31:24",
+  >       "updated_at": "2017-08-02 21:31:24"
+  >     },
+  >     {
+  >       "id": 1,
+  >       "name": "TripleZ",
+  >       "email": "me@triplez.cn",
+  >       "admin": 1,
+  >       "phone_number": "15240241051",
+  >       "created_at": "2017-08-02 21:31:24",
+  >       "updated_at": "2017-08-02 21:31:24"
+  >     },
+  >     {
+  >       "id": 2,
+  >       "name": "test",
+  >       "email": "test@triplez.cn",
+  >       "admin": 0,
+  >       "phone_number": "15240241052",
+  >       "created_at": "2017-08-02 21:31:24",
+  >       "updated_at": "2017-08-02 21:31:24"
+  >     }
+  >   ],
+  >   "from": 1,
+  >   "last_page": 1,
+  >   "next_page_url": null,
+  >   "path": "http://homestead.app/admin/users",
+  >   "per_page": 15,
+  >   "prev_page_url": null,
+  >   "to": 3,
+  >   "total": 3
+  > }
+  > ```
 
 - POST `/admin/resetpassword` : 重置管理员密码
   > 请求变量：
@@ -286,6 +439,8 @@ columns:
 - 2017_07_24_130805_create_car_records_table
 - 2017_07_24_132509_create_card_records_table
 - 2017_07_28_080332_create_time_nodes_table
+- 2017_07_31_105738_create_holiday_dates_table
+- 2017_08_02_153827_create_absence_valid_records_table
 
 ```bash
 php artisan migrate:reset
@@ -303,6 +458,9 @@ php artisan migrate
 - CarRecordSeeder
 - CardRecordSeeder
 - TimeNodeSeeder
+- DailyCheckStatusSeeder
+- HolidayDateSeeder
+- AbsenceValidRecordSeeder
 
 ```bash
 composer dump-autoload
