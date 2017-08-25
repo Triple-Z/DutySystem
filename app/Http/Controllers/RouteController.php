@@ -65,7 +65,7 @@ class RouteController extends Controller
                                             ->where('month', '=', $month)
                                             ->where('day', '<=', $time->day)
                                             ->get();
-            $valid_days = ($time->day) - ($holidays_in_month->count());
+            $valid_days = ($time->day) - ($holidays_in_month->count());// Up to current date
         } else { // Former month
             $maxDay = $time->addMonth()->subDay()->day;
             $valid_days = $maxDay - ($holidays->count());

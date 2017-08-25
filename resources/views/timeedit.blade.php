@@ -22,13 +22,13 @@
 						@foreach($timenodes as $timenode)
 							<tr>
 								@if (strcmp($timenode->name, "am_start") == 0)
-									<th title="上午签到记录最早记录时间">上班开始时间</th>
+									<th title="上午开始时间：&#10;上午签到记录最早记录时间">上午开始时间</th>
 								@elseif (strcmp($timenode->name, "am_end") == 0)
-									<th title="上午签到记录最晚记录时间">上班结束时间</th>
+									<th title="上午结束时间：&#10;上午签到记录最晚记录时间">上午结束时间</th>
 								@elseif (strcmp($timenode->name, "pm_start") == 0)
-									<th title="下午签到记录最早记录时间">下午开始时间</th>
+									<th title="下午开始时间：&#10;下午签到记录最早记录时间">下午开始时间</th>
 								@elseif (strcmp($timenode->name, "pm_end") == 0)
-									<th title="下午签到记录最晚记录时间">下午结束时间</th>
+									<th title="下午结束时间：&#10;下午签到记录最晚记录时间">下午结束时间</th>
 								@elseif (strcmp($timenode->name, "am_ddl") == 0)
 									<th title="上午上班开始时间：&#10;从该时间到迟到最晚时间都是上午迟到时间">上午上班时间</th>
 								@elseif (strcmp($timenode->name, "am_late_ddl") == 0)
