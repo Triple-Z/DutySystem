@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         \App\Console\Commands\SyncCardRecord::class,
         \App\Console\Commands\SyncCarRecord::class,
+        \App\Console\Commands\AbsenceSimCheck::class,
     ];
 
     /**
@@ -28,7 +29,17 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('sync:card')->hourly()->withoutOverlapping();
+        $schedule->command('sync:card')
+                    ->timezone('Asia/Shanghai')
+                    ->hourly()
+                    ->withoutOverlapping();
+
+        $schedule->command('sync:car')
+                    ->timezone('Asia/Shanghai')
+                    ->hourly()
+                    ->withoutOverlapping();
+
+        
     }
 
     /**
