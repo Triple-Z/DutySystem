@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        // \App\Console\Commands\
+        \App\Console\Commands\SyncCardRecord::class,
     ];
 
     /**
@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        
+        $schedule->command('sync:card')->hourly()->withoutOverlapping();
     }
 
     /**
