@@ -16,6 +16,7 @@ class CreateCardRecordsTable extends Migration
         Schema::create('card_records', function (Blueprint $table) {
             $table->increments('id');
             $table->string('card_uid');
+            $table->string('card_gate');
             $table->tinyInteger('direction');
             $table->timestamp('timestamp');
         });
