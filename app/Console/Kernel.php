@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \App\Console\Commands\SyncCardRecord::class,
+        \App\Console\Commands\SyncCarRecord::class,
     ];
 
     /**

@@ -81,7 +81,7 @@ class SyncCardRecord extends Command
         }
 
         if ($success) {
-            $this->info('Car record sync successfully');
+            $this->info('Card records sync successfully');
         } else {
             $this->error('Sync ERROR');
         }

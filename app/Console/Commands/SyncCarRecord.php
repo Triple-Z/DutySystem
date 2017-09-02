@@ -3,6 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Employee;
+use App\CarRecord;
+use App\Record;
 
 class SyncCarRecord extends Command
 {
@@ -37,6 +40,47 @@ class SyncCarRecord extends Command
      */
     public function handle()
     {
-        //
+        $success = true;
+        // Last sync time from records table
+        $lastSyncTime = Record::latest('created_at')->first()->created_at;
+        $this->info('lastSyncTime: ' . $lastSyncTime);
+        // Car records waiting to sync to main records table
+        $waitToSyncRecords = CarRecord::where('timestamp', '>', $lastSyncTime)->get();
+
+        // For test
+        if (isset($waitToSyncRecords)) {
+            $this->info('Collection Set');
+        } else {
+            $this->info('Collection Empty');
+        }
+
+        foreach ($waitToSyncRecords as $carRecord) {
+
+            // A bug occured when it cannot find the employee
+            $employee = $carRecord->employee;
+            if (isset($employee)) {
+                $employeeId = $employee->id;
+                $checkDirection = $carRecord->direction;
+                $checkTime = $carRecord->timestamp;
+    
+                Record::create([
+                    'employee_id' => $employeeId,
+                    'check_direction' => $checkDirection,   
+                    'check_method' => 'car',
+                    'check_time' => $checkTime,
+                    'note' => 'Test sync car records',
+                ]);
+            } else {
+                $this->error('Cannot FIND the employee!');
+                $success = false;
+            }
+
+        }
+
+        if ($success) {
+            $this->info('Car records sync successfully');
+        } else {
+            $this->error('Sync ERROR');
+        }
     }
 }
