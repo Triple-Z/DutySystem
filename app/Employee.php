@@ -441,8 +441,6 @@ class Employee extends Model
         }
 
 
-
-
         $special_records = array(
             "today_am_earliest_record"     => $today_am_earliest_record,
             "today_am_latest_record"       => $today_am_latest_record,

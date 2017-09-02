@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\SyncCardRecord::class,
         \App\Console\Commands\SyncCarRecord::class,
         \App\Console\Commands\AbsenceSimCheck::class,
+        \App\Console\Commands\UpdateDailyCheckStatus::class,
     ];
 
     /**
