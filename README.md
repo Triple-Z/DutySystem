@@ -472,13 +472,18 @@ php artisan migratem
 
 填充假数据
 
+基础数据：
 - UsersTableSeeder
 - EmployeeSeeder
-- RecordSeeder
-- ActionRecordSeeder
+- TimeNodeSeeder
+
+假数据核心：
 - CarRecordSeeder
 - CardRecordSeeder
-- TimeNodeSeeder
+
+垃圾数据 / 历史遗留：
+- RecordSeeder
+- ActionRecordSeeder
 - DailyCheckStatusSeeder
 - HolidayDateSeeder
 - AbsenceValidRecordSeeder
