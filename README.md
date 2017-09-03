@@ -8,6 +8,7 @@ A duty system for Drone Institution of NUAA.
 - [Runtime Enviornment](#runtime-enviornment)
 	- [Initialize](#initialize)
 	- [MySQL authentication](#mysql-authentication)
+	- [Cron Config](#cron-config)
 - [Service Logic](#service-logic)
 	- [Model](#model)
 		- [Model Relationship](#model-relationship)
@@ -50,18 +51,18 @@ A duty system for Drone Institution of NUAA.
 
 运行环境
 
-|Enviornment	|Version	|
-|:-----------:	|:-------:	|
-|Laravel		|5.4		|
-|PHP			|7.0.10		|
-|MySQL			|5.7.17		|
-|Nginx			|1.11.9		|
+|Enviornment    |Version|
+|:-----------:  |:-------:|
+|Laravel        |5.4|
+|PHP            |7.0.10|
+|MySQL          |5.7.17|
+|Nginx          |1.11.9|
 
 ## Initialize
 
 系统初始化
 
-```
+```bash
 php artisan key:generate
 php artisan make:auth
 php artisan migrate
@@ -78,6 +79,17 @@ remote database:
 - IP: `119.29.150.233:3306`
 - Account: `root`
 - Password: `DutySystem`
+
+## Cron Config
+
+```bash
+crontab -e
+```
+
+Add line:
+```makefile
+* * * * * php /home/vagrant/Code/artisan schedule:run >> /dev/null 2>&1
+```
 
 # Service Logic
 
@@ -108,11 +120,15 @@ $actions->user; // 返回某条指定记录的管理员信息
 
 $employee->records; // 返回某个指定雇员的签到记录
 $employee->special_records(); // 以数组返回某个指定雇员的重要签到记录
+$employee->special_records_date($date); // 以数组返回某个指定雇员的指定日期重要签到记录
+$employee->special_records_date_cache($date); // 从数据库中缓存查询并返回一个 DailyCheckStatus 对象实例，含有某个指定雇员的某个指定日期的重要签到数据
+$employee->daily_check_record_note($date); // 返回某个指定日期记录备注
 $employee->month_report_data(); // 以数组返回某个指定雇员的月记录数据
 
 $record->employee; // 返回某条指定签到记录的雇员信息
 
 $absenceValidRecord->employee;// 返回某条指定请假记录的雇员信息
+
 ```
 
 

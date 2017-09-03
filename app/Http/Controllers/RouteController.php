@@ -8,6 +8,7 @@ use App\Record;
 use Carbon\Carbon;
 use App\TimeNode;
 use App\HolidayDate;
+use App\DailyCheckStatus;
 
 
 class RouteController extends Controller
