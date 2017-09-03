@@ -23,6 +23,7 @@ A duty system for Drone Institution of NUAA.
 	- [Migrations](#migrations)
 	- [Seeds](#seeds)
 	- [Schedule Tasks](#schedule-tasks)
+	- [Artisan Command](#artisan-command)
 	- [Employee Status](#employee-status)
 	- [Important Timestamp](#important-timestamp)
 		- [Default Timezone](#default-timezone)
@@ -448,7 +449,7 @@ columns:
 
 ```bash
 php artisan migrate:reset
-php artisan migrate
+php artisan migratem
 ```
 
 ## Seeds
@@ -477,11 +478,25 @@ php artisan db:seed
 
 计划任务
 
-|Task|Frequency|Note|
-|:----:|:----:|:----:|
-|SyncCarRecord||同步车辆记录|
-|SyncCardRecord||同步闸机记录|
-|AbsenceSimCheck||请假模拟签到|
+|Task           |Frequency  |Note|
+|:----:         |:----:     |:----:|
+|SyncCarRecord  |每小时一次   |同步车辆进出记录到记录主数据表|
+|SyncCardRecord |每小时一次   |同步步行进出记录到记录主数据表|
+|AbsenceSimCheck|每日两次，分别在 `am_start` 和 `pm_away`|请假模拟签到|
+|UpdateDailyCheckStatus|每日一次，在 `pm_end`|更新每日雇员签到状态|
+
+## Artisan Command
+
+自定义的 `artisan` 命令
+
+```bash
+php artisan sync:car        // 同步车辆进出记录到记录主数据表
+php artisan sync:card       // 同步步行进出记录到记录主数据表
+php artisan absence:check   // 请假模拟签到
+php artisan daily:status    // 更新每日雇员签到状态
+```
+
+自定义命令需要在 `app/Console/Kernel.php` 中注册。
 
 ## Employee Status
 
