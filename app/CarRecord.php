@@ -21,6 +21,6 @@ class CarRecord extends Model
     ];
 
     public function employee() {
-        return $this->hasMany('App\Employee', 'car_number', 'car_number');
+        return $this->belongsTo('App\Employee', 'car_number', 'car_number');
     }
 }

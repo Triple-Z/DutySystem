@@ -12,6 +12,7 @@ class CardRecord extends Model
 
     protected $fillable = [
         'card_uid',
+        'card_gate',
         'direction',
         'timestamp',
     ];

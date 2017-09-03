@@ -182,19 +182,26 @@ class Employee extends Model
 
         // Check status
         $check_status = null;
+
         if ($today_am_earliest_record && $today_pm_latest_record) {
+            // Valid absence
+            if (strcmp($today_am_earliest_record->check_method, "car") && strcmp($today_am_earliest_record->check_method, "card")) { 
+                // Present invalid
+                $check_status = $today_am_earliest_record->check_method;
+            }
+
             // Records valid
             if (Carbon::parse($today_am_earliest_record->check_time)->between($am_start, $am_ddl)) { 
                 // AM in-check valid
                 if (Carbon::parse($today_pm_latest_record->check_time)->between($pm_away, $pm_end)) { 
                     // PM out-check valid
-                    if (strcmp($today_am_earliest_record->check_method, "car") && strcmp($today_am_earliest_record->check_method, "card")) { 
-                        // Present invalid
-                        $check_status = $today_am_earliest_record->check_method;
-                    } else { 
+                    // if (strcmp($today_am_earliest_record->check_method, "car") && strcmp($today_am_earliest_record->check_method, "card")) { 
+                    //     // Present invalid
+                    //     $check_status = $today_am_earliest_record->check_method;
+                    // } else { 
                         // Present valid
                         $check_status = "正常";
-                    }
+                    // }
                 } else { 
                     // AM in-check valid, PM out-check invalid
                     if (Carbon::parse($today_pm_latest_record->check_time)->between($pm_early_ddl, $pm_away)) {
@@ -390,19 +397,26 @@ class Employee extends Model
 
         // Check status
         $check_status = null;
-        if ($today_am_earliest_record && $today_pm_latest_record) {
+
+        
+        if ($today_am_earliest_record && $today_pm_latest_record && !$validAbsence) {
+            // Valid absence
+            if (strcmp($today_am_earliest_record->check_method, "car") && strcmp($today_am_earliest_record->check_method, "card")) { 
+                // Present invalid
+                $check_status = $today_am_earliest_record->check_method;
+            }
             // Records valid
             if (Carbon::parse($today_am_earliest_record->check_time)->between($am_start, $am_ddl)) { 
                 // AM in-check valid
                 if (Carbon::parse($today_pm_latest_record->check_time)->between($pm_away, $pm_end)) { 
                     // PM out-check valid
-                    if (strcmp($today_am_earliest_record->check_method, "car") && strcmp($today_am_earliest_record->check_method, "card")) { 
-                        // Present invalid
-                        $check_status = $today_am_earliest_record->check_method;
-                    } else { 
+                    // if (strcmp($today_am_earliest_record->check_method, "car") && strcmp($today_am_earliest_record->check_method, "card")) { 
+                    //     // Present invalid
+                    //     $check_status = $today_am_earliest_record->check_method;
+                    // } else { 
                         // Present valid
                         $check_status = "正常";
-                    }
+                    // }
                 } else { 
                     // AM in-check valid, PM out-check invalid
                     if (Carbon::parse($today_pm_latest_record->check_time)->between($pm_early_ddl, $pm_away)) {
@@ -441,8 +455,6 @@ class Employee extends Model
         }
 
 
-
-
         $special_records = array(
             "today_am_earliest_record"     => $today_am_earliest_record,
             "today_am_latest_record"       => $today_am_latest_record,
@@ -453,6 +465,62 @@ class Employee extends Model
         );
 
         return $special_records;
+    }
+
+    public function special_records_date_cache($date) {
+        
+        $select_date = Carbon::parse($date);
+
+        // return $this->hasMany('App\DailyCheckStatus', 'employee_id', 'id'); // return a collection
+
+        $date_daily_data = DB::table('daily_check_status')
+                                ->where('employee_id', '=', $this->id)
+                                ->whereDate('date', $select_date->toDateString())
+                                ->first();
+        
+        return $date_daily_data;
+    }
+
+    public function daily_check_record_note($date) {
+
+        $select_date = Carbon::parse($date);
+        $year = $select_date->year;
+        $month = $select_date->month;
+        $day = $select_date->day;
+
+        // Load time from db
+        $am_start_timeNode = DB::table('time_nodes')
+                        ->where('name', '=', 'am_start')
+                        ->first();
+        $am_start = Carbon::create($year, $month, $day, $am_start_timeNode->hour, $am_start_timeNode->minute, $am_start_timeNode->second);
+        if ($am_start_timeNode->day) {
+            $am_start->addDays($am_start_timeNode->day);
+        }
+
+        $pm_end_timeNode = DB::table('time_nodes')
+                        ->where('name', '=', 'pm_end')
+                        ->first();
+        $pm_end = Carbon::create($year, $month, $day, $pm_end_timeNode->hour, $pm_end_timeNode->minute, $pm_end_timeNode->second);
+        if ($pm_end_timeNode->day) {
+            $pm_end->addDays($pm_end_timeNode->day);
+        }
+
+        // Note
+        $notes = DB::table('records')
+                ->where('employee_id', '=', $this->id)
+                ->where('check_time', '<=', $pm_end)
+                ->where('check_time', '>=', $am_start)
+                ->select('note')
+                ->get();
+
+        $note_all = null;
+        foreach ($notes as $note) {
+            if ($note->note) {
+                $note_all .= ' ' . $note->note;
+            }
+        }
+
+        return $note_all;
     }
 
     public function month_report_data($date) {
