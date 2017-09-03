@@ -182,19 +182,26 @@ class Employee extends Model
 
         // Check status
         $check_status = null;
+
         if ($today_am_earliest_record && $today_pm_latest_record) {
+            // Valid absence
+            if (strcmp($today_am_earliest_record->check_method, "car") && strcmp($today_am_earliest_record->check_method, "card")) { 
+                // Present invalid
+                $check_status = $today_am_earliest_record->check_method;
+            }
+
             // Records valid
             if (Carbon::parse($today_am_earliest_record->check_time)->between($am_start, $am_ddl)) { 
                 // AM in-check valid
                 if (Carbon::parse($today_pm_latest_record->check_time)->between($pm_away, $pm_end)) { 
                     // PM out-check valid
-                    if (strcmp($today_am_earliest_record->check_method, "car") && strcmp($today_am_earliest_record->check_method, "card")) { 
-                        // Present invalid
-                        $check_status = $today_am_earliest_record->check_method;
-                    } else { 
+                    // if (strcmp($today_am_earliest_record->check_method, "car") && strcmp($today_am_earliest_record->check_method, "card")) { 
+                    //     // Present invalid
+                    //     $check_status = $today_am_earliest_record->check_method;
+                    // } else { 
                         // Present valid
                         $check_status = "正常";
-                    }
+                    // }
                 } else { 
                     // AM in-check valid, PM out-check invalid
                     if (Carbon::parse($today_pm_latest_record->check_time)->between($pm_early_ddl, $pm_away)) {
@@ -390,19 +397,26 @@ class Employee extends Model
 
         // Check status
         $check_status = null;
-        if ($today_am_earliest_record && $today_pm_latest_record) {
+
+        
+        if ($today_am_earliest_record && $today_pm_latest_record && !$validAbsence) {
+            // Valid absence
+            if (strcmp($today_am_earliest_record->check_method, "car") && strcmp($today_am_earliest_record->check_method, "card")) { 
+                // Present invalid
+                $check_status = $today_am_earliest_record->check_method;
+            }
             // Records valid
             if (Carbon::parse($today_am_earliest_record->check_time)->between($am_start, $am_ddl)) { 
                 // AM in-check valid
                 if (Carbon::parse($today_pm_latest_record->check_time)->between($pm_away, $pm_end)) { 
                     // PM out-check valid
-                    if (strcmp($today_am_earliest_record->check_method, "car") && strcmp($today_am_earliest_record->check_method, "card")) { 
-                        // Present invalid
-                        $check_status = $today_am_earliest_record->check_method;
-                    } else { 
+                    // if (strcmp($today_am_earliest_record->check_method, "car") && strcmp($today_am_earliest_record->check_method, "card")) { 
+                    //     // Present invalid
+                    //     $check_status = $today_am_earliest_record->check_method;
+                    // } else { 
                         // Present valid
                         $check_status = "正常";
-                    }
+                    // }
                 } else { 
                     // AM in-check valid, PM out-check invalid
                     if (Carbon::parse($today_pm_latest_record->check_time)->between($pm_early_ddl, $pm_away)) {
