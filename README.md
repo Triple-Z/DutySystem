@@ -9,6 +9,7 @@ A duty system for Drone Institution of NUAA.
 	- [Initialize](#initialize)
 	- [MySQL authentication](#mysql-authentication)
 	- [Cron Config](#cron-config)
+	- [PHP Config](#php-config)
 - [Service Logic](#service-logic)
 	- [Model](#model)
 		- [Model Relationship](#model-relationship)
@@ -95,6 +96,10 @@ Add line:
 ```bash
 systemctl restart crond
 ```
+
+## PHP Config
+
+在 `php.ini` 中开启函数： `proc_open`, `proc_close`, `proc_nice`, `proc_terminate`, `leak`, `proc_get_status`，`putenv`.
 
 # Service Logic
 
