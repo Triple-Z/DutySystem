@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Schema;
 
 use App\CardRecord;
 use Carbon\Carbon;
@@ -49,27 +50,38 @@ class Kernel extends ConsoleKernel
         // Simulate check for absence-valid employees
         // At am_start & pm_away
 
-        $amStart = TimeNode::where('name', '=', 'am_start')->first();
-        $pmAway = TimeNode::where('name', '=', 'pm_away')->first();
-            // Create "Hour:minute" strings
-        $am_start_hm = $amStart->hour . ':' . $amStart->minute;
-        $pm_away_hm = $pmAway->hour . ':' . $pmAway->minute;
+        if (Schema::hasTable('time_nodes')) {
+            // Has important table
+            $amStart = TimeNode::where('name', '=', 'am_start')->first();
+            $pmAway = TimeNode::where('name', '=', 'pm_away')->first();
 
-        $schedule->command('absence:check')
-                    ->timezone('Asia/Shanghai')
-                    ->dailyAt($am_start_hm)
-                    ->dailyAt($pm_away_hm)
-                    ->withoutOverlapping();
+            if ($amStart && $pmAway) {
+                // Create "Hour:minute" strings
+                $am_start_hm = $amStart->hour . ':' . $amStart->minute;
+                $pm_away_hm = $pmAway->hour . ':' . $pmAway->minute;
 
-        // Update daily check status daily at pm_end
+                $schedule->command('absence:check')
+                            ->timezone('Asia/Shanghai')
+                            ->dailyAt($am_start_hm)
+                            ->dailyAt($pm_away_hm)
+                            ->withoutOverlapping();
+            }
+    
+    
+            // Update daily check status daily at pm_end
+            
+            $pmEnd = TimeNode::where('name', '=', 'pm_end')->first();
+
+            if ($pmEnd) {
+                $pm_end_hm = $pmEnd->hour . ':' . $pmEnd->minute;
         
-        $pmEnd = TimeNode::where('name', '=', 'pm_end')->first();
-        $pm_end_hm = $pmEnd->hour . ':' . $pmEnd->minute;
+                $schedule->command('daily:status')
+                            ->timezone('Asia/Shanghai')
+                            ->dailyAt($pm_end_hm)
+                            ->withoutOverlapping();
+            }
+        }
 
-        $schedule->command('daily:status')
-                    ->timezone('Asia/Shanghai')
-                    ->dailyAt($pm_end_hm)
-                    ->withoutOverlapping();
         
     }
 
