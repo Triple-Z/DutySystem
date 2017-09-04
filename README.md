@@ -70,6 +70,7 @@ php artisan migrate
 
 ## MySQL authentication
 
+Local homestead:
 > account: `homestead`
 > 
 > password: `secret`
@@ -89,6 +90,10 @@ crontab -e
 Add line:
 ```makefile
 * * * * * php /home/vagrant/Code/artisan schedule:run >> /dev/null 2>&1
+```
+
+```bash
+systemctl restart crond
 ```
 
 # Service Logic
