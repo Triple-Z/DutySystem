@@ -17,7 +17,8 @@ class RouteController extends Controller
         $this->middleware('auth');
     }
     public function valid() {
-        $employees = Employee::orderBy('work_number')->paginate(15);
+        // $employees = Employee::orderBy('work_number')->paginate(15); // Paginate the employee data
+        $employees = Employee::orderBy('work_number')->get(); // Get all the employee data
         
         return view('valid', [
             'employees' => $employees,
@@ -27,7 +28,8 @@ class RouteController extends Controller
     public function valid_date(Request $request) {
         $date = $request->input('date');
 
-        $employees = Employee::orderBy('work_number')->paginate(15);
+        // $employees = Employee::orderBy('work_number')->paginate(15); // Paginate the employee data
+        $employees = Employee::orderBy('work_number')->get(); // Get all the employee data
 
         return view('valid_date', [
             'employees' => $employees,
@@ -52,7 +54,8 @@ class RouteController extends Controller
         $now = Carbon::now('Asia/Shanghai');
         $time = Carbon::parse($date);
         
-        $employees = Employee::orderBy('work_number')->paginate(15);
+        // $employees = Employee::orderBy('work_number')->paginate(15); // Paginate the employee data
+        $employees = Employee::orderBy('work_number')->get(); // Get all the employee data
         
         $year = $time->year;
         $month = $time->month;

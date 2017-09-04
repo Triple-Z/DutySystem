@@ -323,7 +323,8 @@ th {
             </tbody>
         </table>
         <div style="text-align: center;">
-            {{ $employees->links() }}
+            {{--  Do not use links  --}}
+            {{--  {{ $employees->links() }}  --}}
         </div>
     </div>
 </div>
