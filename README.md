@@ -10,6 +10,7 @@ A duty system for Drone Institution of NUAA.
 	- [MySQL authentication](#mysql-authentication)
 	- [Cron Config](#cron-config)
 	- [PHP Config](#php-config)
+	- [Change Server Timezone](#change-server-timezone)
 - [Service Logic](#service-logic)
 	- [Model](#model)
 		- [Model Relationship](#model-relationship)
@@ -27,6 +28,10 @@ A duty system for Drone Institution of NUAA.
 		- [Fake Data Set](#fake-data-set)
 	- [Schedule Tasks](#schedule-tasks)
 	- [Artisan Command](#artisan-command)
+	- [Debug Mode](#debug-mode)
+		- [Open Debug Mode](#open-debug-mode)
+		- [Cancel Debug Mode](#cancel-debug-mode)
+	- [Change Laravel Timezone](#change-laravel-timezone)
 	- [Employee Status](#employee-status)
 	- [Important Timestamp](#important-timestamp)
 		- [Default Timezone](#default-timezone)
@@ -34,7 +39,6 @@ A duty system for Drone Institution of NUAA.
 	- [Note](#note)
 		- [Error message:](#error-message)
 		- [Solution](#solution)
-		- [Change Server Timezone](#change-server-timezone)
 	- [Source Code rewrite](#source-code-rewrite)
 		- [Modal Position](#modal-position)
 		- [Position Method](#position-method)
@@ -101,6 +105,13 @@ systemctl restart crond
 ## PHP Config
 
 在 `php.ini` 中开启函数： `proc_open`, `proc_close`, `proc_nice`, `proc_terminate`, `leak`, `proc_get_status`，`putenv`.
+
+## Change Server Timezone
+
+```bash
+sudo timedatectl set-timezone Asia/Shanghai
+date
+```
 
 # Service Logic
 
@@ -540,6 +551,48 @@ php artisan daily:status    // 更新每日雇员签到状态
 
 自定义命令需要在 `app/Console/Kernel.php` 中注册。
 
+## Debug Mode
+
+Laravel 调试模式
+
+### Open Debug Mode
+
+修改 `.env` :
+
+```env
+APP_DEBUG=true
+```
+
+修改 `config/app.php`
+
+```php
+'debug' => env('APP_DEBUG', true),
+```
+
+### Cancel Debug Mode
+
+修改 `.env`
+
+```env
+APP_DEBUG=false
+```
+
+修改 `config/app.php`
+
+```php
+'debug' => env('APP_DEBUG', false),
+```
+
+> 优先级：`.env` > `config/app.php`
+
+## Change Laravel Timezone
+
+修改 `config/app.php`
+
+```php
+'timezone' => 'Asia/Shanghai',
+```
+
 ## Employee Status
 
 雇员状态
@@ -615,12 +668,6 @@ in file: `config\database.php`
 'engine' => 'InnoDB ROW_FORMAT=DYNAMIC',
 ```
 
-### Change Server Timezone
-
-```bash
-sudo timedatectl set-timezone Asia/Shanghai
-date
-```
 
 > Add timezone when written data into database!
 >

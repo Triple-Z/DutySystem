@@ -46,7 +46,10 @@ class SyncCardRecord extends Command
         // Last sync time from records table
         // Condition: if there is no empty/first run
         if (Schema::hasTable('records')) {
-            $lastRecord = Record::latest('created_at')->first();
+            $lastRecord = Record::where('check_method', '=', 'card')
+                                ->latest('created_at')
+                                ->first();
+            
             if ($lastRecord) {
                 // Table is not empty
                 $lastSyncTime = Record::latest('created_at')->first()->created_at;
@@ -55,7 +58,7 @@ class SyncCardRecord extends Command
                 $waitToSyncRecords = CardRecord::where('timestamp', '>', $lastSyncTime)->get();
             } else {
                 // Table is empty
-                $waitToSyncRecords = CarRecord::all();
+                $waitToSyncRecords = CardRecord::all();
                 $this->info('System first sync card records task.');
             }
         }
@@ -67,6 +70,7 @@ class SyncCardRecord extends Command
             $this->info('Collection Empty');
         }
 
+        $count = 0;
         foreach ($waitToSyncRecords as $cardRecord) {
 
             // A bug occured when it cannot find the employee
@@ -83,8 +87,10 @@ class SyncCardRecord extends Command
                     'check_method' => 'card',
                     'check_time' => $checkTime,
                     'card_gate' => $cardGate,
-                    'note' => 'Test sync card records',
+                    'note' => '',
                 ]);
+                $count++;
+
             } else {
                 $this->error('Cannot FIND the employee!');
                 $success = false;
@@ -93,6 +99,7 @@ class SyncCardRecord extends Command
         }
 
         if ($success) {
+            $this->info('Sync ' . $count . ' card records');
             $this->info('Card records sync successfully');
         } else {
             $this->error('Sync ERROR');

@@ -12,7 +12,7 @@ class CardRecordSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 50; $i < 10; $i--) {
+        for ($i = 50; $i > 10; $i--) {
             // i is from 50 to 10
             if ($i % 2 == 0) {
                 App\CardRecord::create([
@@ -31,7 +31,7 @@ class CardRecordSeeder extends Seeder
             }
         }
 
-        for ($i = 50; $i < 10; $i--) {
+        for ($i = 50; $i > 10; $i--) {
             if ($i % 2 == 0) {
                 App\CardRecord::create([
                     'card_uid' => '#543'.$i,
