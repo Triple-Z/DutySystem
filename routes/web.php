@@ -1,6 +1,7 @@
 <?php
 
 Route::get('/', 'IndexController@index');
+Route::get('welcome', 'IndexController@index');
 Route::post('/', 'IndexController@search');
 
 Auth::routes();
