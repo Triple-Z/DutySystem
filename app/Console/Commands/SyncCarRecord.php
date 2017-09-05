@@ -45,7 +45,10 @@ class SyncCarRecord extends Command
         // Last sync time from records table
         // Condition: if there is no empty/first run
         if (Schema::hasTable('records')) {
-            $lastRecord = Record::latest('created_at')->first();
+            $lastRecord = Record::where('check_method', '=', 'car')
+                                ->latest('created_at')
+                                ->first();
+            
             if ($lastRecord) {
                 // Table is not empty
                 $lastSyncTime = Record::latest('created_at')->first()->created_at;
@@ -66,6 +69,7 @@ class SyncCarRecord extends Command
             $this->info('Collection Empty');
         }
 
+        $count = 0;
         foreach ($waitToSyncRecords as $carRecord) {
 
             // A bug occured when it cannot find the employee
@@ -80,8 +84,10 @@ class SyncCarRecord extends Command
                     'check_direction' => $checkDirection,   
                     'check_method' => 'car',
                     'check_time' => $checkTime,
-                    'note' => 'Test sync car records',
+                    'note' => '',
                 ]);
+                $count++;
+
             } else {
                 $this->error('Cannot FIND the employee!');
                 $success = false;
@@ -90,6 +96,7 @@ class SyncCarRecord extends Command
         }
 
         if ($success) {
+            $this->info('Sync ' . $count . ' car records');
             $this->info('Car records sync successfully');
         } else {
             $this->error('Sync ERROR');
