@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Console\Command;
 use App\Employee;
 use App\CarRecord;
@@ -42,10 +43,21 @@ class SyncCarRecord extends Command
     {
         $success = true;
         // Last sync time from records table
-        $lastSyncTime = Record::latest('created_at')->first()->created_at;
-        $this->info('lastSyncTime: ' . $lastSyncTime);
-        // Car records waiting to sync to main records table
-        $waitToSyncRecords = CarRecord::where('timestamp', '>', $lastSyncTime)->get();
+        // Condition: if there is no empty/first run
+        if (Schema::hasTable('records')) {
+            $lastRecord = Record::latest('created_at')->first();
+            if ($lastRecord) {
+                // Table is not empty
+                $lastSyncTime = Record::latest('created_at')->first()->created_at;
+                $this->info('lastSyncTime: ' . $lastSyncTime);
+                // Car records waiting to sync to main records table
+                $waitToSyncRecords = CarRecord::where('timestamp', '>', $lastSyncTime)->get();
+            } else {
+                // Table is empty
+                $waitToSyncRecords = CarRecord::all();
+                $this->info('System first sync car records task.');
+            }
+        }
 
         // For test
         if (isset($waitToSyncRecords)) {

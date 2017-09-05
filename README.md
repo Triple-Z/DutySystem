@@ -24,6 +24,7 @@ A duty system for Drone Institution of NUAA.
 		- [table name: `user_action_records`](#table-name-`useractionrecords`)
 	- [Migrations](#migrations)
 	- [Seeds](#seeds)
+		- [Fake Data Set](#fake-data-set)
 	- [Schedule Tasks](#schedule-tasks)
 	- [Artisan Command](#artisan-command)
 	- [Employee Status](#employee-status)
@@ -312,7 +313,7 @@ $absenceValidRecord->employee;// 返回某条指定请假记录的雇员信息
 - PUT `/employees/{work_number}/records/{id}` : 更改某个指定雇员的某条指定出勤记录
   > 请求变量：
   > ```php
-  > $check_direction // 签到方向
+  > $check_direction // 签到方向（1 为进，0 为出）
   > $check_method // 签到方式（car || card || 请假）
   > $card_gate // 刷卡机器编号（可为空）
   > $note // 备注
@@ -504,6 +505,16 @@ php artisan db:seed
 ```
 
 记得将需要 seed 的数据在 `database/seeds/DatabaseSeeder.php` 中注册。
+
+### Fake Data Set
+
+假数据集
+
+```
+employee.work_number  => 00(11 ~ 60)       // Example: 0011, 0059, etc.
+employee.car_number   => 苏A234(51 ~ 60)   // Example: 苏A23453, etc.
+employee.card_uid     => #543(11 ~ 60)     // Example: #54311, #54359, etc.
+```
 
 ## Schedule Tasks
 

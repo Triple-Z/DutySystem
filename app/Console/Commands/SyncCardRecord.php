@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Console\Command;
 use App\Record;
 use App\Employee;
@@ -43,10 +44,21 @@ class SyncCardRecord extends Command
     {
         $success = true;
         // Last sync time from records table
-        $lastSyncTime = Record::latest('created_at')->first()->created_at;
-        $this->info('lastSyncTime: ' . $lastSyncTime);
-        // Card records waiting to sync to main records table
-        $waitToSyncRecords = CardRecord::where('timestamp', '>', $lastSyncTime)->get();
+        // Condition: if there is no empty/first run
+        if (Schema::hasTable('records')) {
+            $lastRecord = Record::latest('created_at')->first();
+            if ($lastRecord) {
+                // Table is not empty
+                $lastSyncTime = Record::latest('created_at')->first()->created_at;
+                $this->info('lastSyncTime: ' . $lastSyncTime);
+                // Card records waiting to sync to main records table
+                $waitToSyncRecords = CardRecord::where('timestamp', '>', $lastSyncTime)->get();
+            } else {
+                // Table is empty
+                $waitToSyncRecords = CarRecord::all();
+                $this->info('System first sync card records task.');
+            }
+        }
 
         // For test
         if (isset($waitToSyncRecords)) {
