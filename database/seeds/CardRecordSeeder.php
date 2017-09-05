@@ -12,33 +12,38 @@ class CardRecordSeeder extends Seeder
      */
     public function run()
     {
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 50; $i > 10; $i--) {
+            // i is from 50 to 10
             if ($i % 2 == 0) {
                 App\CardRecord::create([
-                    'card_uid' => '12345'.$i,
-                    'direction' => '1',
+                    'card_uid' => '#543'.$i,
+                    'card_gate' => 'SN01',
+                    'direction' => '1',// IN
                     'timestamp' => Carbon::now('Asia/Shanghai'),
                 ]);
             } else {
                 App\CardRecord::create([
-                    'card_uid' => '12345'.$i,
-                    'direction' => '0',
+                    'card_uid' => '#543'.$i,
+                    'card_gate' => 'SN02',
+                    'direction' => '0',// OUT
                     'timestamp' => Carbon::now('Asia/Shanghai'),
                 ]);
             }
         }
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 50; $i > 10; $i--) {
             if ($i % 2 == 0) {
                 App\CardRecord::create([
-                    'card_uid' => '12345'.$i,
-                    'direction' => '0',
+                    'card_uid' => '#543'.$i,
+                    'card_gate' => 'SN03',
+                    'direction' => '0',// OUT
                     'timestamp' => Carbon::now('Asia/Shanghai'),
                 ]);
             } else {
                 App\CardRecord::create([
-                    'card_uid' => '12345'.$i,
-                    'direction' => '1',
+                    'card_uid' => '#543'.$i,
+                    'card_gate' => 'SN01',
+                    'direction' => '1',// IN
                     'timestamp' => Carbon::now('Asia/Shanghai'),
                 ]);
             }

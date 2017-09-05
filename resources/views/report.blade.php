@@ -209,7 +209,7 @@ th {
                 <tr>
                     <th>工号</th>
                     <th>姓名</th>
-                    <th>应出勤天数</th>
+                    <th title="若为当前月，则应出勤天数截至当前日期。&#10;若为过去月，则为该月所有非请假日期数目和。">应出勤天数</th>
                     <th>实际出勤天数</th>
                     <th>事假</th>
                     <th>病假</th>
@@ -241,7 +241,8 @@ th {
             </tbody>
         </table>
         <div style="text-align: center;">
-             {{ $employees->links() }} 
+             {{--  Do not use page links  --}}
+            {{--  {{ $employees->links() }}  --}}
         </div>
     </div>
 </div>

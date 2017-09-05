@@ -2,70 +2,81 @@
 
 A duty system for Drone Institution of NUAA.
 
+<!-- TOC -->
 
-<!-- vscode-markdown-toc -->
-* 1. [Initialize](#Initialize)
-* 2. [MySQL authentication](#MySQLauthentication)
-* 3. [Model](#Model)
-	* 3.1. [Model Relationship](#ModelRelationship)
-* 4. [Controller](#Controller)
-* 5. [Middleware](#Middleware)
-* 6. [API](#API)
-* 7. [Database tables](#Databasetables)
-	* 7.1. [table name: `employees`](#tablename:employees)
-	* 7.2. [table names: `records`](#tablenames:records)
-	* 7.3. [table name: `users`](#tablename:users)
-	* 7.4. [table name: `user_action_records`](#tablename:user_action_records)
-* 8. [Migrations](#Migrations)
-* 9. [Seeds](#Seeds)
-* 10. [Employee Status](#EmployeeStatus)
-* 11. [Important Timestamp](#ImportantTimestamp)
-	* 11.1. [Default Timezone](#DefaultTimezone)
-* 12. [Scheduling task](#Schedulingtask)
-* 13. [note](#note)
-	* 13.1. [Error message:](#Errormessage:)
-	* 13.2. [Solution](#Solution)
-	* 13.3. [Change Server Timezone](#ChangeServerTimezone)
-* 14. [Source Code rewrite](#SourceCoderewrite)
-	* 14.1. [modal position](#modalposition)
-	* 14.2. [positionmethod](#positionmethod)
-* 15. [Web-view Layouts Design](#Web-viewLayoutsDesign)
-	* 15.1. [general page](#generalpage)
-	* 15.2. [graph page](#graphpage)
-	* 15.3. [valid records](#validrecords)
-	* 15.4. [holiday page(option)](#holidaypageoption)
-	* 15.5. [timeedit page](#timeeditpage)
+- [DutySystem](#dutysystem)
+- [Runtime Enviornment](#runtime-enviornment)
+	- [Initialize](#initialize)
+	- [MySQL authentication](#mysql-authentication)
+	- [Cron Config](#cron-config)
+	- [PHP Config](#php-config)
+	- [Change Server Timezone](#change-server-timezone)
+- [Service Logic](#service-logic)
+	- [Model](#model)
+		- [Model Relationship](#model-relationship)
+	- [Controller](#controller)
+	- [Middleware](#middleware)
+	- [Listener](#listener)
+	- [API](#api)
+	- [Database tables](#database-tables)
+		- [table name: `employees`](#table-name-`employees`)
+		- [table names: `records`](#table-names-`records`)
+		- [table name: `users`](#table-name-`users`)
+		- [table name: `user_action_records`](#table-name-`useractionrecords`)
+	- [Migrations](#migrations)
+	- [Seeds](#seeds)
+		- [Fake Data Set](#fake-data-set)
+	- [Schedule Tasks](#schedule-tasks)
+	- [Artisan Command](#artisan-command)
+	- [Debug Mode](#debug-mode)
+		- [Open Debug Mode](#open-debug-mode)
+		- [Cancel Debug Mode](#cancel-debug-mode)
+	- [Change Laravel Timezone](#change-laravel-timezone)
+	- [Employee Status](#employee-status)
+	- [Important Timestamp](#important-timestamp)
+		- [Default Timezone](#default-timezone)
+	- [Scheduling task](#scheduling-task)
+	- [Note](#note)
+		- [Error message:](#error-message)
+		- [Solution](#solution)
+	- [Source Code rewrite](#source-code-rewrite)
+		- [Modal Position](#modal-position)
+		- [Position Method](#position-method)
+	- [Web-view Layouts Design](#web-view-layouts-design)
+		- [General Page](#general-page)
+		- [Graph Page](#graph-page)
+		- [Valid Records](#valid-records)
+		- [Holiday Page (option)](#holiday-page-option)
+		- [Timeedit Page](#timeedit-page)
+- [Copyright](#copyright)
 
-<!-- vscode-markdown-toc-config
-	numbering=true
-	autoSave=true
-	/vscode-markdown-toc-config -->
-<!-- /vscode-markdown-toc -->
+<!-- /TOC -->
 
 
 # Runtime Enviornment
 
 运行环境
 
-|Enviornment	|Version	|
-|:-----------:	|:-------:	|
-|Laravel		|5.4		|
-|PHP			|7.0.10		|
-|MySQL			|5.7.17		|
-|Nginx			|1.11.9		|
+|Enviornment    |Version|
+|:-----------:  |:-------:|
+|Laravel        |5.4|
+|PHP            |7.0.10|
+|MySQL          |5.7.17|
+|Nginx          |1.11.9|
 
-##  1. <a name='Initialize'></a>Initialize
+## Initialize
 
 系统初始化
 
-```
+```bash
 php artisan key:generate
 php artisan make:auth
 php artisan migrate
 ```
 
-##  2. <a name='MySQLauthentication'></a>MySQL authentication
+## MySQL authentication
 
+Local homestead:
 > account: `homestead`
 > 
 > password: `secret`
@@ -76,11 +87,37 @@ remote database:
 - Account: `root`
 - Password: `DutySystem`
 
+## Cron Config
+
+```bash
+crontab -e
+```
+
+Add line:
+```makefile
+* * * * * php /home/vagrant/Code/artisan schedule:run >> /dev/null 2>&1
+```
+
+```bash
+systemctl restart crond
+```
+
+## PHP Config
+
+在 `php.ini` 中开启函数： `proc_open`, `proc_close`, `proc_nice`, `proc_terminate`, `leak`, `proc_get_status`，`putenv`.
+
+## Change Server Timezone
+
+```bash
+sudo timedatectl set-timezone Asia/Shanghai
+date
+```
+
 # Service Logic
 
 业务逻辑
 
-##  3. <a name='Model'></a>Model
+## Model
 
 模型
 
@@ -95,7 +132,7 @@ remote database:
 - HolidayDate
 - AbsenceValidRecord
 
-###  3.1. <a name='ModelRelationship'></a>Model Relationship
+### Model Relationship
 
 模型间关系
 
@@ -105,15 +142,19 @@ $actions->user; // 返回某条指定记录的管理员信息
 
 $employee->records; // 返回某个指定雇员的签到记录
 $employee->special_records(); // 以数组返回某个指定雇员的重要签到记录
+$employee->special_records_date($date); // 以数组返回某个指定雇员的指定日期重要签到记录
+$employee->special_records_date_cache($date); // 从数据库中缓存查询并返回一个 DailyCheckStatus 对象实例，含有某个指定雇员的某个指定日期的重要签到数据
+$employee->daily_check_record_note($date); // 返回某个指定日期记录备注
 $employee->month_report_data(); // 以数组返回某个指定雇员的月记录数据
 
 $record->employee; // 返回某条指定签到记录的雇员信息
 
 $absenceValidRecord->employee;// 返回某条指定请假记录的雇员信息
+
 ```
 
 
-##  4. <a name='Controller'></a>Controller
+## Controller
 
 控制器
 
@@ -133,7 +174,7 @@ $absenceValidRecord->employee;// 返回某条指定请假记录的雇员信息
 	- ForgetPasswordController
 	- ResetPasswordController
 
-##  5. <a name='Middleware'></a>Middleware
+## Middleware
 
 中间件
 
@@ -148,7 +189,7 @@ $absenceValidRecord->employee;// 返回某条指定请假记录的雇员信息
 
 
 
-##  6. <a name='API'></a>API
+## API
 
 应用程序接口
 
@@ -283,7 +324,7 @@ $absenceValidRecord->employee;// 返回某条指定请假记录的雇员信息
 - PUT `/employees/{work_number}/records/{id}` : 更改某个指定雇员的某条指定出勤记录
   > 请求变量：
   > ```php
-  > $check_direction // 签到方向
+  > $check_direction // 签到方向（1 为进，0 为出）
   > $check_method // 签到方式（car || card || 请假）
   > $card_gate // 刷卡机器编号（可为空）
   > $note // 备注
@@ -382,16 +423,18 @@ $absenceValidRecord->employee;// 返回某条指定请假记录的雇员信息
   > ```
 
 
-##  7. <a name='Databasetables'></a>Database tables
+## Database tables
 
 数据表
+
+（有待补充……好多都没写……）
 
 |symbol	|means		|
 |:---:	|:-----:	|
 |\*		|primary key|
 |^		|foreign key|
 
-###  7.1. <a name='tablename:employees'></a>table name: `employees`
+### table name: `employees`
 
 columns:
 
@@ -400,7 +443,7 @@ columns:
 |1|TripleZ|man|me@triplez.cn|15240241051|CEO|Develop Department|null|
 
 
-###  7.2. <a name='tablenames:records'></a>table names: `records`
+### table names: `records`
 
 columns:
 
@@ -411,7 +454,7 @@ columns:
 |3|1|1|car|2017-07-22 07:22:13|
 |4|1|0|car|2017-07-22 12:22:13|
 
-###  7.3. <a name='tablename:users'></a>table name: `users`
+### table name: `users`
 
 columns:
 
@@ -420,7 +463,7 @@ columns:
 |1|TripleZ|me@triplez.cn|******|1|15240241051|
 |2|test|test@triplez.cn|******|0|88888888|
 
-###  7.4. <a name='tablename:user_action_records'></a>table name: `user_action_records`
+### table name: `user_action_records`
 
 columns:
 
@@ -429,7 +472,7 @@ columns:
 |1|1|login|2017-07-23 15:47:35|
 |2|1|logout|2017-07-23 15:47:39|
 
-##  8. <a name='Migrations'></a>Migrations
+## Migrations
 
 - 2014_10_12_000000_create_users_table
 - 2014_10_12_100000_create_password_resets_table
@@ -444,20 +487,25 @@ columns:
 
 ```bash
 php artisan migrate:reset
-php artisan migrate
+php artisan migratem
 ```
 
-##  9. <a name='Seeds'></a>Seeds
+## Seeds
 
 填充假数据
 
+基础数据：
 - UsersTableSeeder
 - EmployeeSeeder
-- RecordSeeder
-- ActionRecordSeeder
+- TimeNodeSeeder
+
+假数据核心：
 - CarRecordSeeder
 - CardRecordSeeder
-- TimeNodeSeeder
+
+垃圾数据 / 历史遗留：
+- RecordSeeder
+- ActionRecordSeeder
 - DailyCheckStatusSeeder
 - HolidayDateSeeder
 - AbsenceValidRecordSeeder
@@ -469,7 +517,83 @@ php artisan db:seed
 
 记得将需要 seed 的数据在 `database/seeds/DatabaseSeeder.php` 中注册。
 
-##  10. <a name='EmployeeStatus'></a>Employee Status
+### Fake Data Set
+
+假数据集
+
+```
+employee.work_number  => 00(11 ~ 60)       // Example: 0011, 0059, etc.
+employee.car_number   => 苏A234(51 ~ 60)   // Example: 苏A23453, etc.
+employee.card_uid     => #543(11 ~ 60)     // Example: #54311, #54359, etc.
+```
+
+## Schedule Tasks
+
+计划任务
+
+|Task           |Frequency  |Note|
+|:----:         |:----:     |:----:|
+|SyncCarRecord  |每小时一次   |同步车辆进出记录到记录主数据表|
+|SyncCardRecord |每小时一次   |同步步行进出记录到记录主数据表|
+|AbsenceSimCheck|每日两次，分别在 `am_start` 和 `pm_away`|请假模拟签到|
+|UpdateDailyCheckStatus|每日一次，在 `pm_end`|更新每日雇员签到状态|
+
+## Artisan Command
+
+自定义的 `artisan` 命令
+
+```bash
+php artisan sync:car        // 同步车辆进出记录到记录主数据表
+php artisan sync:card       // 同步步行进出记录到记录主数据表
+php artisan absence:check   // 请假模拟签到
+php artisan daily:status    // 更新每日雇员签到状态
+```
+
+自定义命令需要在 `app/Console/Kernel.php` 中注册。
+
+## Debug Mode
+
+Laravel 调试模式
+
+### Open Debug Mode
+
+修改 `.env` :
+
+```env
+APP_DEBUG=true
+```
+
+修改 `config/app.php`
+
+```php
+'debug' => env('APP_DEBUG', true),
+```
+
+### Cancel Debug Mode
+
+修改 `.env`
+
+```env
+APP_DEBUG=false
+```
+
+修改 `config/app.php`
+
+```php
+'debug' => env('APP_DEBUG', false),
+```
+
+> 优先级：`.env` > `config/app.php`
+
+## Change Laravel Timezone
+
+修改 `config/app.php`
+
+```php
+'timezone' => 'Asia/Shanghai',
+```
+
+## Employee Status
 
 雇员状态
 
@@ -483,7 +607,7 @@ php artisan db:seed
 - 暂无
 
 
-##  11. <a name='ImportantTimestamp'></a>Important Timestamp
+## Important Timestamp
 
 重要时间戳
 
@@ -507,19 +631,20 @@ $pm_early_ddl = `16:00` // 下午离开早退最早时间
 ```
 
 
-###  11.1. <a name='DefaultTimezone'></a>Default Timezone
+### Default Timezone
 
 默认时区
 
 `UTC+8` `Asia/Shanghai`
 
-##  12. <a name='Schedulingtask'></a>Scheduling task
+## Scheduling task
 
 计划任务
 
 
-##  13. <a name='note'></a>note
-###  13.1. <a name='Errormessage:'></a>Error message:
+## Note
+
+### Error message:
 ```
 $ php artisan migrate
 Migration table created successfully.
@@ -534,7 +659,7 @@ Migration table created successfully.
   SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was t
   oo long; max key length is 1000 bytes
 ```
-###  13.2. <a name='Solution'></a>Solution
+### Solution
 in file: `config\database.php`
 
 ```
@@ -543,26 +668,20 @@ in file: `config\database.php`
 'engine' => 'InnoDB ROW_FORMAT=DYNAMIC',
 ```
 
-###  13.3. <a name='ChangeServerTimezone'></a>Change Server Timezone
-
-```bash
-sudo timedatectl set-timezone Asia/Shanghai
-date
-```
 
 > Add timezone when written data into database!
 >
 > `Caron::now('Asia/Shanghai')` **OR** `Carbon::now('CST')`
 
-##  14. <a name='SourceCoderewrite'></a>Source Code rewrite
+## Source Code rewrite
 
-###  14.1. <a name='modalposition'></a>modal position
+### Modal Position
 
 demand:
 
 make the modal box be at a right position
 
-###  14.2. <a name='positionmethod'></a>positionmethod
+### Position Method
 
 find the function 'Modal.prototype.adjustDialog' bootstrap.js(in this project is included in public/js/app.js),then replace them as the follow code:
 
@@ -591,9 +710,9 @@ Modal.prototype.adjustDialog = function () {
 ```
 
 
-##  15. <a name='Web-viewLayoutsDesign'></a>Web-view Layouts Design
+## Web-view Layouts Design
 
-###  15.1. <a name='generalpage'></a>general page
+### General Page
 
 function:display all the records ordered by time stamp
 
@@ -619,7 +738,7 @@ view structure:
 ```
 
 
-###  15.2. <a name='graphpage'></a>graph page
+### Graph Page
 
 function: build a calendar, and display each employee duty status.
 
@@ -643,7 +762,7 @@ view structure:
 ```
 
 
-###  15.3. <a name='validrecords'></a>valid records
+### Valid Records
 
 function: display all records by day.
 
@@ -667,7 +786,7 @@ view structure:
 ```
 
 
-###  15.4. <a name='holidaypageoption'></a>holiday page(option)
+### Holiday Page (option)
 
 function: mark up holiday.
 
@@ -691,7 +810,7 @@ view structure:
 ```
 
 
-###  15.5. <a name='timeeditpage'></a>timeedit page
+### Timeedit Page
 
 function:define legal time
 

@@ -11,15 +11,20 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(RecordSeeder::class);
+        // Basics
         $this->call(UsersTableSeeder::class);
         $this->call(EmployeeSeeder::class);
-        $this->call(ActionRecordSeeder::class);
+        $this->call(TimeNodeSeeder::class);
+        
+        // Fake Data
         $this->call(CarRecordSeeder::class);
         $this->call(CardRecordSeeder::class);
-        $this->call(TimeNodeSeeder::class);
-        $this->call(DailyCheckStatusSeeder::class);
-        $this->call(HolidayDateSeeder::class);
-        $this->call(AbsenceValidRecordSeeder::class);
+        
+        // No so useful
+        // $this->call(RecordSeeder::class);
+        // $this->call(ActionRecordSeeder::class);
+        // $this->call(DailyCheckStatusSeeder::class);
+        // $this->call(HolidayDateSeeder::class);
+        // $this->call(AbsenceValidRecordSeeder::class);
     }
 }
