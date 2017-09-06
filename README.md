@@ -422,6 +422,17 @@ $absenceValidRecord->employee;// 返回某条指定请假记录的雇员信息
   > $password_confirmation // 确认密码
   > ```
 
+- POST `/admin/resetemail` : 重置管理员邮件地址
+  > 请求变量：
+  > ```php
+  > $newemail // 新邮件地址
+  > ```
+
+- POST `/admin/resetname` : 重置管理员用户名
+> 请求变量：
+> ```php
+> $newname // 新用户名
+> ```
 
 ## Database tables
 
