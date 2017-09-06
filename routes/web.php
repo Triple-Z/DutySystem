@@ -46,7 +46,8 @@ Route::group(['middleware' => 'auth'], function(){
 // Rotues for modifying admin info
 Route::group(['middleware' => 'auth', 'prefix' => 'admin', 'namespace' => 'Auth'], function(){
 	Route::post('resetpassword', 'ResetPasswordController@resetPassword');
-	// Route::post('resetemail', 'ResetInfoController@resetemail');
+	Route::post('resetemail', 'ResetInfoController@resetEmail');
+	Route::post('resetname', 'ResetInfoController@resestName');
 });
 
 // Route for test SQL Server connection;
