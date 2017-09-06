@@ -35,7 +35,7 @@ A duty system for Drone Institution of NUAA.
 	- [Employee Status](#employee-status)
 	- [Important Timestamp](#important-timestamp)
 		- [Default Timezone](#default-timezone)
-	- [Scheduling task](#scheduling-task)
+	- [Task Scheduling](#task-scheduling)
 	- [Note](#note)
 		- [Error message:](#error-message)
 		- [Solution](#solution)
@@ -538,6 +538,8 @@ employee.card_uid     => #543(11 ~ 60)     // Example: #54311, #54359, etc.
 |AbsenceSimCheck|每日两次，分别在 `am_start` 和 `pm_away`|请假模拟签到|
 |UpdateDailyCheckStatus|每日一次，在 `pm_end`|更新每日雇员签到状态|
 
+> 计划任务的日志文件为 `storage/logs/schedule.log`
+
 ## Artisan Command
 
 自定义的 `artisan` 命令
@@ -637,7 +639,7 @@ $pm_early_ddl = `16:00` // 下午离开早退最早时间
 
 `UTC+8` `Asia/Shanghai`
 
-## Scheduling task
+## Task Scheduling
 
 计划任务
 
