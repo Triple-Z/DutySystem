@@ -47,6 +47,8 @@ class AbsenceSimCheck extends Command
         $month = $now->month;
         $day = $now->day;
 
+        $this->info($now->toDateTimeString() . ' AbsenceSimCheck');
+
         // Get the valid absence records collection
         $absenceValidRecords = AbsenceValidRecord::where('year', '=', $year)
                                                     ->where('month', '=', $month)

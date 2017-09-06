@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use App\Employee;
 use App\CarRecord;
 use App\Record;
+use Carbon\Carbon;
 
 class SyncCarRecord extends Command
 {
@@ -41,6 +42,9 @@ class SyncCarRecord extends Command
      */
     public function handle()
     {
+        $now = Carbon::now('Asia/Shanghai');
+        $this->info($now->toDateTimeString() . ' SyncCarRecord');
+
         $success = true;
         // Last sync time from records table
         // Condition: if there is no empty/first run
