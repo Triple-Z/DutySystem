@@ -41,6 +41,8 @@ class UpdateDailyCheckStatus extends Command
      */
     public function handle()
     {
+        $now = Carbon::now('Asia/Shanghai');
+        $this->info($now->toDateTimeString() . ' UpdateDailyCheckStatus');
         $success = true;
 
         $employees = Employee::orderBy('work_number')

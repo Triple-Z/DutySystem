@@ -641,6 +641,12 @@ $pm_early_ddl = `16:00` // 下午离开早退最早时间
 
 计划任务
 
+|Task           |Frequency  |Note|
+|:----:         |:----:     |:----:|
+|SyncCarRecord  |每小时一次   |同步车辆进出记录到记录主数据表|
+|SyncCardRecord |每小时一次   |同步步行进出记录到记录主数据表|
+|AbsenceSimCheck|每日两次，分别在 `am_start` 和 `pm_away`|请假模拟签到|
+|UpdateDailyCheckStatus|每日一次，在 `pm_end`|更新每日雇员签到状态|
 
 ## Note
 

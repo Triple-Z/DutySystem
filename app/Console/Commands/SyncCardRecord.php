@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use App\Record;
 use App\Employee;
 use App\CardRecord;
+use Carbon\Carbon;
 
 
 class SyncCardRecord extends Command
@@ -42,6 +43,9 @@ class SyncCardRecord extends Command
      */
     public function handle()
     {
+        $now = Carbon::now('Asia/Shanghai');
+        $this->info($now->toDateTimeString() . ' SyncCardRecord');
+
         $success = true;
         // Last sync time from records table
         // Condition: if there is no empty/first run
