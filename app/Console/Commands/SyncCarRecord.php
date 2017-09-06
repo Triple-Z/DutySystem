@@ -55,7 +55,7 @@ class SyncCarRecord extends Command
             
             if ($lastRecord) {
                 // Table is not empty
-                $lastSyncTime = Record::latest('created_at')->first()->created_at;
+                $lastSyncTime = $lastRecord->created_at;
                 $this->info('lastSyncTime: ' . $lastSyncTime);
                 // Car records waiting to sync to main records table
                 $waitToSyncRecords = CarRecord::where('timestamp', '>', $lastSyncTime)->get();

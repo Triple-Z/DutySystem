@@ -56,7 +56,7 @@ class SyncCardRecord extends Command
             
             if ($lastRecord) {
                 // Table is not empty
-                $lastSyncTime = Record::latest('created_at')->first()->created_at;
+                $lastSyncTime = $lastRecord->created_at;
                 $this->info('lastSyncTime: ' . $lastSyncTime);
                 // Card records waiting to sync to main records table
                 $waitToSyncRecords = CardRecord::where('timestamp', '>', $lastSyncTime)->get();
