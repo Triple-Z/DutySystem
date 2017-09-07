@@ -661,6 +661,8 @@ $pm_early_ddl = `16:00` // 下午离开早退最早时间
 |AbsenceSimCheck|每日两次，分别在 `am_start` 和 `pm_away`|请假模拟签到|
 |UpdateDailyCheckStatus|每日一次，在 `pm_end`|更新每日雇员签到状态|
 
+> 计划任务的日志文件为 `storage/logs/schedule.log`
+
 ## Note
 
 ### Error message:

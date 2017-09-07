@@ -57,13 +57,14 @@ class Kernel extends ConsoleKernel
 
         if (Schema::hasTable('time_nodes')) {
             // Has important table
+
             $amStart = TimeNode::where('name', '=', 'am_start')->first();
             $pmAway = TimeNode::where('name', '=', 'pm_away')->first();
 
             if ($amStart && $pmAway) {
                 // Create "Hour:minute" strings
-                $amStartTime = Carbon::parse(null, null, null, $amStart->hour, $amStart->minute, $amStart->second);
-                $pmAwayTime = Carbon::parse(null, null, null, $pmAway->hour, $pmAway->minute, $pmAway->second);
+                $amStartTime = Carbon::create(null, null, null, $amStart->hour, $amStart->minute, $amStart->second);
+                $pmAwayTime = Carbon::create(null, null, null, $pmAway->hour, $pmAway->minute, $pmAway->second);
 
                 $am_start_hm = $amStartTime->addMinute()->format('h:i');
                 $pm_away_hm = $pmAwayTime->addMinute()->format('h:i');
@@ -82,7 +83,7 @@ class Kernel extends ConsoleKernel
             $pmEnd = TimeNode::where('name', '=', 'pm_end')->first();
 
             if ($pmEnd) {
-                $pmEndTime = Carbon::parse(null, null, null, $pmEnd->hour, $pmEnd->minute, $pmEnd->second);
+                $pmEndTime = Carbon::create(null, null, null, $pmEnd->hour, $pmEnd->minute, $pmEnd->second);
                 $pm_end_hm = $pmEndTime->addMinute()->format('h:i');
         
                 $schedule->command('daily:status')

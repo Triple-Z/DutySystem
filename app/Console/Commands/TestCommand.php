@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Carbon\Carbon;
 
 class TestCommand extends Command
 {
@@ -37,6 +38,6 @@ class TestCommand extends Command
      */
     public function handle()
     {
-        $this->info('This is a test message.');
+        $this->info(Carbon::now('Asia/Shanghai')->toDateTimeString() . '  This is a test message.');
     }
 }
