@@ -13,7 +13,7 @@ class CreateCardRecordsTable extends Migration
      */
     public function up()
     {
-        Schema::create('card_records', function (Blueprint $table) {
+        Schema::connection('mysql_read')->create('card_records', function (Blueprint $table) {
             $table->increments('id');
             $table->string('card_uid');
             $table->string('card_gate');
