@@ -16,6 +16,8 @@ class Employee extends Model
 
     protected $table = 'employees';
 
+    protected $connection = 'mysql_read';
+
     protected $fillable = [
         'name', 
         'gender', 
