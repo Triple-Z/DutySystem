@@ -24,6 +24,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\UpdateDailyCheckStatus::class,
         \App\Console\Commands\TestCommand::class,
         \App\Console\Commands\ListConfig::class,
+        \App\Console\Commands\ListCache::class,
     ];
 
     /**

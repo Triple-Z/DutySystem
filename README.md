@@ -560,6 +560,9 @@ php artisan sync:car        // 同步车辆进出记录到记录主数据表
 php artisan sync:card       // 同步步行进出记录到记录主数据表
 php artisan absence:check   // 请假模拟签到
 php artisan daily:status    // 更新每日雇员签到状态
+php artisan test:scheduler  // 测试命令
+php artisan list:config     // 输出关键设置
+php artisan list:cache      // 输出数据缓存日期
 ```
 
 自定义命令需要在 `app/Console/Kernel.php` 中注册。
