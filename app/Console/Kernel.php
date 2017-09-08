@@ -23,6 +23,8 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\AbsenceSimCheck::class,
         \App\Console\Commands\UpdateDailyCheckStatus::class,
         \App\Console\Commands\TestCommand::class,
+        \App\Console\Commands\ListConfig::class,
+        \App\Console\Commands\ListCache::class,
     ];
 
     /**
@@ -72,6 +74,11 @@ class Kernel extends ConsoleKernel
                 $schedule->command('absence:check')
                             ->timezone('Asia/Shanghai')
                             ->dailyAt($am_start_hm)
+                            ->withoutOverlapping()
+                            ->appendOutputTo($outputFile);
+
+                $schedule->command('absence:check')
+                            ->timezone('Asia/Shanghai')
                             ->dailyAt($pm_away_hm)
                             ->withoutOverlapping()
                             ->appendOutputTo($outputFile);
