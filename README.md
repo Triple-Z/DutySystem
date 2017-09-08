@@ -8,6 +8,8 @@ A duty system for Drone Institution of NUAA.
 - [Runtime Enviornment](#runtime-enviornment)
 	- [Initialize](#initialize)
 	- [MySQL authentication](#mysql-authentication)
+	- [Multiple Database Connection](#multiple-database-connection)
+		- [DB Connections Relationship](#db-connections-relationship)
 	- [Cron Config](#cron-config)
 	- [PHP Config](#php-config)
 	- [Change Server Timezone](#change-server-timezone)
@@ -86,6 +88,29 @@ remote database:
 - IP: `119.29.150.233:3306`
 - Account: `root`
 - Password: `DutySystem`
+
+## Multiple Database Connection
+
+多数据库连接
+
+需要用 `homestead` 和 `Record` 数据库。
+
+若缺少数据库，需要新建相应的数据库。
+
+```makefile
+CREATE DATABASE 'homestead';
+CREATE DATABASE 'Record';
+# 或者
+CREATE SCHEMA 'homestead';
+CREATE SCHEMA 'Record';
+```
+
+### DB Connections Relationship
+
+|Database / Schema|Connection|Note|
+|:----:|:----:|:-----:|
+|homestead|`mysql`||
+|Record|`mysql_read`||
 
 ## Cron Config
 
