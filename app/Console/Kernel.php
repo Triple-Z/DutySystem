@@ -68,8 +68,8 @@ class Kernel extends ConsoleKernel
                 $amStartTime = Carbon::create(null, null, null, $amStart->hour, $amStart->minute, $amStart->second);
                 $pmAwayTime = Carbon::create(null, null, null, $pmAway->hour, $pmAway->minute, $pmAway->second);
 
-                $am_start_hm = $amStartTime->addMinute()->format('h:i');
-                $pm_away_hm = $pmAwayTime->addMinute()->format('h:i');
+                $am_start_hm = $amStartTime->addMinute()->format('H:i'); // 24 hour
+                $pm_away_hm = $pmAwayTime->addMinute()->format('H:i'); // 24 hour
 
                 $schedule->command('absence:check')
                             ->timezone('Asia/Shanghai')
@@ -91,7 +91,7 @@ class Kernel extends ConsoleKernel
 
             if ($pmEnd) {
                 $pmEndTime = Carbon::create(null, null, null, $pmEnd->hour, $pmEnd->minute, $pmEnd->second);
-                $pm_end_hm = $pmEndTime->addMinute()->format('h:i');
+                $pm_end_hm = $pmEndTime->addMinute()->format('H:i'); // 24 hour
         
                 $schedule->command('daily:status')
                             ->timezone('Asia/Shanghai')
