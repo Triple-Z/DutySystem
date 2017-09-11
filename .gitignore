@@ -1,3 +1,4 @@
+exclude=xorg-x11*
 /.idea
 /.vagrant
 Homestead.json
@@ -5,3 +6,4 @@ Homestead.yaml
 npm-debug.log
 /node_modules
 /public/vue-schedule-calendar/node_modules
+exclude=xorg-x11*

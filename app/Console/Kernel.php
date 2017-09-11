@@ -22,6 +22,9 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\SyncCarRecord::class,
         \App\Console\Commands\AbsenceSimCheck::class,
         \App\Console\Commands\UpdateDailyCheckStatus::class,
+        \App\Console\Commands\TestCommand::class,
+        \App\Console\Commands\ListConfig::class,
+        \App\Console\Commands\ListCache::class,
     ];
 
     /**
@@ -32,39 +35,53 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // Scheduler logs on `storage/logs/schedule.log`
+        $outputFile = storage_path('logs/schedule.log');
 
         // Sync card records to records hourly
         $schedule->command('sync:card')
                     ->hourly()
                     ->timezone('Asia/Shanghai')
                     ->withoutOverlapping()
-                    ->evenInMaintenanceMode();
+                    ->evenInMaintenanceMode()
+                    ->appendOutputTo($outputFile);
 
         // Sync car records to records hourly
         $schedule->command('sync:car')
                     ->timezone('Asia/Shanghai')
                     ->hourly()
                     ->withoutOverlapping()
-                    ->evenInMaintenanceMode();
+                    ->evenInMaintenanceMode()
+                    ->appendOutputTo($outputFile);
 
         // Simulate check for absence-valid employees
         // At am_start & pm_away
 
         if (Schema::hasTable('time_nodes')) {
             // Has important table
+
             $amStart = TimeNode::where('name', '=', 'am_start')->first();
             $pmAway = TimeNode::where('name', '=', 'pm_away')->first();
 
             if ($amStart && $pmAway) {
                 // Create "Hour:minute" strings
-                $am_start_hm = $amStart->hour . ':' . $amStart->minute;
-                $pm_away_hm = $pmAway->hour . ':' . $pmAway->minute;
+                $amStartTime = Carbon::create(null, null, null, $amStart->hour, $amStart->minute, $amStart->second);
+                $pmAwayTime = Carbon::create(null, null, null, $pmAway->hour, $pmAway->minute, $pmAway->second);
+
+                $am_start_hm = $amStartTime->addMinute()->format('H:i'); // 24 hour
+                $pm_away_hm = $pmAwayTime->addMinute()->format('H:i'); // 24 hour
 
                 $schedule->command('absence:check')
                             ->timezone('Asia/Shanghai')
                             ->dailyAt($am_start_hm)
+                            ->withoutOverlapping()
+                            ->appendOutputTo($outputFile);
+
+                $schedule->command('absence:check')
+                            ->timezone('Asia/Shanghai')
                             ->dailyAt($pm_away_hm)
-                            ->withoutOverlapping();
+                            ->withoutOverlapping()
+                            ->appendOutputTo($outputFile);
             }
     
     
@@ -73,14 +90,22 @@ class Kernel extends ConsoleKernel
             $pmEnd = TimeNode::where('name', '=', 'pm_end')->first();
 
             if ($pmEnd) {
-                $pm_end_hm = $pmEnd->hour . ':' . $pmEnd->minute;
+                $pmEndTime = Carbon::create(null, null, null, $pmEnd->hour, $pmEnd->minute, $pmEnd->second);
+                $pm_end_hm = $pmEndTime->addMinute()->format('H:i'); // 24 hour
         
                 $schedule->command('daily:status')
                             ->timezone('Asia/Shanghai')
                             ->dailyAt($pm_end_hm)
-                            ->withoutOverlapping();
+                            ->withoutOverlapping()
+                            ->appendOutputTo($outputFile);
             }
         }
+
+        // Test scheduler command
+        // $schedule->command('test:scheduler')
+        //             ->timezone('Asia/Shanghai')
+        //             ->everyMinute()
+        //             ->appendOutputTo($outputFile);
 
         
     }

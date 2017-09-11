@@ -16,6 +16,8 @@ class Employee extends Model
 
     protected $table = 'employees';
 
+    protected $connection = 'mysql_read';
+
     protected $fillable = [
         'name', 
         'gender', 
@@ -399,7 +401,7 @@ class Employee extends Model
         $check_status = null;
 
         
-        if ($today_am_earliest_record && $today_pm_latest_record && !$validAbsence) {
+        if ($today_am_earliest_record && $today_pm_latest_record) {
             // Valid absence
             if (strcmp($today_am_earliest_record->check_method, "car") && strcmp($today_am_earliest_record->check_method, "card")) { 
                 // Present invalid

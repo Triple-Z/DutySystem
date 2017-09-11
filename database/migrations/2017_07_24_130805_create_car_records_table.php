@@ -13,7 +13,7 @@ class CreateCarRecordsTable extends Migration
      */
     public function up()
     {
-        Schema::create('car_records', function (Blueprint $table) {
+        Schema::connection('mysql_read')->create('car_records', function (Blueprint $table) {
             $table->increments('id');
             $table->string('car_number');
             $table->tinyInteger('direction');

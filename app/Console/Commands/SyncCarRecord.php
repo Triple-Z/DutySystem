@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use App\Employee;
 use App\CarRecord;
 use App\Record;
+use Carbon\Carbon;
 
 class SyncCarRecord extends Command
 {
@@ -41,6 +42,9 @@ class SyncCarRecord extends Command
      */
     public function handle()
     {
+        $now = Carbon::now('Asia/Shanghai');
+        $this->info($now->toDateTimeString() . ' SyncCarRecord');
+
         $success = true;
         // Last sync time from records table
         // Condition: if there is no empty/first run
@@ -51,7 +55,7 @@ class SyncCarRecord extends Command
             
             if ($lastRecord) {
                 // Table is not empty
-                $lastSyncTime = Record::latest('created_at')->first()->created_at;
+                $lastSyncTime = $lastRecord->created_at;
                 $this->info('lastSyncTime: ' . $lastSyncTime);
                 // Car records waiting to sync to main records table
                 $waitToSyncRecords = CarRecord::where('timestamp', '>', $lastSyncTime)->get();

@@ -8,6 +8,8 @@ A duty system for Drone Institution of NUAA.
 - [Runtime Enviornment](#runtime-enviornment)
 	- [Initialize](#initialize)
 	- [MySQL authentication](#mysql-authentication)
+	- [Multiple Database Connection](#multiple-database-connection)
+		- [DB Connections Relationship](#db-connections-relationship)
 	- [Cron Config](#cron-config)
 	- [PHP Config](#php-config)
 	- [Change Server Timezone](#change-server-timezone)
@@ -35,7 +37,7 @@ A duty system for Drone Institution of NUAA.
 	- [Employee Status](#employee-status)
 	- [Important Timestamp](#important-timestamp)
 		- [Default Timezone](#default-timezone)
-	- [Scheduling task](#scheduling-task)
+	- [Task Scheduling](#task-scheduling)
 	- [Note](#note)
 		- [Error message:](#error-message)
 		- [Solution](#solution)
@@ -86,6 +88,29 @@ remote database:
 - IP: `119.29.150.233:3306`
 - Account: `root`
 - Password: `DutySystem`
+
+## Multiple Database Connection
+
+多数据库连接
+
+需要用 `homestead` 和 `Record` 数据库。
+
+若缺少数据库，需要新建相应的数据库。
+
+```makefile
+CREATE DATABASE 'homestead';
+CREATE DATABASE 'Record';
+# 或者
+CREATE SCHEMA 'homestead';
+CREATE SCHEMA 'Record';
+```
+
+### DB Connections Relationship
+
+|Database / Schema|Connection|Note|
+|:----:|:----:|:-----:|
+|homestead|`mysql`||
+|Record|`mysql_read`||
 
 ## Cron Config
 
@@ -422,6 +447,17 @@ $absenceValidRecord->employee;// 返回某条指定请假记录的雇员信息
   > $password_confirmation // 确认密码
   > ```
 
+- POST `/admin/resetemail` : 重置管理员邮件地址
+  > 请求变量：
+  > ```php
+  > $newemail // 新邮件地址
+  > ```
+
+- POST `/admin/resetname` : 重置管理员用户名
+> 请求变量：
+> ```php
+> $newname // 新用户名
+> ```
 
 ## Database tables
 
@@ -538,6 +574,8 @@ employee.card_uid     => #543(11 ~ 60)     // Example: #54311, #54359, etc.
 |AbsenceSimCheck|每日两次，分别在 `am_start` 和 `pm_away`|请假模拟签到|
 |UpdateDailyCheckStatus|每日一次，在 `pm_end`|更新每日雇员签到状态|
 
+> 计划任务的日志文件为 `storage/logs/schedule.log`
+
 ## Artisan Command
 
 自定义的 `artisan` 命令
@@ -547,6 +585,9 @@ php artisan sync:car        // 同步车辆进出记录到记录主数据表
 php artisan sync:card       // 同步步行进出记录到记录主数据表
 php artisan absence:check   // 请假模拟签到
 php artisan daily:status    // 更新每日雇员签到状态
+php artisan test:scheduler  // 测试命令
+php artisan list:config     // 输出关键设置
+php artisan list:cache      // 输出数据缓存日期
 ```
 
 自定义命令需要在 `app/Console/Kernel.php` 中注册。
@@ -637,10 +678,18 @@ $pm_early_ddl = `16:00` // 下午离开早退最早时间
 
 `UTC+8` `Asia/Shanghai`
 
-## Scheduling task
+## Task Scheduling
 
 计划任务
 
+|Task           |Frequency  |Note|
+|:----:         |:----:     |:----:|
+|SyncCarRecord  |每小时一次   |同步车辆进出记录到记录主数据表|
+|SyncCardRecord |每小时一次   |同步步行进出记录到记录主数据表|
+|AbsenceSimCheck|每日两次，分别在 `am_start` 和 `pm_away`|请假模拟签到|
+|UpdateDailyCheckStatus|每日一次，在 `pm_end`|更新每日雇员签到状态|
+
+> 计划任务的日志文件为 `storage/logs/schedule.log`
 
 ## Note
 

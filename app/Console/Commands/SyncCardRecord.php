@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use App\Record;
 use App\Employee;
 use App\CardRecord;
+use Carbon\Carbon;
 
 
 class SyncCardRecord extends Command
@@ -42,6 +43,9 @@ class SyncCardRecord extends Command
      */
     public function handle()
     {
+        $now = Carbon::now('Asia/Shanghai');
+        $this->info($now->toDateTimeString() . ' SyncCardRecord');
+
         $success = true;
         // Last sync time from records table
         // Condition: if there is no empty/first run
@@ -52,7 +56,7 @@ class SyncCardRecord extends Command
             
             if ($lastRecord) {
                 // Table is not empty
-                $lastSyncTime = Record::latest('created_at')->first()->created_at;
+                $lastSyncTime = $lastRecord->created_at;
                 $this->info('lastSyncTime: ' . $lastSyncTime);
                 // Card records waiting to sync to main records table
                 $waitToSyncRecords = CardRecord::where('timestamp', '>', $lastSyncTime)->get();

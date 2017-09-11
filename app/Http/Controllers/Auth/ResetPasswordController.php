@@ -38,6 +38,7 @@ class ResetPasswordController extends Controller
     }
 
     public function resetPassword(Request $data){
+        $success = true;
         $cur_user = Auth::user();
         $id = $cur_user->id;
         $user = User::where('id', '=', $id)->first();
@@ -45,10 +46,15 @@ class ResetPasswordController extends Controller
             $user->password = bcrypt($data['password']);
             echo $user->password;
             $user->save();
-            return redirect('home');
         } else {
-            echo 'not match';
-            // throw error?
+            $success = false;
         }
+
+        if ($success) {
+            $data->session()->flash('flash_success', '重置密码成功');
+        } else {
+            $data->session()->flash('flash_error', '重置密码失败：密码不正确');
+        }
+        return redirect('home');
     }
 }

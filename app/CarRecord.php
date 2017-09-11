@@ -8,6 +8,8 @@ class CarRecord extends Model
 {
     public $timestamps = false;
 
+    protected $connection = 'mysql_read';
+
     protected $table = 'car_records';
 
     protected $fillable = [
