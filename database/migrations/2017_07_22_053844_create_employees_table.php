@@ -35,6 +35,6 @@ class CreateEmployeesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employees');
+        Schema::connection('mysql_read')->dropIfExists('employees');
     }
 }

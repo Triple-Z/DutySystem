@@ -28,6 +28,6 @@ class CreateCarRecordsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('car_records');
+        Schema::connection('mysql_read')->dropIfExists('car_records');
     }
 }

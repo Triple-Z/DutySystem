@@ -13,7 +13,7 @@ class CreateRecordsTable extends Migration
      */
     public function up()
     {
-        Schema::create('records', function (Blueprint $table) {
+        Schema::connection('mysql')->create('records', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('employee_id');
             $table->tinyInteger('check_direction')->nullable();
@@ -32,6 +32,6 @@ class CreateRecordsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('records');
+        Schema::connection('mysql')->dropIfExists('records');
     }
 }

@@ -13,7 +13,7 @@ class CreateAbsenceValidRecordsTable extends Migration
      */
     public function up()
     {
-        Schema::create('absence_valid_records', function (Blueprint $table) {
+        Schema::connection('mysql')->create('absence_valid_records', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('employee_id');
             $table->integer('year');
@@ -32,6 +32,6 @@ class CreateAbsenceValidRecordsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('absence_valid_records');
+        Schema::connection('mysql')->dropIfExists('absence_valid_records');
     }
 }

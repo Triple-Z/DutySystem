@@ -13,7 +13,7 @@ class CreateTimeNodesTable extends Migration
      */
     public function up()
     {
-        Schema::create('time_nodes', function (Blueprint $table) {
+        Schema::connection('mysql')->create('time_nodes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
             $table->integer('day');
@@ -31,6 +31,6 @@ class CreateTimeNodesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('time_nodes');
+        Schema::connection('mysql')->dropIfExists('time_nodes');
     }
 }
