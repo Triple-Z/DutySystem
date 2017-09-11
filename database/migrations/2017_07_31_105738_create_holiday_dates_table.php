@@ -13,7 +13,7 @@ class CreateHolidayDatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('holiday_dates', function (Blueprint $table) {
+        Schema::connection('mysql')->create('holiday_dates', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('year');
             $table->integer('month');
@@ -29,6 +29,6 @@ class CreateHolidayDatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('holiday_dates');
+        Schema::connection('mysql')->dropIfExists('holiday_dates');
     }
 }

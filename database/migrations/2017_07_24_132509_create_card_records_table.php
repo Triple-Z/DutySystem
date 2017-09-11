@@ -29,6 +29,6 @@ class CreateCardRecordsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('card_records');
+        Schema::connection('mysql_read')->dropIfExists('card_records');
     }
 }

@@ -13,7 +13,7 @@ class CreateDailyCheckStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('daily_check_status', function (Blueprint $table) {
+        Schema::connection('mysql')->create('daily_check_status', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('employee_id');
             $table->date('date');
@@ -33,6 +33,6 @@ class CreateDailyCheckStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('daily_check_status');
+        Schema::connection('mysql')->dropIfExists('daily_check_status');
     }
 }
