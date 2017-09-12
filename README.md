@@ -107,6 +107,8 @@ CREATE SCHEMA 'Record';
 
 ### DB Connections Relationship
 
+初次配置需要更改 `config/database.php` 信息。
+
 |Database / Schema|Connection|Note|
 |:----:|:----:|:-----:|
 |homestead|`mysql`||

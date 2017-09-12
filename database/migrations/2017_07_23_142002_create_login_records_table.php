@@ -13,7 +13,7 @@ class CreateLoginRecordsTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_action_records', function (Blueprint $table) {
+        Schema::connection('mysql')->create('user_action_records', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
             $table->string('action');
@@ -28,6 +28,6 @@ class CreateLoginRecordsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_action_records');
+        Schema::connection('mysql')->dropIfExists('user_action_records');
     }
 }
