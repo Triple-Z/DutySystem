@@ -8,6 +8,8 @@ class AbsenceValidRecord extends Model
 {
     protected $table = 'absence_valid_records';
 
+    protected $connection = 'mysql';
+
     protected $fillable = [
         'employee_id',
         'year',

@@ -9,6 +9,8 @@ class Record extends Model
     // No need created_at & updated_at
     // public $timestamps = false;
 
+    protected $connection = 'mysql';
+
     protected $fillable = [
         'employee_id',
         'check_direction',
