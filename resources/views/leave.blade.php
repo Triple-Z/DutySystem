@@ -289,6 +289,10 @@ th {
     <button data-toggle="modal" data-target="#modal-switch-addleave" class="btn-primary btn">添加请假记录</button>
     <div>
         <div class="col-sm-2 col-md-2" style="font-size: 200%;float: left;">
+            @if ($specific)
+                {{ $choosenEmployee->name }}
+                </br>
+            @endif
             请假情况
         </div>
         <div style="margin-left:30%;">
@@ -355,9 +359,11 @@ th {
                 @endforeach
             </tbody>
         </table>
-        <div style="text-align: center;">
-             {{ $absenceRecords->links() }} 
-        </div>
+        @if (!$specific)
+            <div style="text-align: center;">
+                {{ $absenceRecords->links() }} 
+            </div>
+        @endif
     </div>
 </div>
 <script>

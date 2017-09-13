@@ -10,6 +10,8 @@ class HolidayDate extends Model
 
     // public $timestamps = false;
 
+    protected $connection = 'mysql';
+
     protected $fillable = [
         'year',
         'month',

@@ -25,6 +25,7 @@ class AbsenceValidRecordController extends Controller
         return view('leave',[
             'absenceRecords' => $absenceRecords,
             'employees' => $employees,
+            'specific' => false,
         ]);
     }
 
@@ -43,7 +44,19 @@ class AbsenceValidRecordController extends Controller
     public function search_absence(Request $request) {
         $success = true;
 
-        // Waiting for the futher response...
+        $employeeId = $request->input('employee_id');
+        $employee = Employee::where('id', '=', $employeeId)->first();
+
+        $absenceRecords = AbsenceValidRecord::where('employee_id', '=', $employeeId)->get();
+
+        $employees = Employee::orderBy('work_number')->get();
+
+        return view('leave', [
+            'absenceRecords' => $absenceRecords,
+            'employees' => $employees,
+            'choosenEmployee' => $employee,
+            'specific' => true,
+        ]);
     }
 
     public function add_absence(Request $request) {// PUT
