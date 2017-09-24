@@ -1,7 +1,7 @@
 <template>
     <div id="app"
          class="demo">
-        <h1 class="demo-title">假期更新</h1>
+        <h1 class="demo-title"></h1>
         <div class="demo-container">
             <schedule-calendar :originData="data"></schedule-calendar>
         </div>

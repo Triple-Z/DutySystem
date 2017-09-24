@@ -172,11 +172,11 @@ th {
             <form id="edit_form" class="form-horizontal" method="POST" action="/valid">
                 {{ csrf_field() }}
                 <div class="col-md-2 col-md-offset-3">
-                    <div style="font-size: 150%;">
-                        选择显示日期：
+                    <div class="title" style="margin-left:20%;">
+                        <big>选择显示日期：</big>
                     </div>
                 </div>
-                <div class="col-md-2" style="margin-left: -40px;">  
+                <div class="col-md-2" >  
                     <div class="form-group">  
                         <!--指定 date标记-->  
                         <div class="input-group date" id="datetimepicker2">  
@@ -198,8 +198,8 @@ th {
 <!-- content view -->
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <div>
-        <div class="col-sm-2 col-md-2" style="font-size: 200%;float: left;">
-            当天考勤情况
+        <div class="col-sm-2 col-md-2">
+            <big>当天考勤情况</big>
         </div>
         <div class="col-sm-2 col-md-2" style="float: right;">
             <button type="button" class="btn btn-primary" onclick="method('tableExcel')">
