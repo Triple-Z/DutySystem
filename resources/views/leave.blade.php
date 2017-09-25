@@ -289,37 +289,38 @@ th {
 
 <!-- content view -->
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <button data-toggle="modal" data-target="#modal-switch-addleave" class="btn-primary btn">添加请假记录</button>
-    <div>
-        <div class="col-sm-2 col-md-2" style="font-size: 150%;float: left;">
-            @if ($specific)
-                {{ $choosenEmployee->name }}
-                </br>
-            @endif
-            请假情况
-        </div>
-        <div style="margin-left:30%;">
-            <form id="leave_form" role="form" method="POST" action="/leave">
-                {{ csrf_field() }}  
-                    <div class="form-group">  
-                        <!--指定 date标记-->  
-                        显示指定员工
-                        <select class="selectpicker btn" name="employee_id" required/>
-                        <optgroup label="姓名">
-                            @foreach($employees as $employee)
+    <div class="col-md-12" style="margin-top:10px;margin-bottom:20px;">
+        <button data-toggle="modal" data-target="#modal-switch-addleave" class="btn-primary btn">
+            添加请假记录
+        </button>
+        <button type="button" class="btn btn-primary pull-right" onclick="method('tableExcel')">
+            导出本页表格为excel
+        </button>
+    </div>
+    <div class="col-md-2 col-xs-4 col-xs-offset-3 col-md-offset-5">
+        <form id="leave_form" role="form" method="POST" action="/leave">
+            {{ csrf_field() }}  
+            <div class="form-group">  
+                <select class="selectpicker btn" name="employee_id" required/>
+                <optgroup label="姓名">
+                    @if ($specific)
+                        @foreach($employees as $employee)
+                            @if ($choosenEmployee->id==$employee->id)
+                                <option value="{{ $employee->id }}" selected="selected">{{ $employee->name }}</option>
+                            @else
                                 <option value="{{ $employee->id }}">{{ $employee->name }}</option>
-                            @endforeach
-                        </optgroup>
-                        </select>
-                    <button type="submit" class="btn btn-primary btn-sm">提交</button>
-                    </div> 
-            </form>
-        </div>
-        <div class="col-sm-2 col-md-2" style="float: right;">
-            <button type="button" class="btn btn-primary" onclick="method('tableExcel')">
-                导出本页表格为excel
-            </button>
-        </div>
+                            @endif
+                        @endforeach
+                    @else
+                        @foreach($employees as $employee)
+                            <option value="{{ $employee->id }}">{{ $employee->name }}</option>
+                        @endforeach
+                    @endif
+                </optgroup>
+                </select>
+                <button type="submit" class="btn btn-primary btn-sm">查询</button>
+            </div> 
+        </form>
     </div>
 
     <div class="table-responsive col-md-11">

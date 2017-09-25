@@ -106,8 +106,7 @@ th {
 
         var picker2 = $('#datetimepicker2').datetimepicker({  
             format: 'YYYY-MM-DD',  
-            locale: moment.locale('zh-cn'),
-            maxDate: today
+            locale: moment.locale('zh-cn')
         });  
         //动态设置最小值  
         picker1.on('dp.change', function (e) {  
