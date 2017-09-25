@@ -337,15 +337,15 @@ th {
                     @if (!$hasDuration)
                         <th></th>
                     @endif
+                    <th>
+                        是
+                    </th>
 
                     @if($record->note)
                         <th id="note_{{$record->id}}">{{ $record->note }}</th>
                     @else
                         <th id="note_{{$record->id}}"></th>
                     @endif
-                    <th>
-                        是
-                    </th>
                     <th>
                         <button id="{{$record->id}}" data-toggle="modal" data-target="#modal-switch" class="btn-primary btn" onclick="set_action(this.id)">修改</button>
                     </th>
