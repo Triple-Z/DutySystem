@@ -163,44 +163,31 @@ th {
 
 <!-- filter choice -->
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <div style="margin-top: 20px;">
-            <form class="form-horizontal" method="POST" action="/report">
-                {{ csrf_field() }}
-                <div class="col-md-2 col-md-offset-3">
-                    <div style="font-size: 150%;">
-                        选择显示月份：
+    <div class="col-sm-2 col-md-2 pull-right">
+        <button type="button" class="btn btn-primary" onclick="method('tableExcel')">
+            导出本页表格为excel
+        </button>
+    </div>
+    <div style="margin-top: 10px;margin-bottom: 20px;float:left;">
+        <form class="form-horizontal" method="POST" action="/report">
+            {{ csrf_field() }}
+            <div class="col-md-2 col-xs-4 col-xs-offset-3 col-md-offset-4">  
+                <div class="form-group">  
+                    <!--指定 date标记-->  
+                    <div class="input-group date" id="datetimepicker2" style="width: 90%;">  
+                        <input type="text" class="form-control" type="time" autocomplete="off" placeholder="显示月份" name="month" required/>  
+                        <span class="input-group-addon">  
+                            <span class="glyphicon glyphicon-calendar"></span>  
+                        </span>  
                     </div>
                 </div>
-                <div class="col-md-2" style="margin-left: -40px;">  
-                    <div class="form-group">  
-                        <!--指定 date标记-->  
-                        <div class="input-group date" id="datetimepicker2" style="width: 81%;">  
-                            <input type="text" class="form-control" type="time" autocomplete="off" placeholder="显示月份" name="month" required/>  
-                            <span class="input-group-addon">  
-                                <span class="glyphicon glyphicon-calendar"></span>  
-                            </span>  
-                            <button type="submit" class="btn btn-primary pull-right" style="margin-left: 5px;">
-                                确定
-                            </button>
-                        </div>  
-                    </div> 
-                </div>  
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- content view -->
-<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <div>
-        <div class="title" style="font-size: 150%;">
-            所有记录
-        </div>
-        <div class="col-sm-2 col-md-2" style="float: right;">
-            <button type="button" class="btn btn-primary" onclick="method('tableExcel')">
-                导出本页表格为excel
-            </button>
-        </div>
+            </div>
+            <div class="form-group col-xs-2 col-md-2">  
+                <button type="submit" class="btn btn-primary">
+                    确定
+                </button>
+            </div>  
+        </form>
     </div>
 
     <div class="table-responsive col-md-11">

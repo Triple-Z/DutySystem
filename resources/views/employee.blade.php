@@ -222,7 +222,7 @@ th {
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <button data-toggle="modal" data-target="#modal-switch-profile" class="btn-primary btn btn-sm">员工信息</button><br><br><br>
     <div>
-        <div class="col-sm-2 col-md-2" style="font-size: 200%;text-align: center;">
+        <div class="col-sm-2 col-md-2" style="font-size: 150%;">
             人员所有记录
         </div>
         <div class="col-sm-2 col-md-2" style="float: right;">
