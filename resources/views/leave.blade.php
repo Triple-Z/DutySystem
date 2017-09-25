@@ -97,20 +97,22 @@ th {
 
     function today() {
         var dd = new Date();
-        var y = dd.getFullYear();
-        var m = dd.getMonth()+1;//获取当前月份的日期
-        var d = dd.getDate();
-        return y+"-"+m+"-"+d;
+        var Y = dd.getFullYear();
+        var M = dd.getMonth()+1;//获取当前月份的日期
+        var D = dd.getDate();
+        var H = dd.getHours();
+        var m = dd.getMinutes();
+        return Y+"-"+M+"-"+D+"-"+H+":"+m;
     }
     var today = today();
     $(function () {  
         var picker1 = $('#start_date_timepicker').datetimepicker({  
-            format: 'YYYY-MM-DD',  
+            format: 'YYYY-MM-DD-HH:mm',  
             locale: moment.locale('zh-cn'),  
             minDate: today 
         });  
         var picker2 = $('#end_date_timepicker').datetimepicker({  
-            format: 'YYYY-MM-DD',  
+            format: 'YYYY-MM-DD-HH:mm',  
             locale: moment.locale('zh-cn')  
         });  
 
@@ -156,9 +158,9 @@ th {
                                 </td>
                             </tr>
                             <tr>
-                                <td>开始日期</td>
+                                <td>开始时间</td>
                                 <td>
-                                    <div class="input-group date" id="start_date_timepicker" style="width:40%;margin-left:30%;">  
+                                    <div class="input-group date" id="start_date_timepicker" style="width:50%;margin-left:30%;">  
                                         <input type="text" class="form-control" type="time" autocomplete="off" placeholder="开始时间" name="start_date" required/>  
                                         <span class="input-group-addon">  
                                             <span class="glyphicon glyphicon-calendar"></span>  
@@ -167,9 +169,9 @@ th {
                                 </td>
                             </tr>
                             <tr>
-                                <td>结束日期</td>
+                                <td>结束时间</td>
                                 <td>
-                                    <div class="input-group date" id="end_date_timepicker" style="width:40%;margin-left:30%;">  
+                                    <div class="input-group date" id="end_date_timepicker" style="width:50%;margin-left:30%;">  
                                         <input type="text" class="form-control" type="time" autocomplete="off" placeholder="结束时间" name="end_date" required/>  
                                         <span class="input-group-addon">  
                                             <span class="glyphicon glyphicon-calendar"></span>  
@@ -184,6 +186,7 @@ th {
                                         <optgroup label="类型">
                                             <option value="事假">事假</option>
                                             <option value="病假">病假</option>
+                                            <option value="其他">其他</option>
                                         </optgroup>
                                     </select>
                                 </td>
@@ -249,13 +252,13 @@ th {
                                 </td>
                             </tr>
                             <tr>
-                                <td>起始日期</td>
+                                <td>起始时间</td>
                                 <td>
                                     <input id="td_leave_start_date" class="form-control placeholder-no-fix" type="note" name="start_date" style="width:40%;margin-left:30%;" readonly="readonly" value=""/>
                                 </td>
                             </tr>
                             <tr>
-                                <td>结束日期</td>
+                                <td>结束结束</td>
                                 <td>
                                     <div class="input-group date" id="submit_end_date_timepicker" style="width:40%;margin-left:30%;">  
                                         <input id="submit_end_date" type="text" class="form-control" type="time" autocomplete="off" placeholder="结束时间" name="end_date" required/>  
@@ -288,7 +291,7 @@ th {
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <button data-toggle="modal" data-target="#modal-switch-addleave" class="btn-primary btn">添加请假记录</button>
     <div>
-        <div class="col-sm-2 col-md-2" style="font-size: 200%;float: left;">
+        <div class="col-sm-2 col-md-2" style="font-size: 150%;float: left;">
             @if ($specific)
                 {{ $choosenEmployee->name }}
                 </br>
@@ -385,7 +388,7 @@ th {
         document.getElementById("td_leave_name").value = name_value;
         document.getElementById("td_leave_employee_worknumber").value = employee_worknumber_value;
         $('#submit_end_date_timepicker').datetimepicker({  
-            format: 'YYYY-MM-DD',  
+            format: 'YYYY-MM-DD-HH-mm',  
             locale: moment.locale('zh-cn'),
             minDate: start_date_value
         });  
