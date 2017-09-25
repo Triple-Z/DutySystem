@@ -15,6 +15,8 @@
             }
             .sidebar {
                 position: fixed;
+                box-shadow: 10px 10px 5px #888888;
+                margin-bottom:10px;
             }
             .nav-sidebar > li {
                 padding-left: 40px;
