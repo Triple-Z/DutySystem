@@ -1537,8 +1537,7 @@ html {
 }
 
 body {
-  font-family: "Lucida Grande", Helvetica, Arial, STXihei, "\534E\6587\7EC6\9ED1", "Microsoft YaHei", "\5FAE\8F6F\96C5\9ED1";
-  font-size: 14px;
+  font:13px/1.5 arial;
   line-height: 1.6;
   color: #636b6f;
   background-color: #f5f8fa;
