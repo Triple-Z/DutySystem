@@ -338,7 +338,7 @@ th {
                         <th></th>
                     @endif
                     <th>
-                        是
+                        <a href="{{url('/graph')}}">是</a>
                     </th>
 
                     @if($record->note)
