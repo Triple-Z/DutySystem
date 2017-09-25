@@ -184,7 +184,7 @@ th {
                     </div>  
                 </div>
             </div> 
-            <div class="form-group col-xs-2 col-md-offset-7 col-xs-offset-2">
+            <div class="form-group col-xs-2 col-md-2 col-xs-offset-2">
                 <button type="submit" class="btn btn-primary">
                     确定
                 </button>
