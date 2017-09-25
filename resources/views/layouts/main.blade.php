@@ -15,7 +15,8 @@
             }
             .sidebar {
                 position: fixed;
-                box-shadow: 10px 10px 5px #888888;
+                -moz-box-shadow: 8px 8px 8px #888888; /* 老的 Firefox */
+                box-shadow: 8px 8px 8px #888888;
                 margin-bottom:10px;
             }
             .nav-sidebar > li {

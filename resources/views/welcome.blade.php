@@ -153,27 +153,26 @@ th {
 
 <!-- filter choice -->
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-
-    <div class="col-sm-2 col-md-2" style="float: right;">
+    <div class="col-sm-2 col-md-2 col-xs-2" style="float: right;">
         <button type="button" class="btn btn-primary" onclick="method('tableExcel')">
             导出本页表格为excel
         </button>
     </div>
-    <div style="float:left">
+    <div style="float:left;margin-top:20px;margin-bottom:30px;">
         <form class="form-horizontal" method="POST" action="/">
             {{ csrf_field() }}
-            <div class="col-md-2 col-md-offset-3">  
+            <div class="col-md-2 col-md-offset-3 col-xs-4 col-xs-offset-1">  
                 <div class="form-group">  
                     <!--指定 date标记-->  
                     <div class="input-group date" id="datetimepicker1" style="width:95%;">  
-                        <input type="text" class="form-control" type="time" autocomplete="off" placeholder=">起始时间：" name="start_time" required/>  
+                        <input type="text" class="form-control" type="time" autocomplete="off" placeholder="起始时间：" name="start_time" required/>  
                         <span class="input-group-addon">  
                             <span class="glyphicon glyphicon-calendar"></span>  
                         </span>  
                     </div>  
                 </div> 
             </div>  
-            <div class="col-md-2">  
+            <div class="col-md-2 col-xs-4">  
                 <div class="form-group">  
                     <!--指定 date标记-->  
                     <div class="input-group date" id="datetimepicker2" style="width:95%;">  
@@ -185,15 +184,13 @@ th {
                     </div>  
                 </div>
             </div> 
-            <div class="col-md-1" style="margin-left: -2%;">
-                <div class="form-group">
-                        <button type="submit" class="btn btn-primary pull-right">
-                            确定
-                        </button>
-                </div>
+            <div class="form-group col-xs-2 col-md-offset-7 col-xs-offset-2">
+                <button type="submit" class="btn btn-primary">
+                    确定
+                </button>
             </div>
+        </form>
     </div>
-
     <div class="table-responsive col-md-11">
         <table class="table table-striped" id="tableExcel">
             <thead  style="text-align:center;">
@@ -203,7 +200,6 @@ th {
                     <th>记录时间</th>
                     <th>刷卡位置</th>
                     <th>刷卡方向</th>
-                    <th>外出情况</th>
                     <th>备注</th>
                 </tr>
             </thead>
@@ -239,8 +235,6 @@ th {
                     @else
                         <th>出</th>
                     @endif
-                    
-                    <th></th>
 
                     @if($record->note)
                         <th>{{ $record->note }}</th>
