@@ -21,10 +21,10 @@ A duty system for Drone Institution of NUAA.
 	- [Listener](#listener)
 	- [API](#api)
 	- [Database tables](#database-tables)
-		- [table name: `employees`](#table-name-`employees`)
-		- [table names: `records`](#table-names-`records`)
-		- [table name: `users`](#table-name-`users`)
-		- [table name: `user_action_records`](#table-name-`useractionrecords`)
+		- [table name: `employees`](#table-name-employees)
+		- [table names: `records`](#table-names-records)
+		- [table name: `users`](#table-name-users)
+		- [table name: `user_action_records`](#table-name-user_action_records)
 	- [Migrations](#migrations)
 	- [Seeds](#seeds)
 		- [Fake Data Set](#fake-data-set)
@@ -310,7 +310,7 @@ $absenceValidRecord->employee;// 返回某条指定请假记录的雇员信息
 - POST `/leave` : 请求指定日期的请假信息
   > 请求变量：
   > ```php
-  > // Undeterminated
+  > $employee_id = 21; // 雇员唯一 ID 号
   > ```
 
 - PUT `/leave` : 添加请假信息

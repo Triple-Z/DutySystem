@@ -11,6 +11,8 @@ class ActionRecord extends Model
 
     protected $table = 'user_action_records';
 
+    protected $connection = 'mysql';
+
     protected $fillable = [
         'user_id',
         'action',

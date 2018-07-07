@@ -8,6 +8,8 @@ class TimeNode extends Model
 {
     protected $table = 'time_nodes';
 
+    protected $connection = 'mysql';
+
     protected $fillable = [
         'name',
         'day',
