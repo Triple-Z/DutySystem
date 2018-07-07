@@ -31,12 +31,15 @@ th {
         return y+"-"+m+"-"+d;
     }
     var today = today();
-    $(function () {
-
+    $(function () {  
+        var picker1 = $('#datetimepicker1').datetimepicker({  
+            format: 'YYYY-MM-DD HH:mm',  
+            locale: moment.locale('zh-cn'),  
+            //minDate: '2016-7-1'  
+        });  
         var picker2 = $('#datetimepicker2').datetimepicker({  
-            format: 'YYYY-MM-DD HH:mm:ss',  
-            locale: moment.locale('zh-cn'),
-            maxDate: today
+            format: 'YYYY-MM-DD HH:mm',  
+            locale: moment.locale('zh-cn')  
         });  
         //动态设置最小值  
         picker1.on('dp.change', function (e) {  
@@ -46,7 +49,7 @@ th {
         picker2.on('dp.change', function (e) {  
             picker1.data('DateTimePicker').maxDate(e.date);  
         });  
-    }); 
+    });  
 </script>
 @endsection
 
@@ -220,18 +223,47 @@ th {
 </div>
 
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <button data-toggle="modal" data-target="#modal-switch-profile" class="btn-primary btn btn-sm">员工信息</button><br><br><br>
-    <div>
-        <div class="col-sm-2 col-md-2" style="font-size: 200%;text-align: center;">
-            人员所有记录
-        </div>
-        <div class="col-sm-2 col-md-2" style="float: right;">
-            <button type="button" class="btn btn-primary" onclick="method('tableExcel')">
-                导出本页表格为excel
-            </button>
-        </div>
+    <div class="col-md-12" style="margin-top:10px;margin-bottom:20px;">
+        <button data-toggle="modal" data-target="#modal-switch-profile" class="btn-primary btn">
+            员工信息
+        </button>
+        <button type="button" class="btn btn-primary pull-right" onclick="method('tableExcel')">
+            导出本页表格为excel
+        </button>
     </div>
+    <div style="float:left;margin-top:20px;margin-bottom:30px;">
+        <form class="form-horizontal" method="POST" action="/">
+            {{ csrf_field() }}
+            <div class="col-md-2 col-md-offset-3 col-xs-4 col-xs-offset-1">  
+                <div class="form-group">  
+                    <!--指定 date标记-->  
+                    <div class="input-group date" id="datetimepicker1" style="width:95%;">  
+                        <input type="text" class="form-control" type="time" autocomplete="off" placeholder="起始时间：" name="start_time" required/>  
+                        <span class="input-group-addon">  
+                            <span class="glyphicon glyphicon-calendar"></span>  
+                        </span>  
+                    </div>  
+                </div> 
+            </div>  
+            <div class="col-md-2 col-xs-4">  
+                <div class="form-group">  
+                    <!--指定 date标记-->  
+                    <div class="input-group date" id="datetimepicker2" style="width:95%;">  
+                        <input type='text' class="form-control" type="time" autocomplete="off" placeholder="结束时间：" name="end_time" required/>  
+                        <span class="input-group-addon">  
+                            <span class="glyphicon glyphicon-calendar"></span>  
+                        </span>  
 
+                    </div>  
+                </div>
+            </div> 
+            <div class="form-group col-xs-2 col-md-2 col-xs-offset-2">
+                <button type="submit" class="btn btn-primary">
+                    确定
+                </button>
+            </div>
+        </form>
+    </div>
     <div class="table-responsive col-md-11">
         <table class="table table-striped" id="tableExcel">
             <thead  style="text-align:center;">
@@ -243,6 +275,7 @@ th {
                     <th>进出方向</th>
                     <th>刷卡方式</th>
                     <th>外出时间</th>
+                    <th>是否正常外出</th>
                     <th>备注</th>
                 </tr>
             </thead>
@@ -304,13 +337,15 @@ th {
                     @if (!$hasDuration)
                         <th></th>
                     @endif
+                    <th>
+                        <a href="{{url('/graph')}}">是</a>
+                    </th>
 
                     @if($record->note)
                         <th id="note_{{$record->id}}">{{ $record->note }}</th>
                     @else
                         <th id="note_{{$record->id}}"></th>
                     @endif
-
                     <th>
                         <button id="{{$record->id}}" data-toggle="modal" data-target="#modal-switch" class="btn-primary btn" onclick="set_action(this.id)">修改</button>
                     </th>

@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class DailyCheckStatus extends Model
 {
     protected $table = 'daily_check_status';
+
+    protected $connection = 'mysql';
     
     protected $fillable = [
         'employee_id',
